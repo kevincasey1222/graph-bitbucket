@@ -1,7 +1,7 @@
 {
   "name": "@jupiterone/integration-template",
-  "version": "0.0.0",
-  "description": "A JupiterOne Integration",
+  "version": "0.0.1",
+  "description": "A JupiterOne Integration for BitBucket",
   "license": "MPL-2.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,18 +19,27 @@
     "format": "prettier --write '**/*.{ts,js,json,css,md,yml}'",
     "type-check": "tsc",
     "test": "jest",
-    "test:env": "LOAD_ENV=1 yarn test",
+    "test:env": "LOAD_ENV=1 yarn test", 
     "test:ci": "yarn lint && yarn type-check && yarn test",
     "build": "tsc -p tsconfig.dist.json --declaration",
     "prepush": "yarn lint && yarn type-check && jest --changedSince master",
     "prepack": "yarn build"
   },
+  "dependencies": {
+    "aws-sdk": "^2.382.0",
+    "aws-xray-sdk-core": "^2.2.0",
+    "bunyan": "^1.8.12",
+    "lodash.groupby": "^4.6.0",
+    "node-fetch": "^2.6.1",
+    "url-join": "^4.0.1",
+    "uuid": "^8.3.2"
+  },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^6.0.0"
+    "@jupiterone/integration-sdk-core": "^6.0.2"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^6.0.0",
-    "@jupiterone/integration-sdk-dev-tools": "^6.0.0",
-    "@jupiterone/integration-sdk-testing": "^6.0.0"
+    "@jupiterone/integration-sdk-core": "^6.0.2",
+    "@jupiterone/integration-sdk-dev-tools": "^6.0.2",
+    "@jupiterone/integration-sdk-testing": "^6.0.2"
   }
 }

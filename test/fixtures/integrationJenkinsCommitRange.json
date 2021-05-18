@@ -1,0 +1,205 @@
+[
+  {
+    "rendered": {
+      "message": {
+        "raw": "Merged in ingest-pull-requests-toggle (pull request #95)\n\nIngest PRs (or not) based on config toggle\n\nApproved-by: Erkang Zheng\n",
+        "markup": "markdown",
+        "html": "<p>Merged in ingest-pull-requests-toggle (<a href=\"https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/pull-requests/95/ingest-prs-or-not-based-on-config-toggle\" rel=\"nofollow\" class=\"ap-connect-link\">pull request #95</a>)</p>\n<p>Ingest PRs (or not) based on config toggle</p>\n<p>Approved-by: Erkang Zheng</p>",
+        "type": "rendered"
+      }
+    },
+    "hash": "a7b00c7d420b5d26123bc078ca42a418a5c9db64",
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B2736b367-f1b8-4547-bdba-00f3fdc1fa9e%7D?ts=default"
+        }
+      },
+      "type": "repository",
+      "name": "jupiter-integration-bitbucket",
+      "full_name": "lifeomic/jupiter-integration-bitbucket",
+      "uuid": "{2736b367-f1b8-4547-bdba-00f3fdc1fa9e}"
+    },
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/a7b00c7d420b5d26123bc078ca42a418a5c9db64"
+      },
+      "comments": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/a7b00c7d420b5d26123bc078ca42a418a5c9db64/comments"
+      },
+      "html": {
+        "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/commits/a7b00c7d420b5d26123bc078ca42a418a5c9db64"
+      },
+      "diff": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/diff/a7b00c7d420b5d26123bc078ca42a418a5c9db64"
+      },
+      "approve": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/a7b00c7d420b5d26123bc078ca42a418a5c9db64/approve"
+      },
+      "statuses": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/a7b00c7d420b5d26123bc078ca42a418a5c9db64/statuses"
+      }
+    },
+    "author": {
+      "raw": "Isaac Williams <isaac.williams@lifeomic.com>",
+      "type": "author",
+      "user": {
+        "username": "isaacwilliams-lifeomic",
+        "display_name": "Isaac Williams",
+        "uuid": "{eaf839a0-e1d8-4818-ab41-aebcb93dd81d}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D/"
+          },
+          "avatar": {
+            "href": "https://avatar-cdn.atlassian.com/5c0549b20ecb4f1b2ffa92ff?by=id&sg=Hb9Wglov2aDPIFE5krqOkV%2F0t0k%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIW-2.svg"
+          }
+        },
+        "nickname": "Isaac Williams",
+        "type": "user",
+        "account_id": "5c0549b20ecb4f1b2ffa92ff"
+      }
+    },
+    "summary": {
+      "raw": "Merged in ingest-pull-requests-toggle (pull request #95)\n\nIngest PRs (or not) based on config toggle\n\nApproved-by: Erkang Zheng\n",
+      "markup": "markdown",
+      "html": "<p>Merged in ingest-pull-requests-toggle (<a href=\"https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/pull-requests/95/ingest-prs-or-not-based-on-config-toggle\" rel=\"nofollow\" class=\"ap-connect-link\">pull request #95</a>)</p>\n<p>Ingest PRs (or not) based on config toggle</p>\n<p>Approved-by: Erkang Zheng</p>",
+      "type": "rendered"
+    },
+    "parents": [
+      {
+        "hash": "7e9cc13d3e2b44e1d74623f9a68388c14e7cce3c",
+        "type": "commit",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/7e9cc13d3e2b44e1d74623f9a68388c14e7cce3c"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/commits/7e9cc13d3e2b44e1d74623f9a68388c14e7cce3c"
+          }
+        }
+      },
+      {
+        "hash": "b8a205bf0c94d055a12723fad70e532bd65d19da",
+        "type": "commit",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/b8a205bf0c94d055a12723fad70e532bd65d19da"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/commits/b8a205bf0c94d055a12723fad70e532bd65d19da"
+          }
+        }
+      }
+    ],
+    "date": "2019-06-10T15:28:23+00:00",
+    "message": "Merged in ingest-pull-requests-toggle (pull request #95)\n\nIngest PRs (or not) based on config toggle\n\nApproved-by: Erkang Zheng\n",
+    "type": "commit"
+  },
+  {
+    "rendered": {
+      "message": {
+        "raw": "Ingest PRs (or not) based on config toggle\n",
+        "markup": "markdown",
+        "html": "<p>Ingest PRs (or not) based on config toggle</p>",
+        "type": "rendered"
+      }
+    },
+    "hash": "b8a205bf0c94d055a12723fad70e532bd65d19da",
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B2736b367-f1b8-4547-bdba-00f3fdc1fa9e%7D?ts=default"
+        }
+      },
+      "type": "repository",
+      "name": "jupiter-integration-bitbucket",
+      "full_name": "lifeomic/jupiter-integration-bitbucket",
+      "uuid": "{2736b367-f1b8-4547-bdba-00f3fdc1fa9e}"
+    },
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/b8a205bf0c94d055a12723fad70e532bd65d19da"
+      },
+      "comments": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/b8a205bf0c94d055a12723fad70e532bd65d19da/comments"
+      },
+      "patch": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/patch/b8a205bf0c94d055a12723fad70e532bd65d19da"
+      },
+      "html": {
+        "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/commits/b8a205bf0c94d055a12723fad70e532bd65d19da"
+      },
+      "diff": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/diff/b8a205bf0c94d055a12723fad70e532bd65d19da"
+      },
+      "approve": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/b8a205bf0c94d055a12723fad70e532bd65d19da/approve"
+      },
+      "statuses": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/b8a205bf0c94d055a12723fad70e532bd65d19da/statuses"
+      }
+    },
+    "author": {
+      "raw": "Isaac Williams <isaac.williams@lifeomic.com>",
+      "type": "author",
+      "user": {
+        "username": "isaacwilliams-lifeomic",
+        "display_name": "Isaac Williams",
+        "uuid": "{eaf839a0-e1d8-4818-ab41-aebcb93dd81d}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D/"
+          },
+          "avatar": {
+            "href": "https://avatar-cdn.atlassian.com/5c0549b20ecb4f1b2ffa92ff?by=id&sg=Hb9Wglov2aDPIFE5krqOkV%2F0t0k%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIW-2.svg"
+          }
+        },
+        "nickname": "Isaac Williams",
+        "type": "user",
+        "account_id": "5c0549b20ecb4f1b2ffa92ff"
+      }
+    },
+    "summary": {
+      "raw": "Ingest PRs (or not) based on config toggle\n",
+      "markup": "markdown",
+      "html": "<p>Ingest PRs (or not) based on config toggle</p>",
+      "type": "rendered"
+    },
+    "parents": [
+      {
+        "hash": "8a5f7a5b2e2b851b79202fda3d63eb1487658b69",
+        "type": "commit",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/8a5f7a5b2e2b851b79202fda3d63eb1487658b69"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/commits/8a5f7a5b2e2b851b79202fda3d63eb1487658b69"
+          }
+        }
+      }
+    ],
+    "date": "2019-06-05T19:35:09+00:00",
+    "message": "Ingest PRs (or not) based on config toggle\n",
+    "type": "commit"
+  }
+]

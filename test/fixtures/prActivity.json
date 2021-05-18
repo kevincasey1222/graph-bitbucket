@@ -1,0 +1,479 @@
+[
+  {
+    "update": {
+      "description": "",
+      "title": "LO-765: Added security properties to FHIR conformance resources",
+      "destination": {
+        "commit": {
+          "hash": "20c8b26957b8",
+          "type": "commit",
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/20c8b26957b8"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/20c8b26957b8"
+            }
+          }
+        },
+        "repository": {
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway"
+            },
+            "avatar": {
+              "href": "https://bytebucket.org/ravatar/%7B30f11fea-965e-4268-83b7-5fe8273b0f4d%7D?ts=default"
+            }
+          },
+          "type": "repository",
+          "name": "fhir-gateway",
+          "full_name": "lifeomic/fhir-gateway",
+          "uuid": "{30f11fea-965e-4268-83b7-5fe8273b0f4d}"
+        },
+        "branch": {
+          "name": "master"
+        }
+      },
+      "reason": "",
+      "source": {
+        "commit": {
+          "hash": "86219a88f0c0",
+          "type": "commit",
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/86219a88f0c0"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/86219a88f0c0"
+            }
+          }
+        },
+        "repository": {
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway"
+            },
+            "avatar": {
+              "href": "https://bytebucket.org/ravatar/%7B30f11fea-965e-4268-83b7-5fe8273b0f4d%7D?ts=default"
+            }
+          },
+          "type": "repository",
+          "name": "fhir-gateway",
+          "full_name": "lifeomic/fhir-gateway",
+          "uuid": "{30f11fea-965e-4268-83b7-5fe8273b0f4d}"
+        },
+        "branch": {
+          "name": "LO-765-auth"
+        }
+      },
+      "state": "MERGED",
+      "author": {
+        "username": "markschroering-lifeomic",
+        "display_name": "Mark Schroering",
+        "uuid": "{43357555-d718-44dc-b66f-2af29c4d06c4}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/markschroering-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/markschroering-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/markschroering-lifeomic/avatar/"
+          }
+        },
+        "nickname": "markschroering-lifeomic",
+        "type": "user",
+        "account_id": "557058:3133c613-cc30-4f03-ae5d-a1530caf518f"
+      },
+      "date": "2017-10-31T14:17:19.539255+00:00"
+    },
+    "pull_request": {
+      "type": "pullrequest",
+      "id": "19",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+        }
+      },
+      "title": "LO-765: Added security properties to FHIR conformance resources"
+    }
+  },
+  {
+    "approval": {
+      "date": "2017-10-31T14:14:38.088864+00:00",
+      "pullrequest": {
+        "type": "pullrequest",
+        "id": "19",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+          }
+        },
+        "title": "LO-765: Added security properties to FHIR conformance resources"
+      },
+      "user": {
+        "username": "aroach-lifeomic",
+        "display_name": "Anthony Roach",
+        "uuid": "{3043c9b5-598f-4158-8ed1-75de951ab6ae}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/aroach-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/aroach-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/aroach-lifeomic/avatar/"
+          }
+        },
+        "nickname": "aroach-lifeomic",
+        "type": "user",
+        "account_id": "557058:f8c812fb-cde2-4c59-8a83-9c86f6ff38d3"
+      }
+    },
+    "pull_request": {
+      "type": "pullrequest",
+      "id": "19",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+        }
+      },
+      "title": "LO-765: Added security properties to FHIR conformance resources"
+    }
+  },
+  {
+    "approval": {
+      "date": "2017-10-31T12:33:25.884624+00:00",
+      "pullrequest": {
+        "type": "pullrequest",
+        "id": "19",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+          }
+        },
+        "title": "LO-765: Added security properties to FHIR conformance resources"
+      },
+      "user": {
+        "username": "chrishemp-lifeomic",
+        "display_name": "Chris Hemp",
+        "uuid": "{e89989b2-8d05-46b4-a09c-3f717c66a46e}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/chrishemp-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/chrishemp-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/chrishemp-lifeomic/avatar/"
+          }
+        },
+        "nickname": "chrishemp-lifeomic",
+        "type": "user",
+        "account_id": "557058:d75856bc-8b4a-47d0-91cd-a30ef2a4f7a5"
+      }
+    },
+    "pull_request": {
+      "type": "pullrequest",
+      "id": "19",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+        }
+      },
+      "title": "LO-765: Added security properties to FHIR conformance resources"
+    }
+  },
+  {
+    "approval": {
+      "date": "2017-10-31T11:15:44.664383+00:00",
+      "pullrequest": {
+        "type": "pullrequest",
+        "id": "19",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+          }
+        },
+        "title": "LO-765: Added security properties to FHIR conformance resources"
+      },
+      "user": {
+        "username": "markdlv-lifeomic",
+        "display_name": "Mark DelaVergne",
+        "uuid": "{4845a246-46c4-4a60-8aea-8e547924eda4}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/markdlv-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/markdlv-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/markdlv-lifeomic/avatar/"
+          }
+        },
+        "nickname": "markdlv-lifeomic",
+        "type": "user",
+        "account_id": "557058:b6fdf649-4a34-4aad-89ab-42f46885e28c"
+      }
+    },
+    "pull_request": {
+      "type": "pullrequest",
+      "id": "19",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+        }
+      },
+      "title": "LO-765: Added security properties to FHIR conformance resources"
+    }
+  },
+  {
+    "update": {
+      "description": "",
+      "title": "LO-765: Added security properties to FHIR conformance resources",
+      "destination": {
+        "commit": {
+          "hash": "20c8b26957b8",
+          "type": "commit",
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/20c8b26957b8"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/20c8b26957b8"
+            }
+          }
+        },
+        "repository": {
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway"
+            },
+            "avatar": {
+              "href": "https://bytebucket.org/ravatar/%7B30f11fea-965e-4268-83b7-5fe8273b0f4d%7D?ts=default"
+            }
+          },
+          "type": "repository",
+          "name": "fhir-gateway",
+          "full_name": "lifeomic/fhir-gateway",
+          "uuid": "{30f11fea-965e-4268-83b7-5fe8273b0f4d}"
+        },
+        "branch": {
+          "name": "master"
+        }
+      },
+      "reason": "",
+      "source": {
+        "commit": {
+          "hash": "a55925b94c18",
+          "type": "commit",
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/a55925b94c18"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/a55925b94c18"
+            }
+          }
+        },
+        "repository": {
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway"
+            },
+            "avatar": {
+              "href": "https://bytebucket.org/ravatar/%7B30f11fea-965e-4268-83b7-5fe8273b0f4d%7D?ts=default"
+            }
+          },
+          "type": "repository",
+          "name": "fhir-gateway",
+          "full_name": "lifeomic/fhir-gateway",
+          "uuid": "{30f11fea-965e-4268-83b7-5fe8273b0f4d}"
+        },
+        "branch": {
+          "name": "LO-765-auth"
+        }
+      },
+      "state": "OPEN",
+      "author": {
+        "username": "markschroering-lifeomic",
+        "display_name": "Mark Schroering",
+        "uuid": "{43357555-d718-44dc-b66f-2af29c4d06c4}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/markschroering-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/markschroering-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/markschroering-lifeomic/avatar/"
+          }
+        },
+        "nickname": "markschroering-lifeomic",
+        "type": "user",
+        "account_id": "557058:3133c613-cc30-4f03-ae5d-a1530caf518f"
+      },
+      "date": "2017-10-31T10:46:05.609059+00:00"
+    },
+    "pull_request": {
+      "type": "pullrequest",
+      "id": "19",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+        }
+      },
+      "title": "LO-765: Added security properties to FHIR conformance resources"
+    }
+  },
+  {
+    "update": {
+      "description": "",
+      "title": "LO-765: Added security properties to FHIR conformance resources",
+      "destination": {
+        "commit": {
+          "hash": "20c8b26957b8",
+          "type": "commit",
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/20c8b26957b8"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/20c8b26957b8"
+            }
+          }
+        },
+        "repository": {
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway"
+            },
+            "avatar": {
+              "href": "https://bytebucket.org/ravatar/%7B30f11fea-965e-4268-83b7-5fe8273b0f4d%7D?ts=default"
+            }
+          },
+          "type": "repository",
+          "name": "fhir-gateway",
+          "full_name": "lifeomic/fhir-gateway",
+          "uuid": "{30f11fea-965e-4268-83b7-5fe8273b0f4d}"
+        },
+        "branch": {
+          "name": "master"
+        }
+      },
+      "reason": "",
+      "source": {
+        "commit": {
+          "hash": "a55925b94c18",
+          "type": "commit",
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/a55925b94c18"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/a55925b94c18"
+            }
+          }
+        },
+        "repository": {
+          "links": {
+            "self": {
+              "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway"
+            },
+            "html": {
+              "href": "https://bitbucket.org/lifeomic/fhir-gateway"
+            },
+            "avatar": {
+              "href": "https://bytebucket.org/ravatar/%7B30f11fea-965e-4268-83b7-5fe8273b0f4d%7D?ts=default"
+            }
+          },
+          "type": "repository",
+          "name": "fhir-gateway",
+          "full_name": "lifeomic/fhir-gateway",
+          "uuid": "{30f11fea-965e-4268-83b7-5fe8273b0f4d}"
+        },
+        "branch": {
+          "name": "LO-765-auth"
+        }
+      },
+      "state": "OPEN",
+      "author": {
+        "username": "markschroering-lifeomic",
+        "display_name": "Mark Schroering",
+        "uuid": "{43357555-d718-44dc-b66f-2af29c4d06c4}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/markschroering-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/markschroering-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/markschroering-lifeomic/avatar/"
+          }
+        },
+        "nickname": "markschroering-lifeomic",
+        "type": "user",
+        "account_id": "557058:3133c613-cc30-4f03-ae5d-a1530caf518f"
+      },
+      "date": "2017-10-31T10:46:05.029955+00:00"
+    },
+    "pull_request": {
+      "type": "pullrequest",
+      "id": "19",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+        }
+      },
+      "title": "LO-765: Added security properties to FHIR conformance resources"
+    }
+  }
+]

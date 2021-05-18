@@ -1,36 +1,20 @@
-import http from 'http';
+import {
+  IntegrationExecutionContext,
+  IntegrationInstanceConfig,
+} from '@jupiterone/integration-sdk-core';
 
-import { IntegrationProviderAuthenticationError } from '@jupiterone/integration-sdk-core';
-
-import { IntegrationConfig } from './config';
+import { BitbucketIntegrationConfig } from './types/integration';
+import BitbucketClient from './clients/BitbucketClient';
+import {
+  BitbucketWorkspace,
+  BitbucketUser,
+  BitbucketProject,
+  BitbucketRepo,
+  BitbucketPR,
+} from './types/bitbucket';
+import { getExpandedConfig } from './config';
 
 export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
-
-// Providers often supply types with their API libraries.
-
-type AcmeUser = {
-  id: string;
-  name: string;
-};
-
-type AcmeGroup = {
-  id: string;
-  name: string;
-  users?: Pick<AcmeUser, 'id'>[];
-};
-
-// Those can be useful to a degree, but often they're just full of optional
-// values. Understanding the response data may be more reliably accomplished by
-// reviewing the API response recordings produced by testing the wrapper client
-// (below). However, when there are no types provided, it is necessary to define
-// opaque types for each resource, to communicate the records that are expected
-// to come from an endpoint and are provided to iterating functions.
-
-/*
-import { Opaque } from 'type-fest';
-export type AcmeUser = Opaque<any, 'AcmeUser'>;
-export type AcmeGroup = Opaque<any, 'AcmeGroup'>;
-*/
 
 /**
  * An APIClient maintains authentication state and provides an interface to
@@ -41,69 +25,71 @@ export type AcmeGroup = Opaque<any, 'AcmeGroup'>;
  * resources.
  */
 export class APIClient {
-  constructor(readonly config: IntegrationConfig) {}
+  bitbucket: BitbucketClient;
+  actionsBitbucket: BitbucketClient;
+  expandedConfig: BitbucketIntegrationConfig;
+  constructor(
+    readonly config: IntegrationInstanceConfig,
+    context: IntegrationExecutionContext,
+  ) {
+    const expandedConfig = getExpandedConfig(context.instance.config);
+    const [defaultBitbucket, actionsBitbucket] = bitbucketClientsFromConfig(
+      context,
+      expandedConfig,
+    );
+    this.bitbucket = defaultBitbucket;
+    this.actionsBitbucket = actionsBitbucket;
+    this.expandedConfig = expandedConfig;
+  }
 
   public async verifyAuthentication(): Promise<void> {
-    // TODO make the most light-weight request possible to validate
-    // authentication works with the provided credentials, throw an err if
-    // authentication fails
-    const request = new Promise<void>((resolve, reject) => {
-      http.get(
-        {
-          hostname: 'localhost',
-          port: 443,
-          path: '/api/v1/some/endpoint?limit=1',
-          agent: false,
-          timeout: 10,
-        },
-        (res) => {
-          if (res.statusCode !== 200) {
-            reject(new Error('Provider authentication failed'));
-          } else {
-            resolve();
-          }
-        },
-      );
-    });
+    await this.bitbucket.authenticate(); //failure errors provided by client
+  }
 
-    try {
-      await request;
-    } catch (err) {
-      throw new IntegrationProviderAuthenticationError({
-        cause: err,
-        endpoint: 'https://localhost/api/v1/some/endpoint?limit=1',
-        status: err.status,
-        statusText: err.statusText,
-      });
+  /**
+   * Iterates each Bitbucket workspace.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iterateWorkspaces(
+    iteratee: ResourceIteratee<BitbucketWorkspace>,
+  ): Promise<void> {
+    //following code from syncContext.ts in old integration
+    //slight syntax modification for current context, but points to same
+    const names = this.expandedConfig.teams;
+
+    let workspaces: BitbucketWorkspace[];
+    if (names) {
+      workspaces = await Promise.all(
+        names.map((name) => {
+          //formerly, 'return context.bitbucket.getWorkspace(name);'
+          return this.bitbucket.getWorkspace(name);
+        }),
+      );
+    } else {
+      //this code was in the original, but it will never execute
+      //at least not while config.teams is mandatory in config.ts
+      //also it returns no objects from our dev acct, so perhaps is not a valid API call?
+      workspaces = await this.bitbucket.getAllWorkspaces();
+    }
+
+    for (const workspace of workspaces) {
+      await iteratee(workspace);
     }
   }
 
   /**
-   * Iterates each user resource in the provider.
+   * Iterates each Bitbucket user for a given workspace.
    *
    * @param iteratee receives each resource to produce entities/relationships
    */
   public async iterateUsers(
-    iteratee: ResourceIteratee<AcmeUser>,
+    workspaceSlug: string,
+    iteratee: ResourceIteratee<BitbucketUser>,
   ): Promise<void> {
-    // TODO paginate an endpoint, invoke the iteratee with each record in the
-    // page
-    //
-    // The provider API will hopefully support pagination. Functions like this
-    // should maintain pagination state, and for each page, for each record in
-    // the page, invoke the `ResourceIteratee`. This will encourage a pattern
-    // where each resource is processed and dropped from memory.
-
-    const users: AcmeUser[] = [
-      {
-        id: 'acme-user-1',
-        name: 'User One',
-      },
-      {
-        id: 'acme-user-2',
-        name: 'User Two',
-      },
-    ];
+    const users: BitbucketUser[] = await this.bitbucket.getAllWorkspaceMembers(
+      workspaceSlug,
+    );
 
     for (const user of users) {
       await iteratee(user);
@@ -111,39 +97,92 @@ export class APIClient {
   }
 
   /**
-   * Iterates each group resource in the provider.
+   * Iterates each Bitbucket project for a given workspace.
    *
    * @param iteratee receives each resource to produce entities/relationships
    */
-  public async iterateGroups(
-    iteratee: ResourceIteratee<AcmeGroup>,
+  public async iterateProjects(
+    workspaceSlug: string,
+    iteratee: ResourceIteratee<BitbucketProject>,
   ): Promise<void> {
-    // TODO paginate an endpoint, invoke the iteratee with each record in the
-    // page
-    //
-    // The provider API will hopefully support pagination. Functions like this
-    // should maintain pagination state, and for each page, for each record in
-    // the page, invoke the `ResourceIteratee`. This will encourage a pattern
-    // where each resource is processed and dropped from memory.
+    const projects: BitbucketProject[] = await this.bitbucket.getAllProjects(
+      workspaceSlug,
+    );
 
-    const groups: AcmeGroup[] = [
-      {
-        id: 'acme-group-1',
-        name: 'Group One',
-        users: [
-          {
-            id: 'acme-user-1',
-          },
-        ],
-      },
-    ];
+    for (const project of projects) {
+      await iteratee(project);
+    }
+  }
 
-    for (const group of groups) {
-      await iteratee(group);
+  /**
+   * Iterates each Bitbucket repo for a given workspace.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iterateRepos(
+    workspaceUuid: string,
+    iteratee: ResourceIteratee<BitbucketRepo>,
+  ): Promise<void> {
+    const repos: BitbucketRepo[] = await this.bitbucket.getAllRepos(
+      workspaceUuid,
+    );
+
+    for (const repo of repos) {
+      await iteratee(repo);
+    }
+  }
+
+  /**
+   * Iterates each Bitbucket pull request for a given workspace and repo combination.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iteratePRs(
+    workspaceUuid: string,
+    repoUuid: string,
+    requestFilter: string,
+    iteratee: ResourceIteratee<BitbucketPR>,
+  ): Promise<void> {
+    const pullRequests: BitbucketPR[] = await this.bitbucket.getAllPRs(
+      workspaceUuid,
+      repoUuid,
+      requestFilter,
+    );
+
+    for (const pr of pullRequests) {
+      await iteratee(pr);
     }
   }
 }
 
-export function createAPIClient(config: IntegrationConfig): APIClient {
-  return new APIClient(config);
+export function createAPIClient(
+  config: IntegrationInstanceConfig,
+  context: IntegrationExecutionContext,
+): APIClient {
+  return new APIClient(config, context);
+}
+
+function bitbucketClientsFromConfig(
+  context: IntegrationExecutionContext,
+  config: BitbucketIntegrationConfig,
+): [BitbucketClient, BitbucketClient] {
+  const oauthKeys = config.oauthKey.split(',');
+  const oauthSecrets = config.oauthSecret.split(',');
+
+  const bitbucket = new BitbucketClient(context.logger, {
+    oauthKey: oauthKeys[0],
+    oauthSecret: oauthSecrets[0],
+  });
+
+  let actionsBitbucket;
+  if (oauthKeys.length > 1 && oauthSecrets.length > 1) {
+    actionsBitbucket = new BitbucketClient(context.logger, {
+      oauthKey: oauthKeys[1],
+      oauthSecret: oauthSecrets[1],
+    });
+  } else {
+    actionsBitbucket = bitbucket;
+  }
+
+  return [bitbucket, actionsBitbucket];
 }

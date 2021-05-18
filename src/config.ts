@@ -5,6 +5,7 @@ import {
   IntegrationInstanceConfig,
 } from '@jupiterone/integration-sdk-core';
 import { createAPIClient } from './client';
+import { BitbucketIntegrationConfig } from './types/integration';
 
 /**
  * A type describing the configuration fields required to execute the
@@ -20,13 +21,17 @@ import { createAPIClient } from './client';
  * managed environment. For example, in JupiterOne, users configure
  * `instance.config` in a UI.
  */
+
 export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
-  clientId: {
+  bitbucketOauthKey: {
     type: 'string',
   },
-  clientSecret: {
+  bitbucketOauthSecret: {
     type: 'string',
     mask: true,
+  },
+  bitbucketWorkspace: {
+    type: 'string',
   },
 };
 
@@ -36,27 +41,50 @@ export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
  */
 export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
-   * The provider API client ID used to authenticate requests.
+   * The BitBucket Oauth key used to authenticate requests.
    */
-  clientId: string;
+  bitbucketOauthKey: string;
 
   /**
-   * The provider API client secret used to authenticate requests.
+   * The BitBucket Oauth secret used to authenticate requests.
    */
-  clientSecret: string;
+  bitbucketOauthSecret: string;
+
+  /**
+   * The name of the BitBucket workspace.
+   */
+  bitbucketWorkspace: string | string[];
+
+  /**
+   * Whether Pull Request ingestion is desired.
+   * Optional. Defaults to true. Set to 'false' if PRs are not desired
+   */
+  bitbucketIngestPullRequests?: string;
 }
 
 export async function validateInvocation(
   context: IntegrationExecutionContext<IntegrationConfig>,
 ) {
-  const { config } = context.instance;
+  const apiClient = createAPIClient(context.instance.config, context);
+  await apiClient.verifyAuthentication();
+}
 
-  if (!config.clientId || !config.clientSecret) {
+export function getExpandedConfig(config): BitbucketIntegrationConfig {
+  const expandedConfig: BitbucketIntegrationConfig = {
+    ...config,
+    oauthKey: config.bitbucketOauthKey,
+    oauthSecret: config.bitbucketOauthSecret,
+    teams: [config.bitbucketWorkspace],
+    ingestPullRequests: config.bitbucketIngestPullRequests !== 'false',
+  };
+  if (
+    !expandedConfig.oauthKey ||
+    !expandedConfig.oauthSecret ||
+    !expandedConfig.teams
+  ) {
     throw new IntegrationValidationError(
-      'Config requires all of {clientId, clientSecret}',
+      'Config requires all of {bitbucketOauthKey, bitbucketOauthSecret, bitbucketWorkspace}',
     );
   }
-
-  const apiClient = createAPIClient(config);
-  await apiClient.verifyAuthentication();
+  return expandedConfig;
 }

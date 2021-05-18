@@ -1,0 +1,300 @@
+{
+  "rendered": {
+    "description": {
+      "raw": "We don't need to change the `pullRequestContext` because integration instances with `ingestPullRequests` can still ingest PRs if it’s explicitly requested.",
+      "markup": "markdown",
+      "html": "<p>We don't need to change the <code>pullRequestContext</code> because integration instances with <code>ingestPullRequests</code> can still ingest PRs if it’s explicitly requested.</p>",
+      "type": "rendered"
+    },
+    "title": {
+      "raw": "Ingest PRs (or not) based on config toggle",
+      "markup": "markdown",
+      "html": "<p>Ingest PRs (or not) based on config toggle</p>",
+      "type": "rendered"
+    }
+  },
+  "type": "pullrequest",
+  "description": "We don't need to change the `pullRequestContext` because integration instances with `ingestPullRequests` can still ingest PRs if it’s explicitly requested.",
+  "links": {
+    "decline": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95/decline"
+    },
+    "commits": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95/commits"
+    },
+    "self": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95"
+    },
+    "comments": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95/comments"
+    },
+    "merge": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95/merge"
+    },
+    "html": {
+      "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/pull-requests/95"
+    },
+    "activity": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95/activity"
+    },
+    "diff": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95/diff"
+    },
+    "approve": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95/approve"
+    },
+    "statuses": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests/95/statuses"
+    }
+  },
+  "title": "Ingest PRs (or not) based on config toggle",
+  "close_source_branch": true,
+  "reviewers": [
+    {
+      "username": "erkangz",
+      "display_name": "Erkang Zheng",
+      "uuid": "{14d17a6c-f0fd-4d1d-a8d2-b143354a2995}",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/users/%7B14d17a6c-f0fd-4d1d-a8d2-b143354a2995%7D"
+        },
+        "html": {
+          "href": "https://bitbucket.org/%7B14d17a6c-f0fd-4d1d-a8d2-b143354a2995%7D/"
+        },
+        "avatar": {
+          "href": "https://avatar-cdn.atlassian.com/557058%3Ac1f2ea6e-5675-456e-a9ec-b37a43aaeeb5?by=id&sg=A1jiSpTkEY7VLWT8DPOqUDSY1ac%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FEZ-6.png"
+        }
+      },
+      "nickname": "Erkang Zheng",
+      "type": "user",
+      "account_id": "557058:c1f2ea6e-5675-456e-a9ec-b37a43aaeeb5"
+    },
+    {
+      "username": "aiwilliams-lo",
+      "display_name": "Adam Williams",
+      "uuid": "{11fcd85a-7350-4c81-8ad9-9a413a83600c}",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/users/%7B11fcd85a-7350-4c81-8ad9-9a413a83600c%7D"
+        },
+        "html": {
+          "href": "https://bitbucket.org/%7B11fcd85a-7350-4c81-8ad9-9a413a83600c%7D/"
+        },
+        "avatar": {
+          "href": "https://avatar-cdn.atlassian.com/5b3277b663379b3ac420d8a7?by=id&sg=sz6c6fs7E7ATSHnBf1U1I4vcIEA%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FAW-4.svg"
+        }
+      },
+      "nickname": "Adam Williams",
+      "type": "user",
+      "account_id": "5b3277b663379b3ac420d8a7"
+    }
+  ],
+  "id": 95,
+  "destination": {
+    "commit": {
+      "hash": "7e9cc13d3e2b",
+      "type": "commit",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/7e9cc13d3e2b"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/commits/7e9cc13d3e2b"
+        }
+      }
+    },
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B2736b367-f1b8-4547-bdba-00f3fdc1fa9e%7D?ts=default"
+        }
+      },
+      "type": "repository",
+      "name": "jupiter-integration-bitbucket",
+      "full_name": "lifeomic/jupiter-integration-bitbucket",
+      "uuid": "{2736b367-f1b8-4547-bdba-00f3fdc1fa9e}"
+    },
+    "branch": {
+      "name": "master"
+    }
+  },
+  "created_on": "2019-06-05T19:37:01.211790+00:00",
+  "summary": {
+    "raw": "We don't need to change the `pullRequestContext` because integration instances with `ingestPullRequests` can still ingest PRs if it’s explicitly requested.",
+    "markup": "markdown",
+    "html": "<p>We don't need to change the <code>pullRequestContext</code> because integration instances with <code>ingestPullRequests</code> can still ingest PRs if it’s explicitly requested.</p>",
+    "type": "rendered"
+  },
+  "source": {
+    "commit": {
+      "hash": "b8a205bf0c94",
+      "type": "commit",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/b8a205bf0c94"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/commits/b8a205bf0c94"
+        }
+      }
+    },
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B2736b367-f1b8-4547-bdba-00f3fdc1fa9e%7D?ts=default"
+        }
+      },
+      "type": "repository",
+      "name": "jupiter-integration-bitbucket",
+      "full_name": "lifeomic/jupiter-integration-bitbucket",
+      "uuid": "{2736b367-f1b8-4547-bdba-00f3fdc1fa9e}"
+    },
+    "branch": {
+      "name": "ingest-pull-requests-toggle"
+    }
+  },
+  "comment_count": 0,
+  "state": "MERGED",
+  "task_count": 0,
+  "participants": [
+    {
+      "role": "PARTICIPANT",
+      "participated_on": "2019-06-10T15:28:20.799139+00:00",
+      "type": "participant",
+      "approved": true,
+      "user": {
+        "username": "isaacwilliams-lifeomic",
+        "display_name": "Isaac Williams",
+        "uuid": "{eaf839a0-e1d8-4818-ab41-aebcb93dd81d}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D/"
+          },
+          "avatar": {
+            "href": "https://avatar-cdn.atlassian.com/5c0549b20ecb4f1b2ffa92ff?by=id&sg=Hb9Wglov2aDPIFE5krqOkV%2F0t0k%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIW-2.svg"
+          }
+        },
+        "nickname": "Isaac Williams",
+        "type": "user",
+        "account_id": "5c0549b20ecb4f1b2ffa92ff"
+      }
+    },
+    {
+      "role": "REVIEWER",
+      "participated_on": "2019-06-05T19:38:11.716096+00:00",
+      "type": "participant",
+      "approved": true,
+      "user": {
+        "username": "erkangz",
+        "display_name": "Erkang Zheng",
+        "uuid": "{14d17a6c-f0fd-4d1d-a8d2-b143354a2995}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/%7B14d17a6c-f0fd-4d1d-a8d2-b143354a2995%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7B14d17a6c-f0fd-4d1d-a8d2-b143354a2995%7D/"
+          },
+          "avatar": {
+            "href": "https://avatar-cdn.atlassian.com/557058%3Ac1f2ea6e-5675-456e-a9ec-b37a43aaeeb5?by=id&sg=A1jiSpTkEY7VLWT8DPOqUDSY1ac%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FEZ-6.png"
+          }
+        },
+        "nickname": "Erkang Zheng",
+        "type": "user",
+        "account_id": "557058:c1f2ea6e-5675-456e-a9ec-b37a43aaeeb5"
+      }
+    },
+    {
+      "role": "REVIEWER",
+      "participated_on": null,
+      "type": "participant",
+      "approved": false,
+      "user": {
+        "username": "aiwilliams-lo",
+        "display_name": "Adam Williams",
+        "uuid": "{11fcd85a-7350-4c81-8ad9-9a413a83600c}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/%7B11fcd85a-7350-4c81-8ad9-9a413a83600c%7D"
+          },
+          "html": {
+            "href": "https://bitbucket.org/%7B11fcd85a-7350-4c81-8ad9-9a413a83600c%7D/"
+          },
+          "avatar": {
+            "href": "https://avatar-cdn.atlassian.com/5b3277b663379b3ac420d8a7?by=id&sg=sz6c6fs7E7ATSHnBf1U1I4vcIEA%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FAW-4.svg"
+          }
+        },
+        "nickname": "Adam Williams",
+        "type": "user",
+        "account_id": "5b3277b663379b3ac420d8a7"
+      }
+    }
+  ],
+  "reason": "",
+  "updated_on": "2019-06-10T15:28:25.720331+00:00",
+  "author": {
+    "username": "isaacwilliams-lifeomic",
+    "display_name": "Isaac Williams",
+    "uuid": "{eaf839a0-e1d8-4818-ab41-aebcb93dd81d}",
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/users/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D"
+      },
+      "html": {
+        "href": "https://bitbucket.org/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D/"
+      },
+      "avatar": {
+        "href": "https://avatar-cdn.atlassian.com/5c0549b20ecb4f1b2ffa92ff?by=id&sg=Hb9Wglov2aDPIFE5krqOkV%2F0t0k%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIW-2.svg"
+      }
+    },
+    "nickname": "Isaac Williams",
+    "type": "user",
+    "account_id": "5c0549b20ecb4f1b2ffa92ff"
+  },
+  "merge_commit": {
+    "hash": "a7b00c7d420b",
+    "type": "commit",
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commit/a7b00c7d420b"
+      },
+      "html": {
+        "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket/commits/a7b00c7d420b"
+      }
+    }
+  },
+  "closed_by": {
+    "username": "isaacwilliams-lifeomic",
+    "display_name": "Isaac Williams",
+    "uuid": "{eaf839a0-e1d8-4818-ab41-aebcb93dd81d}",
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/users/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D"
+      },
+      "html": {
+        "href": "https://bitbucket.org/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D/"
+      },
+      "avatar": {
+        "href": "https://avatar-cdn.atlassian.com/5c0549b20ecb4f1b2ffa92ff?by=id&sg=Hb9Wglov2aDPIFE5krqOkV%2F0t0k%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIW-2.svg"
+      }
+    },
+    "nickname": "Isaac Williams",
+    "type": "user",
+    "account_id": "5c0549b20ecb4f1b2ffa92ff"
+  }
+}
