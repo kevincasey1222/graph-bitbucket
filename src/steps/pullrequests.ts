@@ -24,6 +24,7 @@ import {
   BITBUCKET_REPO_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_OPENED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_APPROVED_PR_RELATIONSHIP_TYPE,
+  BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE,
 } from '../constants';
 import {
   IdEntityMap,
@@ -129,6 +130,15 @@ export async function fetchPRs(
               );
             }
           });
+
+          convertedPR.reviewerIds.forEach(async (reviewerId) => {
+            const reviewerEntity = userByIdMap[reviewerId];
+            if (reviewerEntity) {
+              await jobState.addRelationship(
+                convertUserApprovedPRToRelationship(reviewerEntity, prEntity),
+              );
+            }
+          });
         },
       );
     },
@@ -163,6 +173,12 @@ export const prSteps: IntegrationStep<IntegrationConfig>[] = [
       {
         _type: BITBUCKET_USER_APPROVED_PR_RELATIONSHIP_TYPE,
         _class: RelationshipClass.APPROVED,
+        sourceType: BITBUCKET_USER_ENTITY_TYPE,
+        targetType: BITBUCKET_PR_ENTITY_TYPE,
+      },
+      {
+        _type: BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE,
+        _class: RelationshipClass.REVIEWED,
         sourceType: BITBUCKET_USER_ENTITY_TYPE,
         targetType: BITBUCKET_PR_ENTITY_TYPE,
       },

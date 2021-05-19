@@ -229,6 +229,7 @@ export function convertWorkspaceUserToRelationship(
     _type: BITBUCKET_WORKSPACE_USER_RELATIONSHIP_TYPE,
     _fromEntityKey: workspace._key,
     _toEntityKey: user._key,
+    displayName: 'HAS',
   };
 }
 
@@ -242,6 +243,7 @@ export function convertWorkspaceRepoToRelationship(
     _type: BITBUCKET_WORKSPACE_REPO_RELATIONSHIP_TYPE,
     _fromEntityKey: workspace._key,
     _toEntityKey: repo._key,
+    displayName: 'OWNS',
   };
 }
 
@@ -255,6 +257,7 @@ export function convertWorkspaceProjectToRelationship(
     _type: BITBUCKET_WORKSPACE_PROJECT_RELATIONSHIP_TYPE,
     _fromEntityKey: workspace._key,
     _toEntityKey: project._key,
+    displayName: 'OWNS',
   };
 }
 
@@ -268,6 +271,7 @@ export function convertProjectRepoToRelationship(
     _type: BITBUCKET_PROJECT_REPO_RELATIONSHIP_TYPE,
     _fromEntityKey: project._key,
     _toEntityKey: repo._key,
+    displayName: 'HAS',
   };
 }
 
@@ -281,6 +285,7 @@ export function convertRepoPRToRelationship(
     _type: BITBUCKET_REPO_PR_RELATIONSHIP_TYPE,
     _fromEntityKey: repo._key,
     _toEntityKey: pullrequest._key,
+    displayName: 'HAS',
   };
 }
 
@@ -294,6 +299,7 @@ export function convertUserOpenedPRToRelationship(
     _type: BITBUCKET_USER_OPENED_PR_RELATIONSHIP_TYPE,
     _fromEntityKey: user._key,
     _toEntityKey: pullrequest._key,
+    displayName: 'OPENED',
   };
 }
 
@@ -307,6 +313,7 @@ export function convertUserReviewedPRToRelationship(
     _type: BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE,
     _fromEntityKey: user._key,
     _toEntityKey: pullrequest._key,
+    displayName: 'REVIEWED',
   };
 }
 
@@ -320,5 +327,6 @@ export function convertUserApprovedPRToRelationship(
     _type: BITBUCKET_USER_APPROVED_PR_RELATIONSHIP_TYPE,
     _fromEntityKey: user._key,
     _toEntityKey: pullrequest._key,
+    displayName: 'APPROVED',
   };
 }
