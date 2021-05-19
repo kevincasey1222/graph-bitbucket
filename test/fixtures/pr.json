@@ -1,0 +1,319 @@
+{
+  "rendered": {
+    "description": {
+      "raw": "",
+      "markup": "markdown",
+      "html": "",
+      "type": "rendered"
+    },
+    "title": {
+      "raw": "LO-765: Added security properties to FHIR conformance resources",
+      "markup": "markdown",
+      "html": "LO-765: Added security properties to FHIR conformance resources",
+      "type": "rendered"
+    }
+  },
+  "type": "pullrequest",
+  "description": "",
+  "links": {
+    "decline": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19/decline"
+    },
+    "commits": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19/commits"
+    },
+    "self": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19"
+    },
+    "comments": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19/comments"
+    },
+    "merge": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19/merge"
+    },
+    "html": {
+      "href": "https://bitbucket.org/lifeomic/fhir-gateway/pull-requests/19"
+    },
+    "activity": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19/activity"
+    },
+    "diff": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19/diff"
+    },
+    "approve": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19/approve"
+    },
+    "statuses": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/pullrequests/19/statuses"
+    }
+  },
+  "title": "LO-765: Added security properties to FHIR conformance resources",
+  "close_source_branch": true,
+  "reviewers": [
+    {
+      "username": "chrishemp-lifeomic",
+      "display_name": "Chris Hemp",
+      "uuid": "{e89989b2-8d05-46b4-a09c-3f717c66a46e}",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/users/chrishemp-lifeomic"
+        },
+        "html": {
+          "href": "https://bitbucket.org/chrishemp-lifeomic/"
+        },
+        "avatar": {
+          "href": "https://bitbucket.org/account/chrishemp-lifeomic/avatar/"
+        }
+      },
+      "nickname": "chrishemp-lifeomic",
+      "type": "user",
+      "account_id": "557058:d75856bc-8b4a-47d0-91cd-a30ef2a4f7a5"
+    },
+    {
+      "username": "aroach-lifeomic",
+      "display_name": "Anthony Roach",
+      "uuid": "{3043c9b5-598f-4158-8ed1-75de951ab6ae}",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/users/aroach-lifeomic"
+        },
+        "html": {
+          "href": "https://bitbucket.org/aroach-lifeomic/"
+        },
+        "avatar": {
+          "href": "https://bitbucket.org/account/aroach-lifeomic/avatar/"
+        }
+      },
+      "nickname": "aroach-lifeomic",
+      "type": "user",
+      "account_id": "557058:f8c812fb-cde2-4c59-8a83-9c86f6ff38d3"
+    },
+    {
+      "username": "markdlv-lifeomic",
+      "display_name": "Mark DelaVergne",
+      "uuid": "{4845a246-46c4-4a60-8aea-8e547924eda4}",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/users/markdlv-lifeomic"
+        },
+        "html": {
+          "href": "https://bitbucket.org/markdlv-lifeomic/"
+        },
+        "avatar": {
+          "href": "https://bitbucket.org/account/markdlv-lifeomic/avatar/"
+        }
+      },
+      "nickname": "markdlv-lifeomic",
+      "type": "user",
+      "account_id": "557058:b6fdf649-4a34-4aad-89ab-42f46885e28c"
+    }
+  ],
+  "id": "19",
+  "destination": {
+    "commit": {
+      "hash": "20c8b26957b8",
+      "type": "commit",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/20c8b26957b8"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/20c8b26957b8"
+        }
+      }
+    },
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B30f11fea-965e-4268-83b7-5fe8273b0f4d%7D?ts=default"
+        }
+      },
+      "type": "repository",
+      "name": "fhir-gateway",
+      "full_name": "lifeomic/fhir-gateway",
+      "uuid": "{30f11fea-965e-4268-83b7-5fe8273b0f4d}"
+    },
+    "branch": {
+      "name": "master"
+    }
+  },
+  "created_on": "2017-10-31T10:46:04.742384+00:00",
+  "summary": {
+    "raw": "",
+    "markup": "markdown",
+    "html": "",
+    "type": "rendered"
+  },
+  "source": {
+    "commit": {
+      "hash": "86219a88f0c0",
+      "type": "commit",
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/86219a88f0c0"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/86219a88f0c0"
+        }
+      }
+    },
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/fhir-gateway"
+        },
+        "avatar": {
+          "href": "https://bytebucket.org/ravatar/%7B30f11fea-965e-4268-83b7-5fe8273b0f4d%7D?ts=default"
+        }
+      },
+      "type": "repository",
+      "name": "fhir-gateway",
+      "full_name": "lifeomic/fhir-gateway",
+      "uuid": "{30f11fea-965e-4268-83b7-5fe8273b0f4d}"
+    },
+    "branch": {
+      "name": "LO-765-auth"
+    }
+  },
+  "comment_count": 0,
+  "state": "MERGED",
+  "task_count": 0,
+  "participants": [
+    {
+      "role": "REVIEWER",
+      "participated_on": "2017-10-31T14:14:38.088864+00:00",
+      "type": "participant",
+      "approved": true,
+      "user": {
+        "username": "aroach-lifeomic",
+        "display_name": "Anthony Roach",
+        "uuid": "{3043c9b5-598f-4158-8ed1-75de951ab6ae}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/aroach-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/aroach-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/aroach-lifeomic/avatar/"
+          }
+        },
+        "nickname": "aroach-lifeomic",
+        "type": "user",
+        "account_id": "557058:f8c812fb-cde2-4c59-8a83-9c86f6ff38d3"
+      }
+    },
+    {
+      "role": "REVIEWER",
+      "participated_on": "2017-10-31T12:33:25.884624+00:00",
+      "type": "participant",
+      "approved": true,
+      "user": {
+        "username": "chrishemp-lifeomic",
+        "display_name": "Chris Hemp",
+        "uuid": "{e89989b2-8d05-46b4-a09c-3f717c66a46e}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/chrishemp-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/chrishemp-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/chrishemp-lifeomic/avatar/"
+          }
+        },
+        "nickname": "chrishemp-lifeomic",
+        "type": "user",
+        "account_id": "557058:d75856bc-8b4a-47d0-91cd-a30ef2a4f7a5"
+      }
+    },
+    {
+      "role": "REVIEWER",
+      "participated_on": "2017-10-31T11:15:44.664383+00:00",
+      "type": "participant",
+      "approved": true,
+      "user": {
+        "username": "markdlv-lifeomic",
+        "display_name": "Mark DelaVergne",
+        "uuid": "{4845a246-46c4-4a60-8aea-8e547924eda4}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/markdlv-lifeomic"
+          },
+          "html": {
+            "href": "https://bitbucket.org/markdlv-lifeomic/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/markdlv-lifeomic/avatar/"
+          }
+        },
+        "nickname": "markdlv-lifeomic",
+        "type": "user",
+        "account_id": "557058:b6fdf649-4a34-4aad-89ab-42f46885e28c"
+      }
+    }
+  ],
+  "reason": "",
+  "updated_on": "2018-10-16T01:18:28.606015+00:00",
+  "author": {
+    "username": "markschroering-lifeomic",
+    "display_name": "Mark Schroering",
+    "uuid": "{43357555-d718-44dc-b66f-2af29c4d06c4}",
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/users/markschroering-lifeomic"
+      },
+      "html": {
+        "href": "https://bitbucket.org/markschroering-lifeomic/"
+      },
+      "avatar": {
+        "href": "https://bitbucket.org/account/markschroering-lifeomic/avatar/"
+      }
+    },
+    "nickname": "markschroering-lifeomic",
+    "type": "user",
+    "account_id": "557058:3133c613-cc30-4f03-ae5d-a1530caf518f"
+  },
+  "merge_commit": {
+    "hash": "86219a88f0c0",
+    "type": "commit",
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/fhir-gateway/commit/86219a88f0c0"
+      },
+      "html": {
+        "href": "https://bitbucket.org/lifeomic/fhir-gateway/commits/86219a88f0c0"
+      }
+    }
+  },
+  "closed_by": {
+    "username": "markschroering-lifeomic",
+    "display_name": "Mark Schroering",
+    "uuid": "{43357555-d718-44dc-b66f-2af29c4d06c4}",
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/users/markschroering-lifeomic"
+      },
+      "html": {
+        "href": "https://bitbucket.org/markschroering-lifeomic/"
+      },
+      "avatar": {
+        "href": "https://bitbucket.org/account/markschroering-lifeomic/avatar/"
+      }
+    },
+    "nickname": "markschroering-lifeomic",
+    "type": "user",
+    "account_id": "557058:3133c613-cc30-4f03-ae5d-a1530caf518f"
+  }
+}

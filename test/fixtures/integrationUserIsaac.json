@@ -1,0 +1,19 @@
+{
+  "username": "isaacwilliams-lifeomic",
+  "display_name": "Isaac Williams",
+  "uuid": "{eaf839a0-e1d8-4818-ab41-aebcb93dd81d}",
+  "links": {
+    "self": {
+      "href": "https://bitbucket.org/!api/2.0/users/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D"
+    },
+    "html": {
+      "href": "https://bitbucket.org/%7Beaf839a0-e1d8-4818-ab41-aebcb93dd81d%7D/"
+    },
+    "avatar": {
+      "href": "https://avatar-cdn.atlassian.com/5c0549b20ecb4f1b2ffa92ff?by=id&sg=Hb9Wglov2aDPIFE5krqOkV%2F0t0k%3D&d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Finitials%2FIW-2.svg"
+    }
+  },
+  "type": "user",
+  "nickname": "Isaac Williams",
+  "account_id": "5c0549b20ecb4f1b2ffa92ff"
+}

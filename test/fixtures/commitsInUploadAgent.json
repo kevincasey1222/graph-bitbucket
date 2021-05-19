@@ -1,0 +1,326 @@
+[
+  {
+    "hash": "3cb9f7c753546945d59a0ab63101dc94c843be8d",
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/lab-upload-agent"
+        },
+        "avatar": {
+          "href": "https://bitbucket.org/lifeomic/lab-upload-agent/avatar/32/"
+        }
+      },
+      "type": "repository",
+      "name": "lab-upload-agent",
+      "full_name": "lifeomic/lab-upload-agent",
+      "uuid": "{84dbcafb-64a3-4cf6-9ba9-98c5df3b9823}"
+    },
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/3cb9f7c753546945d59a0ab63101dc94c843be8d"
+      },
+      "comments": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/3cb9f7c753546945d59a0ab63101dc94c843be8d/comments"
+      },
+      "patch": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/patch/3cb9f7c753546945d59a0ab63101dc94c843be8d"
+      },
+      "html": {
+        "href": "https://bitbucket.org/lifeomic/lab-upload-agent/commits/3cb9f7c753546945d59a0ab63101dc94c843be8d"
+      },
+      "diff": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/diff/3cb9f7c753546945d59a0ab63101dc94c843be8d"
+      },
+      "approve": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/3cb9f7c753546945d59a0ab63101dc94c843be8d/approve"
+      },
+      "statuses": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/3cb9f7c753546945d59a0ab63101dc94c843be8d/statuses"
+      }
+    },
+    "author": {
+      "raw": "alex_luebbehusen <alex.luebbehusen@lifeomic.com>",
+      "type": "author",
+      "user": {
+        "username": "alex_luebbehusen",
+        "display_name": "Alex Luebbehusen",
+        "type": "user",
+        "uuid": "{66e7631f-5b32-40a8-9b17-22b0fa8c306c}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/alex_luebbehusen"
+          },
+          "html": {
+            "href": "https://bitbucket.org/alex_luebbehusen/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/alex_luebbehusen/avatar/32/"
+          }
+        }
+      }
+    },
+    "parents": [
+      {
+        "hash": "298625841a3cabc6e63d3f5453f9d95b60a3822f",
+        "type": "commit",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/298625841a3cabc6e63d3f5453f9d95b60a3822f"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/lab-upload-agent/commits/298625841a3cabc6e63d3f5453f9d95b60a3822f"
+          }
+        }
+      }
+    ],
+    "date": "2017-10-30T18:44:23+00:00",
+    "message": "LO-299 - made fixes per Matt's PR comments\n",
+    "type": "commit"
+  },
+  {
+    "hash": "298625841a3cabc6e63d3f5453f9d95b60a3822f",
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/lab-upload-agent"
+        },
+        "avatar": {
+          "href": "https://bitbucket.org/lifeomic/lab-upload-agent/avatar/32/"
+        }
+      },
+      "type": "repository",
+      "name": "lab-upload-agent",
+      "full_name": "lifeomic/lab-upload-agent",
+      "uuid": "{84dbcafb-64a3-4cf6-9ba9-98c5df3b9823}"
+    },
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/298625841a3cabc6e63d3f5453f9d95b60a3822f"
+      },
+      "comments": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/298625841a3cabc6e63d3f5453f9d95b60a3822f/comments"
+      },
+      "patch": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/patch/298625841a3cabc6e63d3f5453f9d95b60a3822f"
+      },
+      "html": {
+        "href": "https://bitbucket.org/lifeomic/lab-upload-agent/commits/298625841a3cabc6e63d3f5453f9d95b60a3822f"
+      },
+      "diff": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/diff/298625841a3cabc6e63d3f5453f9d95b60a3822f"
+      },
+      "approve": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/298625841a3cabc6e63d3f5453f9d95b60a3822f/approve"
+      },
+      "statuses": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/298625841a3cabc6e63d3f5453f9d95b60a3822f/statuses"
+      }
+    },
+    "author": {
+      "raw": "alex_luebbehusen <alex.luebbehusen@lifeomic.com>",
+      "type": "author",
+      "user": {
+        "username": "alex_luebbehusen",
+        "display_name": "Alex Luebbehusen",
+        "type": "user",
+        "uuid": "{66e7631f-5b32-40a8-9b17-22b0fa8c306c}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/alex_luebbehusen"
+          },
+          "html": {
+            "href": "https://bitbucket.org/alex_luebbehusen/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/alex_luebbehusen/avatar/32/"
+          }
+        }
+      }
+    },
+    "parents": [
+      {
+        "hash": "dc4e65b4076d25150fc65cea6380ffe09ec5f24b",
+        "type": "commit",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/dc4e65b4076d25150fc65cea6380ffe09ec5f24b"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/lab-upload-agent/commits/dc4e65b4076d25150fc65cea6380ffe09ec5f24b"
+          }
+        }
+      }
+    ],
+    "date": "2017-10-30T14:54:20+00:00",
+    "message": "LO-299 - added jsDoc for sampleMetadata.js\n",
+    "type": "commit"
+  },
+  {
+    "hash": "dc4e65b4076d25150fc65cea6380ffe09ec5f24b",
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/lab-upload-agent"
+        },
+        "avatar": {
+          "href": "https://bitbucket.org/lifeomic/lab-upload-agent/avatar/32/"
+        }
+      },
+      "type": "repository",
+      "name": "lab-upload-agent",
+      "full_name": "lifeomic/lab-upload-agent",
+      "uuid": "{84dbcafb-64a3-4cf6-9ba9-98c5df3b9823}"
+    },
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/dc4e65b4076d25150fc65cea6380ffe09ec5f24b"
+      },
+      "comments": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/dc4e65b4076d25150fc65cea6380ffe09ec5f24b/comments"
+      },
+      "patch": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/patch/dc4e65b4076d25150fc65cea6380ffe09ec5f24b"
+      },
+      "html": {
+        "href": "https://bitbucket.org/lifeomic/lab-upload-agent/commits/dc4e65b4076d25150fc65cea6380ffe09ec5f24b"
+      },
+      "diff": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/diff/dc4e65b4076d25150fc65cea6380ffe09ec5f24b"
+      },
+      "approve": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/dc4e65b4076d25150fc65cea6380ffe09ec5f24b/approve"
+      },
+      "statuses": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/dc4e65b4076d25150fc65cea6380ffe09ec5f24b/statuses"
+      }
+    },
+    "author": {
+      "raw": "alex_luebbehusen <alex.luebbehusen@lifeomic.com>",
+      "type": "author",
+      "user": {
+        "username": "alex_luebbehusen",
+        "display_name": "Alex Luebbehusen",
+        "type": "user",
+        "uuid": "{66e7631f-5b32-40a8-9b17-22b0fa8c306c}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/alex_luebbehusen"
+          },
+          "html": {
+            "href": "https://bitbucket.org/alex_luebbehusen/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/alex_luebbehusen/avatar/32/"
+          }
+        }
+      }
+    },
+    "parents": [
+      {
+        "hash": "1d03d1f267702d5c5fe45c055145dc31f5933a01",
+        "type": "commit",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/1d03d1f267702d5c5fe45c055145dc31f5933a01"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/lab-upload-agent/commits/1d03d1f267702d5c5fe45c055145dc31f5933a01"
+          }
+        }
+      }
+    ],
+    "date": "2017-10-30T14:02:29+00:00",
+    "message": "LO-299 - Added missing files\n",
+    "type": "commit"
+  },
+  {
+    "hash": "1d03d1f267702d5c5fe45c055145dc31f5933a01",
+    "repository": {
+      "links": {
+        "self": {
+          "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent"
+        },
+        "html": {
+          "href": "https://bitbucket.org/lifeomic/lab-upload-agent"
+        },
+        "avatar": {
+          "href": "https://bitbucket.org/lifeomic/lab-upload-agent/avatar/32/"
+        }
+      },
+      "type": "repository",
+      "name": "lab-upload-agent",
+      "full_name": "lifeomic/lab-upload-agent",
+      "uuid": "{84dbcafb-64a3-4cf6-9ba9-98c5df3b9823}"
+    },
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/1d03d1f267702d5c5fe45c055145dc31f5933a01"
+      },
+      "comments": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/1d03d1f267702d5c5fe45c055145dc31f5933a01/comments"
+      },
+      "patch": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/patch/1d03d1f267702d5c5fe45c055145dc31f5933a01"
+      },
+      "html": {
+        "href": "https://bitbucket.org/lifeomic/lab-upload-agent/commits/1d03d1f267702d5c5fe45c055145dc31f5933a01"
+      },
+      "diff": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/diff/1d03d1f267702d5c5fe45c055145dc31f5933a01"
+      },
+      "approve": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/1d03d1f267702d5c5fe45c055145dc31f5933a01/approve"
+      },
+      "statuses": {
+        "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/1d03d1f267702d5c5fe45c055145dc31f5933a01/statuses"
+      }
+    },
+    "author": {
+      "raw": "alex_luebbehusen <alex.luebbehusen@lifeomic.com>",
+      "type": "author",
+      "user": {
+        "username": "alex_luebbehusen",
+        "display_name": "Alex Luebbehusen",
+        "type": "user",
+        "uuid": "{66e7631f-5b32-40a8-9b17-22b0fa8c306c}",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/users/alex_luebbehusen"
+          },
+          "html": {
+            "href": "https://bitbucket.org/alex_luebbehusen/"
+          },
+          "avatar": {
+            "href": "https://bitbucket.org/account/alex_luebbehusen/avatar/32/"
+          }
+        }
+      }
+    },
+    "parents": [
+      {
+        "hash": "2922b0b866946f267ac0cfafbee0528ce7e98de6",
+        "type": "commit",
+        "links": {
+          "self": {
+            "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/lab-upload-agent/commit/2922b0b866946f267ac0cfafbee0528ce7e98de6"
+          },
+          "html": {
+            "href": "https://bitbucket.org/lifeomic/lab-upload-agent/commits/2922b0b866946f267ac0cfafbee0528ce7e98de6"
+          }
+        }
+      }
+    ],
+    "date": "2017-10-30T14:00:14+00:00",
+    "message": "LO-299 - implemented dropping metadata file\n",
+    "type": "commit"
+  }
+]

@@ -16,8 +16,10 @@ following examples:
 
 - JupiterOne periodically fetches services, teams, and users from {{provider}}
   to update the graph.
-- Write JupiterOne queries to review and monitor updates to the graph, or leverage existing queries.
-- Configure alerts to take action when JupiterOne graph changes, or leverage existing alerts.
+- Write JupiterOne queries to review and monitor updates to the graph, or
+  leverage existing queries.
+- Configure alerts to take action when JupiterOne graph changes, or leverage
+  existing alerts.
 
 ## Requirements
 
@@ -37,10 +39,10 @@ If you need help with this integration, please contact
 
 ## Integration Walkthrough
 
-### In {{provider}}
+### In BitBucket
 
-TODO: List specific actions that must be taken in the provider. Remove this
-section when there are no actions to take in the provider.
+TODO: follow these directions:
+https://support.atlassian.com/bitbucket-cloud/docs/use-oauth-on-bitbucket-cloud/
 
 1. [Generate a REST API key](https://example.com/docs/generating-api-keys)
 
@@ -52,15 +54,17 @@ following steps will be reusable; take care to be sure they remain accurate.
 1. From the configuration **Gear Icon**, select **Integrations**.
 2. Scroll to the **{{provider}}** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
+
 - Enter the **Account Name** by which you'd like to identify this {{provider}}
-   account in JupiterOne. Ingested entities will have this value stored in
-   `tag.AccountName` when **Tag with Account Name** is checked.
+  account in JupiterOne. Ingested entities will have this value stored in
+  `tag.AccountName` when **Tag with Account Name** is checked.
 - Enter a **Description** that will further assist your team when identifying
-   the integration instance.
+  the integration instance.
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
-   needs. You may leave this as `DISABLED` and manually execute the integration.
-- {{additional provider-specific settings}} Enter the **{{provider}} API Key** 
-generated for use by JupiterOne.
+  needs. You may leave this as `DISABLED` and manually execute the integration.
+- {{additional provider-specific settings}} Enter the **{{provider}} API Key**
+  generated for use by JupiterOne.
+
 4. Click **Create Configuration** once all values are provided.
 
 # How to Uninstall
@@ -92,19 +96,27 @@ https://github.com/JupiterOne/sdk/blob/master/docs/integrations/development.md
 
 The following entities are created:
 
-| Resources | Entity `_type` | Entity `_class` |
-| --------- | -------------- | --------------- |
-| Account   | `acme_account` | `Account`       |
+| Resources              | Entity `_type`          | Entity `_class` |
+| ---------------------- | ----------------------- | --------------- |
+| Bitbucket Project      | `bitbucket_project`     | `Project`       |
+| Bitbucket Pull Request | `bitbucket_pullrequest` | `Review`, `PR`  |
+| Bitbucket Repo         | `bitbucket_repo`        | `CodeRepo`      |
+| Bitbucket User         | `bitbucket_user`        | `User`          |
+| Bitbucket Workspace    | `bitbucket_workspace`   | `Account`       |
 
 ### Relationships
 
 The following relationships are created/mapped:
 
-| Source Entity `_type` | Relationship `_class` | Target Entity `_type` |
-| --------------------- | --------------------- | --------------------- |
-| `acme_account`        | **HAS**               | `acme_group`          |
-| `acme_account`        | **HAS**               | `acme_user`           |
-| `acme_group`          | **HAS**               | `acme_user`           |
+| Source Entity `_type` | Relationship `_class` | Target Entity `_type`   |
+| --------------------- | --------------------- | ----------------------- |
+| `bitbucket_project`   | **HAS**               | `bitbucket_repo`        |
+| `bitbucket_repo`      | **HAS**               | `bitbucket_pullrequest` |
+| `bitbucket_user`      | **APPROVED**          | `bitbucket_pullrequest` |
+| `bitbucket_user`      | **OPENED**            | `bitbucket_pullrequest` |
+| `bitbucket_workspace` | **HAS**               | `bitbucket_user`        |
+| `bitbucket_workspace` | **OWNS**              | `bitbucket_project`     |
+| `bitbucket_workspace` | **OWNS**              | `bitbucket_repo`        |
 
 <!--
 ********************************************************************************

@@ -1,0 +1,104 @@
+{
+  "scm": "git",
+  "website": "",
+  "has_wiki": false,
+  "uuid": "{2736b367-f1b8-4547-bdba-00f3fdc1fa9e}",
+  "links": {
+    "watchers": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/watchers"
+    },
+    "branches": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/refs/branches"
+    },
+    "tags": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/refs/tags"
+    },
+    "commits": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/commits"
+    },
+    "clone": [
+      {
+        "href": "https://philgatesidem-lifeomic@bitbucket.org/lifeomic/jupiter-integration-bitbucket.git",
+        "name": "https"
+      },
+      {
+        "href": "git@bitbucket.org:lifeomic/jupiter-integration-bitbucket.git",
+        "name": "ssh"
+      }
+    ],
+    "self": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket"
+    },
+    "source": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/src"
+    },
+    "html": {
+      "href": "https://bitbucket.org/lifeomic/jupiter-integration-bitbucket"
+    },
+    "avatar": {
+      "href": "https://bytebucket.org/ravatar/%7B2736b367-f1b8-4547-bdba-00f3fdc1fa9e%7D?ts=default"
+    },
+    "hooks": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/hooks"
+    },
+    "forks": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/forks"
+    },
+    "downloads": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/downloads"
+    },
+    "pullrequests": {
+      "href": "https://bitbucket.org/!api/2.0/repositories/lifeomic/jupiter-integration-bitbucket/pullrequests"
+    }
+  },
+  "fork_policy": "no_public_forks",
+  "name": "jupiter-integration-bitbucket",
+  "project": {
+    "key": "JPT",
+    "type": "project",
+    "uuid": "{ae9b484e-108d-444f-8e54-d3a35826c210}",
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/teams/lifeomic/projects/JPT"
+      },
+      "html": {
+        "href": "https://bitbucket.org/account/user/lifeomic/projects/JPT"
+      },
+      "avatar": {
+        "href": "https://bitbucket.org/account/user/lifeomic/projects/JPT/avatar/32"
+      }
+    },
+    "name": "JupiterOne"
+  },
+  "language": "typescript",
+  "created_on": "2018-02-07T21:20:08.323956+00:00",
+  "mainbranch": {
+    "type": "branch",
+    "name": "master"
+  },
+  "full_name": "lifeomic/jupiter-integration-bitbucket",
+  "has_issues": false,
+  "owner": {
+    "username": "lifeomic",
+    "display_name": "LifeOmic",
+    "type": "team",
+    "uuid": "{816bc128-0132-4b85-a3d0-78900493a1f0}",
+    "links": {
+      "self": {
+        "href": "https://bitbucket.org/!api/2.0/teams/%7B816bc128-0132-4b85-a3d0-78900493a1f0%7D"
+      },
+      "html": {
+        "href": "https://bitbucket.org/%7B816bc128-0132-4b85-a3d0-78900493a1f0%7D/"
+      },
+      "avatar": {
+        "href": "https://bitbucket.org/account/lifeomic/avatar/"
+      }
+    }
+  },
+  "updated_on": "2019-06-10T15:28:25.738416+00:00",
+  "size": 3691220,
+  "type": "repository",
+  "slug": "jupiter-integration-bitbucket",
+  "is_private": true,
+  "description": ""
+}
