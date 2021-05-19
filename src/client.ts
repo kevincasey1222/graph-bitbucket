@@ -141,8 +141,22 @@ export class APIClient {
       requestFilter,
     );
 
+    //for performance reasons, getAllPRs does not provide all PR properties
+    //to get all properties for a PR, you have to pull the PRs individually
+    //but, that's potentially hitting the API a lot
+    //properties that we know are missing in .getAllPRs are
+    // `reviewers` and `participants`
+    const pullPRsIndividually = false;
     for (const pr of pullRequests) {
-      await iteratee(pr);
+      if (pullPRsIndividually) {
+        const thePr: BitbucketPR = await this.bitbucket.getPR(
+          workspaceUuid,
+          repoUuid,
+          pr.id);
+        await iteratee(thePr);
+      } else {
+        await iteratee(pr);
+      }
     }
   }
 }

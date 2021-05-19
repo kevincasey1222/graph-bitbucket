@@ -275,7 +275,7 @@ export default class BitbucketClient {
   async getPR(
     workspace: string,
     repository: string,
-    id: number,
+    id: string,
   ): Promise<BitbucketPR> {
     const result = await this.makeGetRequest<BitbucketPR>(
       `repositories/${workspace}/${repository}/pullrequests/${id}`,

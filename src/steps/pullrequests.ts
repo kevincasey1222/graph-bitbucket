@@ -15,6 +15,7 @@ import {
   convertRepoPRToRelationship,
   convertUserOpenedPRToRelationship,
   convertUserApprovedPRToRelationship,
+  convertUserReviewedPRToRelationship,
 } from '../sync/converters';
 import {
   BITBUCKET_USER_ENTITY_TYPE,
@@ -135,7 +136,7 @@ export async function fetchPRs(
             const reviewerEntity = userByIdMap[reviewerId];
             if (reviewerEntity) {
               await jobState.addRelationship(
-                convertUserApprovedPRToRelationship(reviewerEntity, prEntity),
+                convertUserReviewedPRToRelationship(reviewerEntity, prEntity),
               );
             }
           });
