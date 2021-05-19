@@ -23,9 +23,9 @@ test('should collect data', async () => {
 
   const context = createMockStepExecutionContext<IntegrationConfig>({
     instanceConfig: {
-      bitbucketOauthKey: integrationConfig.oauthKey,
-      bitbucketOauthSecret: integrationConfig.oauthSecret,
-      bitbucketWorkspace: integrationConfig.teams || 'jupiterone-dev',
+      oauthKey: integrationConfig.oauthKey,
+      oauthSecret: integrationConfig.oauthSecret,
+      workspace: integrationConfig.workspace || 'jupiterone-dev',
     },
   });
 

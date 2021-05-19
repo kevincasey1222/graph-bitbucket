@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import { BitbucketIntegrationConfig } from '../src/types';
+import { IntegrationConfig } from '../src/config';
 
 if (process.env.LOAD_ENV) {
   dotenv.config({
@@ -8,11 +8,11 @@ if (process.env.LOAD_ENV) {
   });
 }
 
-export const integrationConfig: BitbucketIntegrationConfig = {
-  oauthKey: process.env.BITBUCKET_OAUTH_KEY || 'testingkey',
-  oauthSecret: process.env.BITBUCKET_OAUTH_SECRET || 'testingsecret',
-  ingestPullRequests: process.env.BITBUCKET_INGEST_PULL_REQUESTS !== 'false',
-  teams: process.env.BITBUCKET_WORKSPACE
-    ? [process.env.BITBUCKET_WORKSPACE]
-    : ['jupiterone-dev'],
+export const integrationConfig: IntegrationConfig = {
+  oauthKey: process.env.OAUTH_KEY || 'testingkey',
+  oauthSecret: process.env.OAUTH_SECRET || 'testingsecret',
+  ingestPullRequests: process.env.INGEST_PULL_REQUESTS !== 'false',
+  workspace: process.env.WORKSPACE
+    ? process.env.WORKSPACE
+    : 'jupiterone-dev'
 };

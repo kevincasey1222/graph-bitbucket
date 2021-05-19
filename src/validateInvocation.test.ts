@@ -30,9 +30,9 @@ it('auth error', async () => {
 
   const executionContext = createMockExecutionContext({
     instanceConfig: {
-      bitbucketOauthKey: 'INVALID',
-      bitbucketOauthSecret: 'INVALID',
-      bitbucketWorkspace: 'INVALID',
+      oauthKey: 'INVALID',
+      oauthSecret: 'INVALID',
+      workspace: 'INVALID',
     },
   });
 

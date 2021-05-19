@@ -1,11 +1,9 @@
 import {
   IntegrationExecutionContext,
-  IntegrationValidationError,
   IntegrationInstanceConfigFieldMap,
   IntegrationInstanceConfig,
 } from '@jupiterone/integration-sdk-core';
 import { createAPIClient } from './client';
-import { BitbucketIntegrationConfig } from './types/integration';
 
 /**
  * A type describing the configuration fields required to execute the
@@ -23,14 +21,14 @@ import { BitbucketIntegrationConfig } from './types/integration';
  */
 
 export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
-  bitbucketOauthKey: {
+  oauthKey: {
     type: 'string',
   },
-  bitbucketOauthSecret: {
+  oauthSecret: {
     type: 'string',
     mask: true,
   },
-  bitbucketWorkspace: {
+  workspace: {
     type: 'string',
   },
 };
@@ -43,23 +41,24 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
    * The BitBucket Oauth key used to authenticate requests.
    */
-  bitbucketOauthKey: string;
+  oauthKey: string;
 
   /**
    * The BitBucket Oauth secret used to authenticate requests.
    */
-  bitbucketOauthSecret: string;
+  oauthSecret: string;
 
   /**
-   * The name of the BitBucket workspace.
+   * The name of the BitBucket workspace, or a comma-delimited list of names.
    */
-  bitbucketWorkspace: string | string[];
+  workspace: string;
 
   /**
    * Whether Pull Request ingestion is desired.
    * Optional. Defaults to true. Set to 'false' if PRs are not desired
    */
-  bitbucketIngestPullRequests?: string;
+  ingestPullRequests?: boolean;
+
 }
 
 export async function validateInvocation(
@@ -67,24 +66,4 @@ export async function validateInvocation(
 ) {
   const apiClient = createAPIClient(context.instance.config, context);
   await apiClient.verifyAuthentication();
-}
-
-export function getExpandedConfig(config): BitbucketIntegrationConfig {
-  const expandedConfig: BitbucketIntegrationConfig = {
-    ...config,
-    oauthKey: config.bitbucketOauthKey,
-    oauthSecret: config.bitbucketOauthSecret,
-    teams: [config.bitbucketWorkspace],
-    ingestPullRequests: config.bitbucketIngestPullRequests !== 'false',
-  };
-  if (
-    !expandedConfig.oauthKey ||
-    !expandedConfig.oauthSecret ||
-    !expandedConfig.teams
-  ) {
-    throw new IntegrationValidationError(
-      'Config requires all of {bitbucketOauthKey, bitbucketOauthSecret, bitbucketWorkspace}',
-    );
-  }
-  return expandedConfig;
 }

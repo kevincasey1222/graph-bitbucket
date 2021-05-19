@@ -16,6 +16,7 @@ import {
   BitbucketWorkspaceRepoRelationship,
   BitbucketWorkspaceUserRelationship,
 } from './';
+import { IntegrationConfig } from '../config';
 
 export interface BitbucketExecutionContext extends IntegrationExecutionContext {
   bitbucket: BitbucketClient;
@@ -32,20 +33,9 @@ export interface BitbucketExecutionContext extends IntegrationExecutionContext {
  * encrypted at rest and decrypted before it is delivered to the integration
  * execution handler.
  */
-export interface BitbucketIntegrationConfig {
-  oauthKey: string;
-  oauthSecret: string;
-  ingestPullRequests: boolean;
-
-  /**
-   * TODO: Rename to workspaces, need to manage migration of existing
-   * configurations.
-   */
-  teams?: string[];
-}
 
 export interface BitbucketIntegrationInstance extends IntegrationInstance {
-  config: BitbucketIntegrationConfig;
+  config: IntegrationConfig;
 }
 
 export interface GraphData {
