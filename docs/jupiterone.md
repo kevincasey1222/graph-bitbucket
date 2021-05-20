@@ -1,21 +1,20 @@
 # Integration with JupiterOne
 
-## {{provider}} + JupiterOne Integration Benefits
+## Bitbucket + JupiterOne Integration Benefits
 
-TODO: Iterate the benefits of ingesting data from the provider into JupiterOne.
-Consider the following examples:
-
-- Visualize {{provider}} services, teams, and users in the JupiterOne graph.
-- Map {{provider}} users to employees in your JupiterOne account.
-- Monitor changes to {{provider}} users using JupiterOne alerts.
+- Visualize Bitbucket workspaces, projects, repos, pull requests, and users in
+  the JupiterOne graph.
+- Map Bitbucket users to employees in your JupiterOne account.
+- Monitor changes to Bitbucket users using JupiterOne alerts.
+- Track which Bitbucket users opened, reviewed, and approved Bitbucket pull
+  requests.
 
 ## How it Works
 
-TODO: Iterate significant activities the integration enables. Consider the
-following examples:
-
-- JupiterOne periodically fetches services, teams, and users from {{provider}}
-  to update the graph.
+- JupiterOne periodically fetches workspaces, projects, repos, and users from
+  Bitbucket to update the graph.
+- Optionally, JupiterOne fetches pull requests from the last 24 hours, along
+  with user activity on those PRs, and adds that information to the graph.
 - Write JupiterOne queries to review and monitor updates to the graph, or
   leverage existing queries.
 - Configure alerts to take action when JupiterOne graph changes, or leverage
@@ -23,13 +22,11 @@ following examples:
 
 ## Requirements
 
-TODO: Iterate requirements for setting up the integration. Consider the
-following examples:
-
-- {{provider}} supports the OAuth2 Client Credential flow. You must have a
+- Bitbucket supports the OAuth2 Client Credential flow. You must have a
   Administrator user account.
-- JupiterOne requires a REST API key. You need permission to create a user in
-  {{provider}} that will be used to obtain the API key.
+- JupiterOne requires an Oauth client key, client secret, and the name of your
+  Bitbucket workspace. You need permission on Bitbucket to access this
+  information.
 - You must have permission in JupiterOne to install new integrations.
 
 ## Support
@@ -41,18 +38,18 @@ If you need help with this integration, please contact
 
 ### In BitBucket
 
-TODO: follow these directions:
-https://support.atlassian.com/bitbucket-cloud/docs/use-oauth-on-bitbucket-cloud/
-
-1. [Generate a REST API key](https://example.com/docs/generating-api-keys)
+1. Go to the
+   [Bitbucket Oauth setup page](https://support.atlassian.com/bitbucket-cloud/docs/use-oauth-on-bitbucket-cloud/)
+   for a walkthrough of how to configure Oauth and generate the client id and
+   client secret. You only need to do the part at the top under
+   `Create a consumer`.
+2. Make a note of the client id and client secret, along with the name of the
+   workspace to be accessed.
 
 ### In JupiterOne
 
-TODO: List specific actions that must be taken in JupiterOne. Many of the
-following steps will be reusable; take care to be sure they remain accurate.
-
 1. From the configuration **Gear Icon**, select **Integrations**.
-2. Scroll to the **{{provider}}** integration tile and click it.
+2. Scroll to the **Bitbucket** integration tile and click it.
 3. Click the **Add Configuration** button and configure the following settings:
 
 - Enter the **Account Name** by which you'd like to identify this {{provider}}
@@ -62,19 +59,37 @@ following steps will be reusable; take care to be sure they remain accurate.
   the integration instance.
 - Select a **Polling Interval** that you feel is sufficient for your monitoring
   needs. You may leave this as `DISABLED` and manually execute the integration.
-- {{additional provider-specific settings}} Enter the **{{provider}} API Key**
-  generated for use by JupiterOne.
+- Enter the **Bitbucket Client ID** for your workspace.
+- Enter the **Bitbucket Client Secret** for your workspace.
+- Enter the **Bitbucket Workspace**, the name of your workspace.
+- Set the **Bitbucket Ingest Pull Requests** field to true or false, according
+  to your preference. If true, whenever the intergration is run, JupiterOne will
+  ingest any PR created or modified in the last 24 hours.
 
 4. Click **Create Configuration** once all values are provided.
 
+### Details on pull request ingestion
+
+Generally, when JupiterOne ingests data from an intregration, any entities not
+ingested are deleted from the JupiterOne graph if they exist. For example, if a
+Project gets deleted from your Bitbucket account, it will disappear from the
+JupiterOne graph the next time the integration runs.
+
+Since Pull Requests are only ingested from the last 24 hours (for performance
+reasons), previous Pull Requests in the JupiterOne graph are not deleted. Even
+if the PR is deleted from Bitbucket, the JupiterOne integration will have no way
+of knowing if the PR was deleted or is merely untouched in the last 24 hours.
+
+That said, if the Repo that owns that Pull Request is deleted from Bitbucket,
+the JupiterOne graph will delete the Repo, and then it will delete any orphaned
+Pull Request entities that were owned by it. This same "cascading delete" would
+apply if higher-level objects (Projects, Workspaces) were deleted from your
+Bitbucket account.
+
 # How to Uninstall
 
-TODO: List specific actions that must be taken to uninstall the integration.
-Many of the following steps will be reusable; take care to be sure they remain
-accurate.
-
 1. From the configuration **Gear Icon**, select **Integrations**.
-2. Scroll to the **{{provider}}** integration tile and click it.
+2. Scroll to the **Bitbucket** integration tile and click it.
 3. Identify and click the **integration to delete**.
 4. Click the **trash can** icon.
 5. Click the **Remove** button to delete the integration.
@@ -114,6 +129,7 @@ The following relationships are created/mapped:
 | `bitbucket_repo`      | **HAS**               | `bitbucket_pullrequest` |
 | `bitbucket_user`      | **APPROVED**          | `bitbucket_pullrequest` |
 | `bitbucket_user`      | **OPENED**            | `bitbucket_pullrequest` |
+| `bitbucket_user`      | **REVIEWED**          | `bitbucket_pullrequest` |
 | `bitbucket_workspace` | **HAS**               | `bitbucket_user`        |
 | `bitbucket_workspace` | **OWNS**              | `bitbucket_project`     |
 | `bitbucket_workspace` | **OWNS**              | `bitbucket_repo`        |
