@@ -21,15 +21,18 @@ import { createAPIClient } from './client';
  */
 
 export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
-  oauthKey: {
+  bitbucketOauthKey: {
     type: 'string',
   },
-  oauthSecret: {
+  bitbucketOauthSecret: {
     type: 'string',
     mask: true,
   },
-  workspace: {
+  bitbucketWorkspace: {
     type: 'string',
+  },
+  bitbucketIngestPullRequests: {
+    type: 'boolean',
   },
 };
 
@@ -41,29 +44,34 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
    * The BitBucket Oauth key used to authenticate requests.
    */
-  oauthKey: string;
+  bitbucketOauthKey: string;
 
   /**
    * The BitBucket Oauth secret used to authenticate requests.
    */
-  oauthSecret: string;
+  bitbucketOauthSecret: string;
 
   /**
    * The name of the BitBucket workspace, or a comma-delimited list of names.
    */
-  workspace: string;
+  bitbucketWorkspace: string;
 
   /**
    * Whether Pull Request ingestion is desired.
    * Optional. Defaults to true. Set to 'false' if PRs are not desired
    */
-  ingestPullRequests?: boolean;
-
+  bitbucketIngestPullRequests?: boolean;
 }
 
 export async function validateInvocation(
   context: IntegrationExecutionContext<IntegrationConfig>,
 ) {
+  //to support old config fields with new code
+  const config = context.instance.config;
+  config.oauthKey = config.bitbucketOauthKey;
+  config.oauthSecret = config.bitbucketOauthSecret;
+  config.workspace = config.bitbucketWorkspace;
+  config.ingestPullRequests = config.bitbucketIngestPullRequests;
   const apiClient = createAPIClient(context.instance.config, context);
   await apiClient.verifyAuthentication();
 }
