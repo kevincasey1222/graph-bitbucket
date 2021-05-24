@@ -1,7 +1,4 @@
-import {
-  IntegrationExecutionContext,
-  IntegrationValidationError,
-} from '@jupiterone/integration-sdk-core';
+import { IntegrationExecutionContext } from '@jupiterone/integration-sdk-core';
 
 import BitbucketClient from './clients/BitbucketClient';
 import {
@@ -29,17 +26,7 @@ export class APIClient {
     readonly config: IntegrationConfig,
     context: IntegrationExecutionContext,
   ) {
-    const oauthKeys = config.oauthKey.split(',');
-    const oauthSecrets = config.oauthSecret.split(',');
-    if (!(oauthKeys.length === oauthSecrets.length)) {
-      throw new IntegrationValidationError(
-        'Number of comma-delimited Oauth keys and secrets differ in the config',
-      );
-    }
-    this.bitbucket = new BitbucketClient(context.logger, {
-      oauthKeys: oauthKeys,
-      oauthSecrets: oauthSecrets,
-    });
+    this.bitbucket = new BitbucketClient(context.logger, config);
   }
 
   public async verifyAuthentication(): Promise<void> {

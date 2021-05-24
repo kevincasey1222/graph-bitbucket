@@ -3,6 +3,7 @@ import {
   IntegrationProviderAuthenticationError,
   IntegrationConfigLoadError,
   IntegrationLogger,
+  IntegrationValidationError,
 } from '@jupiterone/integration-sdk-core';
 import fetch from 'node-fetch';
 import querystring from 'querystring';
@@ -35,8 +36,8 @@ interface BitbucketPage<T> {
 }
 
 interface BitbucketClientOptions {
-  oauthKeys: string[];
-  oauthSecrets: string[];
+  oauthKey?: string;
+  oauthSecret?: string;
 }
 
 interface BitbucketAPICalls {
@@ -62,7 +63,7 @@ function base64(str: string) {
 export default class BitbucketClient {
   public calls: BitbucketAPICalls;
   private accessTokens: string[];
-  private accessToken: string;
+  private currentAccessToken: number;
 
   constructor(
     readonly logger: IntegrationLogger,
@@ -86,18 +87,26 @@ export default class BitbucketClient {
   }
 
   public async authenticate() {
-    if (!this.config.oauthKeys || !this.config.oauthSecrets) {
+    if (!this.config.oauthKey || !this.config.oauthSecret) {
       throw new Error('"oauthKey(s)" and "oauthSecret(s)" are required');
     }
 
+    const oauthKeys = this.config.oauthKey.split(',');
+    const oauthSecrets = this.config.oauthSecret.split(',');
+    if (!(oauthKeys.length === oauthSecrets.length)) {
+      throw new IntegrationValidationError(
+        'Number of comma-delimited Oauth keys and secrets differ in the config',
+      );
+    }
+
     this.accessTokens = [];
-    for (var i = 0; i < this.config.oauthKeys.length; i++) {
+    for (let i = 0; i < oauthKeys.length; i++) {
       const url = 'https://bitbucket.org/site/oauth2/access_token';
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           Authorization: `Basic ${base64(
-            this.config.oauthKeys[i] + ':' + this.config.oauthSecrets[i],
+            oauthKeys[i] + ':' + oauthSecrets[i],
           )}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -118,8 +127,7 @@ export default class BitbucketClient {
       const data: OAuthAccessTokenResponse = await response.json();
       this.accessTokens.push(data.access_token);
     }
-
-    this.accessToken = this.accessTokens[0];
+    this.currentAccessToken = 0;
   }
 
   async makeGetRequest<T>(
@@ -128,10 +136,9 @@ export default class BitbucketClient {
       ignoreNotFound?: boolean;
     },
   ) {
-    if (!this.accessToken) {
+    if (!this.accessTokens) {
       await this.authenticate();
     }
-
     try {
       this.logger.info(`Requesting ${url}...`);
       if (!url.startsWith('https://')) {
@@ -141,7 +148,7 @@ export default class BitbucketClient {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${this.accessToken}`,
+          Authorization: `Bearer ${this.accessTokens[this.currentAccessToken]}`,
         },
         timeout: 10000,
       });
@@ -156,6 +163,24 @@ export default class BitbucketClient {
       }
 
       //if we get a rate-limiting 429 message, go to the next access token, if there is one
+      if (response.status === 429) {
+        if (this.currentAccessToken + 1 < this.accessTokens.length) {
+          this.logger.warn(
+            `Rate limiting encountered on token ${
+              this.currentAccessToken
+            }. Going to access token ${this.currentAccessToken + 1}.`,
+          );
+          this.currentAccessToken++;
+          await this.makeGetRequest<T>(url, options);
+        } else {
+          throw new IntegrationProviderAuthenticationError({
+            cause: undefined,
+            endpoint: url,
+            status: response.status,
+            statusText: `Failure requesting '${url}' due to rate-limiting. Please add another set of key/secret credentials to this account.`,
+          });
+        }
+      }
 
       if (response.status < 200 || response.status >= 400) {
         throw new IntegrationProviderAuthenticationError({
