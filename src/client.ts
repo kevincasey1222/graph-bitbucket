@@ -24,30 +24,24 @@ export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
  * resources.
  */
 export class APIClient {
-  bitbucket: BitbucketClient;
-  actionsBitbucket: BitbucketClient;
+  bitbucketClients: BitbucketClient[];
+  currentClientPointer: number;
   constructor(
     readonly config: IntegrationConfig,
     context: IntegrationExecutionContext,
   ) {
-    let defaultBitbucket;
-    let actionsBitbucket;
     try {
-      [defaultBitbucket, actionsBitbucket] = bitbucketClientsFromConfig(
-        context,
-        config,
-      );
-      this.bitbucket = defaultBitbucket;
-      this.actionsBitbucket = actionsBitbucket;
+      this.bitbucketClients = this.bitbucketClientsFromConfig(context, config);
     } catch (err) {
       throw new IntegrationValidationError(
         'Could not validate the config and get Bitbucket clients',
       );
     }
+    this.currentClientPointer = 0;
   }
 
   public async verifyAuthentication(): Promise<void> {
-    await this.bitbucket.authenticate(); //failure errors provided by client
+    await this.getCurrentClient().authenticate(); //failure errors provided by client
   }
 
   /**
@@ -79,7 +73,7 @@ export class APIClient {
     workspaceSlug: string,
     iteratee: ResourceIteratee<BitbucketUser>,
   ): Promise<void> {
-    const users: BitbucketUser[] = await this.bitbucket.getAllWorkspaceMembers(
+    const users: BitbucketUser[] = await this.getCurrentClient().getAllWorkspaceMembers(
       workspaceSlug,
     );
 
@@ -97,7 +91,7 @@ export class APIClient {
     workspaceSlug: string,
     iteratee: ResourceIteratee<BitbucketProject>,
   ): Promise<void> {
-    const projects: BitbucketProject[] = await this.bitbucket.getAllProjects(
+    const projects: BitbucketProject[] = await this.getCurrentClient().getAllProjects(
       workspaceSlug,
     );
 
@@ -115,7 +109,7 @@ export class APIClient {
     workspaceUuid: string,
     iteratee: ResourceIteratee<BitbucketRepo>,
   ): Promise<void> {
-    const repos: BitbucketRepo[] = await this.bitbucket.getAllRepos(
+    const repos: BitbucketRepo[] = await this.getCurrentClient().getAllRepos(
       workspaceUuid,
     );
 
@@ -135,7 +129,7 @@ export class APIClient {
     requestFilter: string,
     iteratee: ResourceIteratee<BitbucketPR>,
   ): Promise<void> {
-    const pullRequests: BitbucketPR[] = await this.bitbucket.getAllPRs(
+    const pullRequests: BitbucketPR[] = await this.getCurrentClient().getAllPRs(
       workspaceUuid,
       repoUuid,
       requestFilter,
@@ -149,15 +143,46 @@ export class APIClient {
     const pullPRsIndividually = false;
     for (const pr of pullRequests) {
       if (pullPRsIndividually) {
-        const thePr: BitbucketPR = await this.bitbucket.getPR(
+        const thePr: BitbucketPR = await this.getCurrentClient().getPR(
           workspaceUuid,
           repoUuid,
-          pr.id);
+          pr.id,
+        );
         await iteratee(thePr);
       } else {
         await iteratee(pr);
       }
     }
+  }
+
+  bitbucketClientsFromConfig(
+    context: IntegrationExecutionContext,
+    config: IntegrationConfig,
+  ): BitbucketClient[] {
+    const oauthKeys = config.oauthKey.split(',');
+    const oauthSecrets = config.oauthSecret.split(',');
+
+    if (!(oauthKeys.length === oauthSecrets.length)) {
+      throw new IntegrationValidationError(
+        'Quantities of Oauth keys and secrets differ in the config',
+      );
+    }
+
+    const bitbucketClients: BitbucketClient[] = [];
+    for (let i = 0; i < oauthKeys.length; i++) {
+      bitbucketClients.push(
+        new BitbucketClient(context.logger, {
+          oauthKey: oauthKeys[i],
+          oauthSecret: oauthSecrets[i],
+        }),
+      );
+    }
+
+    return bitbucketClients;
+  }
+
+  getCurrentClient(): BitbucketClient {
+    return this.bitbucketClients[this.currentClientPointer];
   }
 }
 
@@ -166,29 +191,4 @@ export function createAPIClient(
   context: IntegrationExecutionContext,
 ): APIClient {
   return new APIClient(config, context);
-}
-
-function bitbucketClientsFromConfig(
-  context: IntegrationExecutionContext,
-  config: IntegrationConfig,
-): [BitbucketClient, BitbucketClient] {
-  const oauthKeys = config.oauthKey.split(',');
-  const oauthSecrets = config.oauthSecret.split(',');
-
-  const bitbucket = new BitbucketClient(context.logger, {
-    oauthKey: oauthKeys[0],
-    oauthSecret: oauthSecrets[0],
-  });
-
-  let actionsBitbucket;
-  if (oauthKeys.length > 1 && oauthSecrets.length > 1) {
-    actionsBitbucket = new BitbucketClient(context.logger, {
-      oauthKey: oauthKeys[1],
-      oauthSecret: oauthSecrets[1],
-    });
-  } else {
-    actionsBitbucket = bitbucket;
-  }
-
-  return [bitbucket, actionsBitbucket];
 }

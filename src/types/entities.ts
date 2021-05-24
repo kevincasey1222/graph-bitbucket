@@ -81,3 +81,7 @@ export interface BitbucketPullRequestEntity extends Entity {
   approverIds: string[];
   approvers: string[];
 }
+
+export interface IdEntityMap<V> {
+  [key: string]: V;
+}
