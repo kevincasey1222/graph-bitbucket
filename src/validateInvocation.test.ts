@@ -32,7 +32,7 @@ it('auth error', async () => {
     instanceConfig: {
       bitbucketOauthKey: 'INVALID',
       bitbucketOauthSecret: 'INVALID',
-      bitbucketWorkspace: 'INVALID',
+      bitbucketTeams: 'INVALID',
       bitbucketIngestPullRequests: false,
     },
   });

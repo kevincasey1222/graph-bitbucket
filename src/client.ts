@@ -1,4 +1,7 @@
-import { IntegrationExecutionContext, IntegrationValidationError } from '@jupiterone/integration-sdk-core';
+import {
+  IntegrationExecutionContext,
+  IntegrationValidationError,
+} from '@jupiterone/integration-sdk-core';
 
 import BitbucketClient from './clients/BitbucketClient';
 import {
@@ -29,18 +32,18 @@ export class APIClient {
   ) {
     let defaultBitbucket;
     let actionsBitbucket;
-      try {
-        [defaultBitbucket, actionsBitbucket] = bitbucketClientsFromConfig(
+    try {
+      [defaultBitbucket, actionsBitbucket] = bitbucketClientsFromConfig(
         context,
         config,
       );
       this.bitbucket = defaultBitbucket;
       this.actionsBitbucket = actionsBitbucket;
-      } catch (err) {
-        throw new IntegrationValidationError(
-          'Could not validate the config and get Bitbucket clients'
-        );
-      }
+    } catch (err) {
+      throw new IntegrationValidationError(
+        'Could not validate the config and get Bitbucket clients',
+      );
+    }
   }
 
   public async verifyAuthentication(): Promise<void> {
@@ -55,20 +58,12 @@ export class APIClient {
   public async iterateWorkspaces(
     iteratee: ResourceIteratee<BitbucketWorkspace>,
   ): Promise<void> {
-    const names = this.config.workspace.split(",");
-    let workspaces: BitbucketWorkspace[];
-    if (names) {
-      workspaces = await Promise.all(
-        names.map((name) => {
-          return this.bitbucket.getWorkspace(name);
-        }),
-      );
-    } else {
-      //this code was in the original, but it will never execute
-      //at least not while config.workspace is mandatory in config.ts
-      //also it returns no objects from our dev acct, so perhaps is not a valid API call?
-      workspaces = await this.bitbucket.getAllWorkspaces();
-    }
+    const names = this.config.workspace.split(',');
+    const workspaces: BitbucketWorkspace[] = await Promise.all(
+      names.map((name) => {
+        return this.bitbucket.getWorkspace(name);
+      }),
+    );
 
     for (const workspace of workspaces) {
       await iteratee(workspace);

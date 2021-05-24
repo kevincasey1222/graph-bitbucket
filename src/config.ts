@@ -28,7 +28,7 @@ export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
     type: 'string',
     mask: true,
   },
-  bitbucketWorkspace: {
+  bitbucketTeams: {
     type: 'string',
   },
   bitbucketIngestPullRequests: {
@@ -54,7 +54,7 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
    * The name of the BitBucket workspace, or a comma-delimited list of names.
    */
-  bitbucketWorkspace: string;
+  bitbucketTeams: string;
 
   /**
    * Whether Pull Request ingestion is desired.
@@ -70,7 +70,7 @@ export async function validateInvocation(
   const config = context.instance.config;
   config.oauthKey = config.bitbucketOauthKey;
   config.oauthSecret = config.bitbucketOauthSecret;
-  config.workspace = config.bitbucketWorkspace;
+  config.workspace = config.bitbucketTeams;
   config.ingestPullRequests = config.bitbucketIngestPullRequests;
   const apiClient = createAPIClient(context.instance.config, context);
   await apiClient.verifyAuthentication();
