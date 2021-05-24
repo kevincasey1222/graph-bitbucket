@@ -86,6 +86,8 @@ export default class BitbucketClient {
     };
   }
 
+  //checks to see if all oauthKeys and oauthSecrets yield valid access tokens
+  //also points the current access token to use as the first (index 0) token
   public async authenticate() {
     if (!this.config.oauthKey || !this.config.oauthSecret) {
       throw new Error('"oauthKey(s)" and "oauthSecret(s)" are required');
@@ -130,6 +132,11 @@ export default class BitbucketClient {
     this.currentAccessToken = 0;
   }
 
+  //the actual moment that we hit the API
+  //including logic for handling rate-limiting (status 429) errors by going to the next access token
+  //Bitbucket limits calls to repos, PRs, and details of PRs to 1000 per hour for each Oauth key/secret
+  //therefore, some clients get around this limit by configuring multiple Oauth key/secrets for the account
+  //these are provided in the config file by delimiting them with commas
   async makeGetRequest<T>(
     url: string,
     options?: {
@@ -163,6 +170,19 @@ export default class BitbucketClient {
       }
 
       //if we get a rate-limiting 429 message, go to the next access token, if there is one
+      //
+      //currently, this code does not go back to earlier tokens, because it only takes 5 to 7 minutes
+      //to exhaust the 1000 API call limit, so the earlier token will only have refreshed a little.
+      //They refresh 1000/hour, which is 16.67/min, so after 5 min, the credentials that got limited
+      //the first time would only have recovered 80 to 100 calls.
+      //
+      //theoretically, if a client had many credentials loaded, it could be worth rotating back
+      //to earlier credentials. But, our code can easily hit the API multiple times per second, and
+      //the refresh on rate-limiting works out to 3.6 seconds per call. So, if we got to a state where
+      //we were continuously rotating between completely exhausted credentials, we might get 429
+      //responses 8 to 10 times for each 1 time that a little bit of data slips through.
+      //Timers would be better, if such a feature is desired, where we take say a 5 minute break
+      //before restarting the use of a previously rate-limited set of credentials.
       if (response.status === 429) {
         if (this.currentAccessToken + 1 < this.accessTokens.length) {
           this.logger.warn(
@@ -182,6 +202,7 @@ export default class BitbucketClient {
         }
       }
 
+      //some error that is not rate-limiting
       if (response.status < 200 || response.status >= 400) {
         throw new IntegrationProviderAuthenticationError({
           cause: undefined,
@@ -203,6 +224,7 @@ export default class BitbucketClient {
     }
   }
 
+  //generic pagination function, within which the actual API call happens
   async forEachPage<T>(
     options: {
       firstUri: string;
