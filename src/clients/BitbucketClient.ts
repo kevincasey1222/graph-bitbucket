@@ -35,8 +35,8 @@ interface BitbucketPage<T> {
 }
 
 interface BitbucketClientOptions {
-  oauthKey?: string;
-  oauthSecret?: string;
+  oauthKeys: string[];
+  oauthSecrets: string[];
 }
 
 interface BitbucketAPICalls {
@@ -61,6 +61,7 @@ function base64(str: string) {
 
 export default class BitbucketClient {
   public calls: BitbucketAPICalls;
+  private accessTokens: string[];
   private accessToken: string;
 
   constructor(
@@ -85,35 +86,40 @@ export default class BitbucketClient {
   }
 
   public async authenticate() {
-    if (!this.config.oauthKey || !this.config.oauthSecret) {
-      throw new Error('"oauthKey" and "oauthSecret" are required');
+    if (!this.config.oauthKeys || !this.config.oauthSecrets) {
+      throw new Error('"oauthKey(s)" and "oauthSecret(s)" are required');
     }
 
-    const url = 'https://bitbucket.org/site/oauth2/access_token';
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${base64(
-          this.config.oauthKey + ':' + this.config.oauthSecret,
-        )}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: querystring.stringify({
-        grant_type: 'client_credentials',
-      }),
-    });
-
-    if (response.status < 200 || response.status >= 400) {
-      throw new IntegrationProviderAuthenticationError({
-        cause: undefined,
-        endpoint: url,
-        status: response.status,
-        statusText: `Failure requesting '${url}'. Response status: ${response.status}`,
+    this.accessTokens = [];
+    for (var i = 0; i < this.config.oauthKeys.length; i++) {
+      const url = 'https://bitbucket.org/site/oauth2/access_token';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${base64(
+            this.config.oauthKeys[i] + ':' + this.config.oauthSecrets[i],
+          )}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: querystring.stringify({
+          grant_type: 'client_credentials',
+        }),
       });
+
+      if (response.status < 200 || response.status >= 400) {
+        throw new IntegrationProviderAuthenticationError({
+          cause: undefined,
+          endpoint: url,
+          status: response.status,
+          statusText: `Failure requesting '${url}' for Oauth Key ${i}. Response status: ${response.status}`,
+        });
+      }
+
+      const data: OAuthAccessTokenResponse = await response.json();
+      this.accessTokens.push(data.access_token);
     }
 
-    const data: OAuthAccessTokenResponse = await response.json();
-    this.accessToken = data.access_token;
+    this.accessToken = this.accessTokens[0];
   }
 
   async makeGetRequest<T>(
@@ -148,6 +154,8 @@ export default class BitbucketClient {
           status: response.status,
         };
       }
+
+      //if we get a rate-limiting 429 message, go to the next access token, if there is one
 
       if (response.status < 200 || response.status >= 400) {
         throw new IntegrationProviderAuthenticationError({
