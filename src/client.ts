@@ -1,6 +1,7 @@
 import {
   IntegrationExecutionContext,
   IntegrationValidationError,
+  IntegrationLogger,
 } from '@jupiterone/integration-sdk-core';
 
 import BitbucketClient from './clients/BitbucketClient';
@@ -30,8 +31,19 @@ export class APIClient {
     readonly config: IntegrationConfig,
     context: IntegrationExecutionContext,
   ) {
+    const oauthKeys = config.oauthKey.split(',');
+    const oauthSecrets = config.oauthSecret.split(',');
+    if (!(oauthKeys.length === oauthSecrets.length)) {
+      throw new IntegrationValidationError(
+        'Number of comma-delimited Oauth keys and secrets differ in the config',
+      );
+    }
     try {
-      this.bitbucketClients = this.bitbucketClientsFromConfig(context, config);
+      this.bitbucketClients = this.bitbucketClientsFromConfig(
+        oauthKeys,
+        oauthSecrets,
+        context.logger,
+      );
     } catch (err) {
       throw new IntegrationValidationError(
         'Could not validate the config and get Bitbucket clients',
@@ -156,22 +168,14 @@ export class APIClient {
   }
 
   bitbucketClientsFromConfig(
-    context: IntegrationExecutionContext,
-    config: IntegrationConfig,
+    oauthKeys: string[],
+    oauthSecrets: string[],
+    logger: IntegrationLogger,
   ): BitbucketClient[] {
-    const oauthKeys = config.oauthKey.split(',');
-    const oauthSecrets = config.oauthSecret.split(',');
-
-    if (!(oauthKeys.length === oauthSecrets.length)) {
-      throw new IntegrationValidationError(
-        'Quantities of Oauth keys and secrets differ in the config',
-      );
-    }
-
     const bitbucketClients: BitbucketClient[] = [];
     for (let i = 0; i < oauthKeys.length; i++) {
       bitbucketClients.push(
-        new BitbucketClient(context.logger, {
+        new BitbucketClient(logger, {
           oauthKey: oauthKeys[i],
           oauthSecret: oauthSecrets[i],
         }),
