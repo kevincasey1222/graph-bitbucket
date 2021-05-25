@@ -58,7 +58,7 @@ export class APIClient {
   public async iterateWorkspaces(
     iteratee: ResourceIteratee<BitbucketWorkspace>,
   ): Promise<void> {
-    const names = this.config.workspace.split(',');
+    const names = this.config.workspace;
     const workspaces: BitbucketWorkspace[] = await Promise.all(
       names.map((name) => {
         return this.bitbucket.getWorkspace(name);
