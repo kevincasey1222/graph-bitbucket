@@ -39,7 +39,10 @@ export async function fetchPRs(
 ) {
   if (context.instance.config.ingestPullRequests) {
     const jobState = context.jobState;
-    const apiClient = createAPIClient(context.instance.config, context);
+    const apiClient = createAPIClient(
+      sanitizeConfig(context.instance.config),
+      context,
+    );
 
     // old integration helper and converter code requires a map of user._key -> userEntity,
     // and an array of the user._key
