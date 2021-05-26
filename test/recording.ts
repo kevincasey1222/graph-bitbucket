@@ -26,7 +26,7 @@ function mutateRecordingEntry(entry: RecordingEntry): void {
   //let's unzip the entry so we can modify it
   mutations.unzipGzippedRecordingEntry(entry);
 
-  let responseText = entry.response.content.text;
+  const responseText = entry.response.content.text;
   const responseJson = parseJson(responseText);
   if (responseJson) {
     if (/oauth2/.exec(entry.request.url) && entry.request.postData) {
