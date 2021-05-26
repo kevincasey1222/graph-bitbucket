@@ -37,8 +37,6 @@ interface BitbucketPage<T> {
 interface BitbucketClientOptions {
   oauthKey?: string;
   oauthSecret?: string;
-  bitbucketOauthKey?: string;
-  bitbucketOauthSecret?: string;
 }
 
 interface BitbucketAPICalls {
