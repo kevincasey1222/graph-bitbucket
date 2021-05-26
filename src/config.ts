@@ -67,7 +67,7 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
    * Whether Pull Request ingestion is desired.
    * Optional. Defaults to true. Set to 'false' if PRs are not desired
-   * This default value is set in validateInvocation below.
+   * This default value is set in sanitizeConfig below.
    */
   ingestPullRequests?: boolean;
 }
@@ -75,9 +75,21 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
 export async function validateInvocation(
   context: IntegrationExecutionContext<IntegrationConfig>,
 ) {
+  //mutate config to ensure that old and new patterns are handled
+  const config = sanitizeConfig(context.instance.config);
+  if (!config.oauthKey || !config.oauthSecret || !config.workspace) {
+    throw new IntegrationValidationError(
+      'Config requires all of {oauthKey, oauthSecret, (workspace | teams)}',
+    );
+  }
+  const apiClient = createAPIClient(config, context);
+  await apiClient.verifyAuthentication();
+}
+
+export function sanitizeConfig(config) {
   //there's a little bit of crazy here trying to account for old and new patterns
   //the idea is that the crazy is resolved by the end of this function
-  const config = context.instance.config;
+  //
   //customer instances loaded through the UI will use `teams` instead of `workspace`
   if (config.teams) {
     config.workspace = config.teams;
@@ -85,18 +97,18 @@ export async function validateInvocation(
   //the .env loader doesn't support arrays, but workspace is meant to be an array
   //`teams` from customer instances will be an array
   if (typeof config.workspace === 'string') {
-    config.workspace = (<string>config.workspace).split(','); //what a hack!
+    config.workspace = (<string>config.workspace).split(',');
   }
   //customer instances loaded through the UI may not have a value for `ingestPullRequests`
   //if no value, we want ingestPullRequests to be true
-  config.ingestPullRequests = config.IngestPullRequests !== 'false';
-
-  if (!config.oauthKey || !config.oauthSecret || !config.workspace) {
-    throw new IntegrationValidationError(
-      'Config requires all of {oauthKey, oauthSecret, (workspace | teams)}',
-    );
+  if (
+    config.ingestPullRequests === false ||
+    config.ingestPullRequests === 'false'
+  ) {
+    config.ingestPullRequests = false;
+  } else {
+    //if it's undefined, true, or some string that is not 'false', set it to true
+    config.ingestPullRequests = true;
   }
-
-  const apiClient = createAPIClient(context.instance.config, context);
-  await apiClient.verifyAuthentication();
+  return config;
 }
