@@ -84,7 +84,7 @@ export async function fetchPRs(
           async (pr) => {
             //prApprovalData code from the old integration syncContext.ts, loadPullRequestsFromBitBucket()
             const prApprovalData = await collectCommitsForPR(
-              apiClient.getCurrentClient(),
+              apiClient.bitbucket,
               context.logger,
               workspaceUuid,
               userIds,
