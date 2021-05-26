@@ -26,7 +26,7 @@
     "prepack": "yarn build"
   },
   "dependencies": {
-    "bunyan": "^1.8.12",
+    "bunyan": "^1.8.15",
     "lodash.groupby": "^4.6.0",
     "node-fetch": "^2.6.1",
     "url-join": "^4.0.1",
