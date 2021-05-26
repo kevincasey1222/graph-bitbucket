@@ -1,4 +1,7 @@
-import { IntegrationExecutionContext } from '@jupiterone/integration-sdk-core';
+import {
+  IntegrationExecutionContext,
+  IntegrationValidationError,
+} from '@jupiterone/integration-sdk-core';
 
 import BitbucketClient from './clients/BitbucketClient';
 import {
@@ -21,16 +24,24 @@ export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
  * resources.
  */
 export class APIClient {
-  bitbucket: BitbucketClient;
+  bitbucketClients: BitbucketClient[];
+  currentClientPointer: number;
   constructor(
     readonly config: IntegrationConfig,
     context: IntegrationExecutionContext,
   ) {
-    this.bitbucket = new BitbucketClient(context.logger, config);
+    try {
+      this.bitbucketClients = this.bitbucketClientsFromConfig(context, config);
+    } catch (err) {
+      throw new IntegrationValidationError(
+        'Could not validate the config and get Bitbucket clients',
+      );
+    }
+    this.currentClientPointer = 0;
   }
 
   public async verifyAuthentication(): Promise<void> {
-    await this.bitbucket.authenticate(); //failure errors provided by client
+    await this.getCurrentClient().authenticate(); //failure errors provided by client
   }
 
   /**
@@ -44,7 +55,7 @@ export class APIClient {
     const names = this.config.workspace;
     const workspaces: BitbucketWorkspace[] = await Promise.all(
       names.map((name) => {
-        return this.bitbucket.getWorkspace(name);
+        return this.getCurrentClient().getWorkspace(name);
       }),
     );
 
@@ -62,7 +73,7 @@ export class APIClient {
     workspaceSlug: string,
     iteratee: ResourceIteratee<BitbucketUser>,
   ): Promise<void> {
-    const users: BitbucketUser[] = await this.bitbucket.getAllWorkspaceMembers(
+    const users: BitbucketUser[] = await this.getCurrentClient().getAllWorkspaceMembers(
       workspaceSlug,
     );
 
@@ -80,7 +91,7 @@ export class APIClient {
     workspaceSlug: string,
     iteratee: ResourceIteratee<BitbucketProject>,
   ): Promise<void> {
-    const projects: BitbucketProject[] = await this.bitbucket.getAllProjects(
+    const projects: BitbucketProject[] = await this.getCurrentClient().getAllProjects(
       workspaceSlug,
     );
 
@@ -98,7 +109,7 @@ export class APIClient {
     workspaceUuid: string,
     iteratee: ResourceIteratee<BitbucketRepo>,
   ): Promise<void> {
-    const repos: BitbucketRepo[] = await this.bitbucket.getAllRepos(
+    const repos: BitbucketRepo[] = await this.getCurrentClient().getAllRepos(
       workspaceUuid,
     );
 
@@ -118,7 +129,7 @@ export class APIClient {
     requestFilter: string,
     iteratee: ResourceIteratee<BitbucketPR>,
   ): Promise<void> {
-    const pullRequests: BitbucketPR[] = await this.bitbucket.getAllPRs(
+    const pullRequests: BitbucketPR[] = await this.getCurrentClient().getAllPRs(
       workspaceUuid,
       repoUuid,
       requestFilter,
@@ -132,7 +143,7 @@ export class APIClient {
     const pullPRsIndividually = false;
     for (const pr of pullRequests) {
       if (pullPRsIndividually) {
-        const thePr: BitbucketPR = await this.bitbucket.getPR(
+        const thePr: BitbucketPR = await this.getCurrentClient().getPR(
           workspaceUuid,
           repoUuid,
           pr.id,
@@ -142,6 +153,36 @@ export class APIClient {
         await iteratee(pr);
       }
     }
+  }
+
+  bitbucketClientsFromConfig(
+    context: IntegrationExecutionContext,
+    config: IntegrationConfig,
+  ): BitbucketClient[] {
+    const oauthKeys = config.oauthKey.split(',');
+    const oauthSecrets = config.oauthSecret.split(',');
+
+    if (!(oauthKeys.length === oauthSecrets.length)) {
+      throw new IntegrationValidationError(
+        'Quantities of Oauth keys and secrets differ in the config',
+      );
+    }
+
+    const bitbucketClients: BitbucketClient[] = [];
+    for (let i = 0; i < oauthKeys.length; i++) {
+      bitbucketClients.push(
+        new BitbucketClient(context.logger, {
+          oauthKey: oauthKeys[i],
+          oauthSecret: oauthSecrets[i],
+        }),
+      );
+    }
+
+    return bitbucketClients;
+  }
+
+  getCurrentClient(): BitbucketClient {
+    return this.bitbucketClients[this.currentClientPointer];
   }
 }
 
