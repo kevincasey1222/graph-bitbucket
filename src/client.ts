@@ -1,9 +1,8 @@
 import {
   IntegrationExecutionContext,
-  IntegrationInstanceConfig,
+  IntegrationValidationError,
 } from '@jupiterone/integration-sdk-core';
 
-import { BitbucketIntegrationConfig } from './types/integration';
 import BitbucketClient from './clients/BitbucketClient';
 import {
   BitbucketWorkspace,
@@ -12,7 +11,7 @@ import {
   BitbucketRepo,
   BitbucketPR,
 } from './types/bitbucket';
-import { getExpandedConfig } from './config';
+import { IntegrationConfig } from '../src/config';
 
 export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
 
@@ -27,19 +26,24 @@ export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
 export class APIClient {
   bitbucket: BitbucketClient;
   actionsBitbucket: BitbucketClient;
-  expandedConfig: BitbucketIntegrationConfig;
   constructor(
-    readonly config: IntegrationInstanceConfig,
+    readonly config: IntegrationConfig,
     context: IntegrationExecutionContext,
   ) {
-    const expandedConfig = getExpandedConfig(context.instance.config);
-    const [defaultBitbucket, actionsBitbucket] = bitbucketClientsFromConfig(
-      context,
-      expandedConfig,
-    );
-    this.bitbucket = defaultBitbucket;
-    this.actionsBitbucket = actionsBitbucket;
-    this.expandedConfig = expandedConfig;
+    let defaultBitbucket;
+    let actionsBitbucket;
+    try {
+      [defaultBitbucket, actionsBitbucket] = bitbucketClientsFromConfig(
+        context,
+        config,
+      );
+      this.bitbucket = defaultBitbucket;
+      this.actionsBitbucket = actionsBitbucket;
+    } catch (err) {
+      throw new IntegrationValidationError(
+        'Could not validate the config and get Bitbucket clients',
+      );
+    }
   }
 
   public async verifyAuthentication(): Promise<void> {
@@ -54,24 +58,12 @@ export class APIClient {
   public async iterateWorkspaces(
     iteratee: ResourceIteratee<BitbucketWorkspace>,
   ): Promise<void> {
-    //following code from syncContext.ts in old integration
-    //slight syntax modification for current context, but points to same
-    const names = this.expandedConfig.teams;
-
-    let workspaces: BitbucketWorkspace[];
-    if (names) {
-      workspaces = await Promise.all(
-        names.map((name) => {
-          //formerly, 'return context.bitbucket.getWorkspace(name);'
-          return this.bitbucket.getWorkspace(name);
-        }),
-      );
-    } else {
-      //this code was in the original, but it will never execute
-      //at least not while config.teams is mandatory in config.ts
-      //also it returns no objects from our dev acct, so perhaps is not a valid API call?
-      workspaces = await this.bitbucket.getAllWorkspaces();
-    }
+    const names = this.config.workspace;
+    const workspaces: BitbucketWorkspace[] = await Promise.all(
+      names.map((name) => {
+        return this.bitbucket.getWorkspace(name);
+      }),
+    );
 
     for (const workspace of workspaces) {
       await iteratee(workspace);
@@ -156,7 +148,7 @@ export class APIClient {
 }
 
 export function createAPIClient(
-  config: IntegrationInstanceConfig,
+  config: IntegrationConfig,
   context: IntegrationExecutionContext,
 ): APIClient {
   return new APIClient(config, context);
@@ -164,7 +156,7 @@ export function createAPIClient(
 
 function bitbucketClientsFromConfig(
   context: IntegrationExecutionContext,
-  config: BitbucketIntegrationConfig,
+  config: IntegrationConfig,
 ): [BitbucketClient, BitbucketClient] {
   const oauthKeys = config.oauthKey.split(',');
   const oauthSecrets = config.oauthSecret.split(',');

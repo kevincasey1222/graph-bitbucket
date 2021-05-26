@@ -6,8 +6,7 @@ import {
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../client';
-import { IntegrationConfig } from '../config';
-import { integrationConfig } from '../../test/config';
+import { IntegrationConfig, sanitizeConfig } from '../config';
 import {
   convertProjectToEntity,
   convertWorkspaceProjectToRelationship,
@@ -24,7 +23,10 @@ export async function fetchProjects(
   context: IntegrationStepExecutionContext<IntegrationConfig>,
 ) {
   const jobState = context.jobState;
-  const apiClient = createAPIClient(integrationConfig, context);
+  const apiClient = createAPIClient(
+    sanitizeConfig(context.instance.config),
+    context,
+  );
 
   await jobState.iterateEntities(
     {

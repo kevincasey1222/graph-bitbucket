@@ -1,11 +1,10 @@
 import {
   IntegrationExecutionContext,
-  IntegrationValidationError,
   IntegrationInstanceConfigFieldMap,
   IntegrationInstanceConfig,
+  IntegrationValidationError,
 } from '@jupiterone/integration-sdk-core';
 import { createAPIClient } from './client';
-import { BitbucketIntegrationConfig } from './types/integration';
 
 /**
  * A type describing the configuration fields required to execute the
@@ -22,16 +21,26 @@ import { BitbucketIntegrationConfig } from './types/integration';
  * `instance.config` in a UI.
  */
 
+//ideally, these fields would match the fields coming from the UI
+//in this case, there will be an inconsistency, where we are using
+//`workspace` but the UI still says teams.
+//also, workspace is really an array in the code, but arrays are not
+//supported in processing the .env file
+//lastly, ingestPullRequests is optional in the UI, but not here because
+//optional fields are not supported here
 export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
-  bitbucketOauthKey: {
+  oauthKey: {
     type: 'string',
   },
-  bitbucketOauthSecret: {
+  oauthSecret: {
     type: 'string',
     mask: true,
   },
-  bitbucketWorkspace: {
+  workspace: {
     type: 'string',
+  },
+  ingestPullRequests: {
+    type: 'boolean',
   },
 };
 
@@ -43,48 +52,63 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
    * The BitBucket Oauth key used to authenticate requests.
    */
-  bitbucketOauthKey: string;
+  oauthKey: string;
 
   /**
    * The BitBucket Oauth secret used to authenticate requests.
    */
-  bitbucketOauthSecret: string;
+  oauthSecret: string;
 
   /**
-   * The name of the BitBucket workspace.
+   * The name of the BitBucket workspace, or a comma-delimited list of names.
    */
-  bitbucketWorkspace: string | string[];
+  workspace: string[];
 
   /**
    * Whether Pull Request ingestion is desired.
    * Optional. Defaults to true. Set to 'false' if PRs are not desired
+   * This default value is set in sanitizeConfig below.
    */
-  bitbucketIngestPullRequests?: string;
+  ingestPullRequests?: boolean;
 }
 
 export async function validateInvocation(
   context: IntegrationExecutionContext<IntegrationConfig>,
 ) {
-  const apiClient = createAPIClient(context.instance.config, context);
+  //mutate config to ensure that old and new patterns are handled
+  const config = sanitizeConfig(context.instance.config);
+  if (!config.oauthKey || !config.oauthSecret || !config.workspace) {
+    throw new IntegrationValidationError(
+      'Config requires all of {oauthKey, oauthSecret, (workspace | teams)}',
+    );
+  }
+  const apiClient = createAPIClient(config, context);
   await apiClient.verifyAuthentication();
 }
 
-export function getExpandedConfig(config): BitbucketIntegrationConfig {
-  const expandedConfig: BitbucketIntegrationConfig = {
-    ...config,
-    oauthKey: config.bitbucketOauthKey,
-    oauthSecret: config.bitbucketOauthSecret,
-    teams: [config.bitbucketWorkspace],
-    ingestPullRequests: config.bitbucketIngestPullRequests !== 'false',
-  };
-  if (
-    !expandedConfig.oauthKey ||
-    !expandedConfig.oauthSecret ||
-    !expandedConfig.teams
-  ) {
-    throw new IntegrationValidationError(
-      'Config requires all of {bitbucketOauthKey, bitbucketOauthSecret, bitbucketWorkspace}',
-    );
+export function sanitizeConfig(config) {
+  //there's a little bit of crazy here trying to account for old and new patterns
+  //the idea is that the crazy is resolved by the end of this function
+  //
+  //customer instances loaded through the UI will use `teams` instead of `workspace`
+  if (config.teams) {
+    config.workspace = config.teams;
   }
-  return expandedConfig;
+  //the .env loader doesn't support arrays, but workspace is meant to be an array
+  //`teams` from customer instances will be an array
+  if (typeof config.workspace === 'string') {
+    config.workspace = (<string>config.workspace).split(',');
+  }
+  //customer instances loaded through the UI may not have a value for `ingestPullRequests`
+  //if no value, we want ingestPullRequests to be true
+  if (
+    config.ingestPullRequests === false ||
+    config.ingestPullRequests === 'false'
+  ) {
+    config.ingestPullRequests = false;
+  } else {
+    //if it's undefined, true, or some string that is not 'false', set it to true
+    config.ingestPullRequests = true;
+  }
+  return config;
 }

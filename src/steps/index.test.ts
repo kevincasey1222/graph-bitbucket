@@ -22,11 +22,7 @@ test('should collect data', async () => {
   });
 
   const context = createMockStepExecutionContext<IntegrationConfig>({
-    instanceConfig: {
-      bitbucketOauthKey: integrationConfig.oauthKey,
-      bitbucketOauthSecret: integrationConfig.oauthSecret,
-      bitbucketWorkspace: integrationConfig.teams || 'jupiterone-dev',
-    },
+    instanceConfig: integrationConfig,
   });
 
   // Simulates dependency graph execution.
