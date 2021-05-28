@@ -7,3 +7,9 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## 2021-05-28 - v1.0.0
+
+### Updated
+
+- to '@jupiterone/integration-sdk-core'
