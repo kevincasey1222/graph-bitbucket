@@ -144,12 +144,12 @@ export class APIClient {
     const pullPRsIndividually = false;
     for (const pr of pullRequests) {
       if (pullPRsIndividually) {
-        const thePr: BitbucketPR = await this.bitbucket.getPR(
+        const enrichedPr: BitbucketPR = await this.bitbucket.getPR(
           workspaceUuid,
           repoUuid,
           pr.id,
         );
-        await iteratee(thePr);
+        await iteratee(enrichedPr);
       } else {
         await iteratee(pr);
       }

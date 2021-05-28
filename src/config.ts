@@ -50,12 +50,12 @@ export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
  */
 export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
-   * The BitBucket Oauth key used to authenticate requests.
+   * The BitBucket OAuth key used to authenticate requests.
    */
   oauthKey: string;
 
   /**
-   * The BitBucket Oauth secret used to authenticate requests.
+   * The BitBucket OAuth secret used to authenticate requests.
    */
   oauthSecret: string;
 

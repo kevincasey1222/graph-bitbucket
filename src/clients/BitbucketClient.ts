@@ -97,7 +97,7 @@ export default class BitbucketClient {
     const oauthSecrets = this.config.oauthSecret.split(',');
     if (!(oauthKeys.length === oauthSecrets.length)) {
       throw new IntegrationValidationError(
-        'Number of comma-delimited Oauth keys and secrets differ in the config',
+        'Number of comma-delimited OAuth keys and secrets differ in the config',
       );
     }
 
@@ -122,7 +122,7 @@ export default class BitbucketClient {
           cause: undefined,
           endpoint: url,
           status: response.status,
-          statusText: `Failure requesting '${url}' for Oauth Key ${i}. Response status: ${response.status}`,
+          statusText: `Failure requesting '${url}' for OAuth Key ${i}. Response status: ${response.status}`,
         });
       }
 
@@ -134,8 +134,8 @@ export default class BitbucketClient {
 
   //the actual moment that we hit the API
   //including logic for handling rate-limiting (status 429) errors by going to the next access token
-  //Bitbucket limits calls to repos, PRs, and details of PRs to 1000 per hour for each Oauth key/secret
-  //therefore, some clients get around this limit by configuring multiple Oauth key/secrets for the account
+  //Bitbucket limits calls to repos, PRs, and details of PRs to 1000 per hour for each OAuth key/secret
+  //therefore, some clients get around this limit by configuring multiple OAuth key/secrets for the account
   //these are provided in the config file by delimiting them with commas
   async makeGetRequest<T>(
     url: string,
