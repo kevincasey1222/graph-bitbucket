@@ -580,6 +580,7 @@ Object {
       "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|has|{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
       "_toEntityKey": "{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
       "_type": "bitbucket_workspace_has_user",
+      "displayName": "HAS",
     },
     Object {
       "_class": "HAS",
@@ -587,6 +588,7 @@ Object {
       "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|has|{f1eb42cf-0d64-4bb9-bac5-459b83d9f0ed}",
       "_toEntityKey": "{f1eb42cf-0d64-4bb9-bac5-459b83d9f0ed}",
       "_type": "bitbucket_workspace_has_user",
+      "displayName": "HAS",
     },
     Object {
       "_class": "OWNS",
@@ -594,6 +596,7 @@ Object {
       "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|owns|{e608ae89-60af-45dc-bab1-66bccc8a295a}",
       "_toEntityKey": "{e608ae89-60af-45dc-bab1-66bccc8a295a}",
       "_type": "bitbucket_workspace_owns_project",
+      "displayName": "OWNS",
     },
     Object {
       "_class": "OWNS",
@@ -601,6 +604,7 @@ Object {
       "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|owns|{819a7369-1044-444e-921c-0124fec32830}",
       "_toEntityKey": "{819a7369-1044-444e-921c-0124fec32830}",
       "_type": "bitbucket_workspace_owns_project",
+      "displayName": "OWNS",
     },
     Object {
       "_class": "OWNS",
@@ -608,6 +612,7 @@ Object {
       "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|owns|{2408f9ea-6d10-4897-84c5-aeeffb1b4c14}",
       "_toEntityKey": "{2408f9ea-6d10-4897-84c5-aeeffb1b4c14}",
       "_type": "bitbucket_workspace_owns_repo",
+      "displayName": "OWNS",
     },
     Object {
       "_class": "HAS",
@@ -615,6 +620,7 @@ Object {
       "_key": "{819a7369-1044-444e-921c-0124fec32830}|has|{2408f9ea-6d10-4897-84c5-aeeffb1b4c14}",
       "_toEntityKey": "{2408f9ea-6d10-4897-84c5-aeeffb1b4c14}",
       "_type": "bitbucket_project_has_repo",
+      "displayName": "HAS",
     },
     Object {
       "_class": "OWNS",
@@ -622,6 +628,7 @@ Object {
       "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|owns|{d052842f-c89c-4690-9e73-5162e0f23be1}",
       "_toEntityKey": "{d052842f-c89c-4690-9e73-5162e0f23be1}",
       "_type": "bitbucket_workspace_owns_repo",
+      "displayName": "OWNS",
     },
     Object {
       "_class": "HAS",
@@ -629,6 +636,7 @@ Object {
       "_key": "{e608ae89-60af-45dc-bab1-66bccc8a295a}|has|{d052842f-c89c-4690-9e73-5162e0f23be1}",
       "_toEntityKey": "{d052842f-c89c-4690-9e73-5162e0f23be1}",
       "_type": "bitbucket_project_has_repo",
+      "displayName": "HAS",
     },
   ],
   "encounteredTypes": Array [

@@ -126,6 +126,7 @@ test('converters.convertWorkspaceUserToRelationship', () => {
     _type: 'bitbucket_workspace_has_user',
     _fromEntityKey: workspace._key,
     _toEntityKey: user._key,
+    displayName: 'HAS',
   });
 });
 
@@ -162,5 +163,6 @@ test('converters.convertWorkspaceRepoToRelationship', () => {
     _type: 'bitbucket_workspace_owns_repo',
     _fromEntityKey: workspaceEntity._key,
     _toEntityKey: repo._key,
+    displayName: 'OWNS',
   });
 });

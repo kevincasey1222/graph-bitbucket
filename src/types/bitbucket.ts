@@ -121,8 +121,8 @@ export interface BitbucketPR {
   closed_by?: BitbucketUser | null;
   reason: string;
   links: BitbucketPRLinks;
-  reviewers?: BitbucketUser[];
-  participants?: BitbucketUser[];
+  reviewers?: BitbucketUser[]; //API gives this only if you pull the PR individually
+  participants?: BitbucketUser[]; //API gives this only if you pull the PR individually
   created_on?: string;
   updated_on?: string;
   task_count: number;

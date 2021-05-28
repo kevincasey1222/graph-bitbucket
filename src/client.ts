@@ -25,20 +25,15 @@ export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
  */
 export class APIClient {
   bitbucket: BitbucketClient;
-  actionsBitbucket: BitbucketClient;
   constructor(
     readonly config: IntegrationConfig,
     context: IntegrationExecutionContext,
   ) {
-    let defaultBitbucket;
-    let actionsBitbucket;
     try {
-      [defaultBitbucket, actionsBitbucket] = bitbucketClientsFromConfig(
-        context,
-        config,
-      );
-      this.bitbucket = defaultBitbucket;
-      this.actionsBitbucket = actionsBitbucket;
+      this.bitbucket = new BitbucketClient(context.logger, {
+        oauthKey: config.oauthKey,
+        oauthSecret: config.oauthSecret,
+      });
     } catch (err) {
       throw new IntegrationValidationError(
         'Could not validate the config and get Bitbucket clients',
@@ -141,8 +136,23 @@ export class APIClient {
       requestFilter,
     );
 
+    //for performance reasons, getAllPRs does not provide all PR properties
+    //to get all properties for a PR, you have to pull the PRs individually
+    //but, that's potentially hitting the API a lot
+    //properties that we know are missing in .getAllPRs are
+    // `reviewers` and `participants`
+    const pullPRsIndividually = false;
     for (const pr of pullRequests) {
-      await iteratee(pr);
+      if (pullPRsIndividually) {
+        const thePr: BitbucketPR = await this.bitbucket.getPR(
+          workspaceUuid,
+          repoUuid,
+          pr.id,
+        );
+        await iteratee(thePr);
+      } else {
+        await iteratee(pr);
+      }
     }
   }
 }
@@ -152,29 +162,4 @@ export function createAPIClient(
   context: IntegrationExecutionContext,
 ): APIClient {
   return new APIClient(config, context);
-}
-
-function bitbucketClientsFromConfig(
-  context: IntegrationExecutionContext,
-  config: IntegrationConfig,
-): [BitbucketClient, BitbucketClient] {
-  const oauthKeys = config.oauthKey.split(',');
-  const oauthSecrets = config.oauthSecret.split(',');
-
-  const bitbucket = new BitbucketClient(context.logger, {
-    oauthKey: oauthKeys[0],
-    oauthSecret: oauthSecrets[0],
-  });
-
-  let actionsBitbucket;
-  if (oauthKeys.length > 1 && oauthSecrets.length > 1) {
-    actionsBitbucket = new BitbucketClient(context.logger, {
-      oauthKey: oauthKeys[1],
-      oauthSecret: oauthSecrets[1],
-    });
-  } else {
-    actionsBitbucket = bitbucket;
-  }
-
-  return [bitbucket, actionsBitbucket];
 }
