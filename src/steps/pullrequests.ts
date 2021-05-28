@@ -187,6 +187,7 @@ export const prSteps: IntegrationStep<IntegrationConfig>[] = [
         _class: RelationshipClass.REVIEWED,
         sourceType: BITBUCKET_USER_ENTITY_TYPE,
         targetType: BITBUCKET_PR_ENTITY_TYPE,
+        partial: true,
       },
     ],
     dependsOn: ['fetch-repos', 'fetch-users'],

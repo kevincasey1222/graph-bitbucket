@@ -24,7 +24,7 @@
 
 - Bitbucket supports the OAuth2 Client Credential flow. You must have a
   Administrator user account.
-- JupiterOne requires an Oauth client key, client secret, and the name of your
+- JupiterOne requires an OAuth client key, client secret, and the name of your
   Bitbucket workspace. You need permission on Bitbucket to access this
   information.
 - You must have permission in JupiterOne to install new integrations.
@@ -39,8 +39,8 @@ If you need help with this integration, please contact
 ### In BitBucket
 
 1. Go to the
-   [Bitbucket Oauth setup page](https://support.atlassian.com/bitbucket-cloud/docs/use-oauth-on-bitbucket-cloud/)
-   for a walkthrough of how to configure Oauth and generate the client id and
+   [Bitbucket OAuth setup page](https://support.atlassian.com/bitbucket-cloud/docs/use-oauth-on-bitbucket-cloud/)
+   for a walkthrough of how to configure OAuth and generate the client id and
    client secret. You only need to do the part at the top under
    `Create a consumer`.
 2. Make a note of the client id and client secret, along with the name of the
