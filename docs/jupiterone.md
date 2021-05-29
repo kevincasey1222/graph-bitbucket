@@ -55,9 +55,9 @@ If you need help with this integration, please contact
 7. Check the box labeled **This is a private consumer**. This is required for
    the way the integration authenticates.
 8. Set permissions for this consumer. The integration requires Read access to
-   **Account**, **Workspace membership**, **Projects**, and **Repositories**. If
-   you plan to ingest pull requests into the JupiterOne graph, or think you
-   might later, the integration also needs Read access to **Pull requests**.
+   **Account**, **Projects**, and **Repositories**. If you plan to ingest pull
+   requests into the JupiterOne graph, or think you might later, the integration
+   also needs Read access to **Pull requests**.
 9. Click **Save**. The system generates a key and a secret for you. Make a note
    of the client id and client secret, along with the name of the workspace to
    be accessed.

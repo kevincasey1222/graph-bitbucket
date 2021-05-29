@@ -140,9 +140,6 @@ export default class BitbucketClient {
     if (!/account/.test(scopeString)) {
       missingScopes.push('Account');
     }
-    if (!/team/.test(scopeString)) {
-      missingScopes.push('Workspace membership');
-    }
     if (!/project/.test(scopeString)) {
       missingScopes.push('Projects');
     }
@@ -235,7 +232,7 @@ export default class BitbucketClient {
           cause: undefined,
           endpoint: url,
           status: response.status,
-          statusText: `Failure requesting '${url}'. Response status: ${response.status}`,
+          statusText: `Failure requesting '${url}'. Response status: ${response.status}. See Errors & Validation under https://docs.atlassian.com/bitbucket-server/rest/7.13.0/bitbucket-branch-rest.html`,
         });
       }
 
