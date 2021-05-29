@@ -9,7 +9,7 @@ export function calculatePRRequestFilter(
   //new Date() returns the same thing as new Date(Date.now())
   //however, calling Date.now so jest can fake Date.now() in tests
   const date = new Date(Date.now());
-  date.setDate(date.getDate() - 30);
+  date.setDate(date.getDate() - 1);
 
   if (lastCompletedJob && lastCompletedJob > date.getTime()) {
     date.setTime(lastCompletedJob);

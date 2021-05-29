@@ -1,0 +1,26 @@
+import {
+  IntegrationExecutionContext,
+  StepStartStates,
+} from '@jupiterone/integration-sdk-core';
+
+import {
+  validateInvocation,
+  IntegrationConfig,
+  sanitizeConfig,
+} from './config';
+
+export default async function getStepStartStates(
+  context: IntegrationExecutionContext<IntegrationConfig>,
+): Promise<StepStartStates> {
+  const config = context.instance.config;
+  validateInvocation(context);
+  sanitizeConfig(config); //this sets ingestPullRequests no matter what
+
+  return {
+    ['fetch-workspaces']: { disabled: false },
+    ['fetch-users']: { disabled: false },
+    ['fetch-projects']: { disabled: false },
+    ['fetch-repos']: { disabled: false },
+    ['fetch-prs']: { disabled: !config.ingestPullRequests },
+  };
+}
