@@ -141,9 +141,8 @@ export class APIClient {
     //but, that's potentially hitting the API a lot
     //properties that we know are missing in .getAllPRs are
     // `reviewers` and `participants`
-    const pullPRsIndividually = false;
     for (const pr of pullRequests) {
-      if (pullPRsIndividually) {
+      if (this.config.enrichedPrs) {
         const enrichedPr: BitbucketPR = await this.bitbucket.getPR(
           workspaceUuid,
           repoUuid,

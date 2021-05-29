@@ -82,8 +82,8 @@ If you need help with this integration, please contact
   want to disable the ingestion of pull requests into the JupiterOne graph. By
   default, whenever the intergration is run, JupiterOne will ingest any PR
   created or modified in the last 24 hours.
-- Optionally, set the **Bitbucket Enhanced PR Data** field to true to get
-  additional information on each PR, such as who reviewed it. Note that this has
+- Optionally, set the **Bitbucket Enriched PRs** field to true to get additional
+  information on each PR, such as who reviewed it. Note that this has
   performance implications, which is why it is disabled by default. See
   **Details on rate limiting** below.
 
@@ -130,9 +130,11 @@ new OAuth consumer sequentially when it encounters a Bitbucket rate limit, and
 will not throw a rate-limit error unless is exhausts all OAuth consumers.
 
 You can calculate the minimum number of API calls that count against this limit
-as: --If not ingesting Pull Requests: (#Repos)/10 --With Pull Requests (default
-status): (#Repos)/10 + (#PRs)/10 + (2 _ #PRs) --With Enhanced Pull Request Data:
-(#Repos)/10 + (#PRs)/10 + (3 _ #PRs)
+as:
+
+- If not ingesting Pull Requests: (#Repos)/10
+- With Pull Requests (default status): (#Repos)/10 + (#PRs)/10 + (2\*#PRs)
+- With Enriched PRs: (#Repos)/10 + (#PRs)/10 + (3\*#PRs)
 
 # How to Uninstall
 

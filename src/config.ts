@@ -42,6 +42,9 @@ export const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
   ingestPullRequests: {
     type: 'boolean',
   },
+  enrichedPrs: {
+    type: 'boolean',
+  },
 };
 
 /**
@@ -70,6 +73,13 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
    * This default value is set in sanitizeConfig below.
    */
   ingestPullRequests?: boolean;
+
+  /**
+   * Whether Pull Request ingestion is desired.
+   * Optional. Defaults to true. Set to 'false' if PRs are not desired
+   * This default value is set in sanitizeConfig below.
+   */
+  enrichedPrs?: boolean;
 }
 
 export async function validateInvocation(
@@ -109,6 +119,14 @@ export function sanitizeConfig(config) {
   } else {
     //if it's undefined, true, or some string that is not 'false', set it to true
     config.ingestPullRequests = true;
+  }
+  //customer instances loaded through the UI may not have a value for `enrichedPrs`
+  //if no value, we want enrichedPrs to be false
+  if (config.enrichedPrs === true || config.enrichedPrs === 'true') {
+    config.enrichedPrs = true;
+  } else {
+    //if it's undefined, false, or some string that is not 'true', set it to false
+    config.enrichedPrs = false;
   }
   return config;
 }
