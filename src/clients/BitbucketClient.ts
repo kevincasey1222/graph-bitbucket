@@ -24,6 +24,7 @@ const BASE_API_URL = 'https://bitbucket.org/api/2.0/';
 
 interface OAuthAccessTokenResponse {
   access_token: string;
+  scopes: string;
 }
 
 interface BitbucketPage<T> {
@@ -36,8 +37,9 @@ interface BitbucketPage<T> {
 }
 
 interface BitbucketClientOptions {
-  oauthKey?: string;
-  oauthSecret?: string;
+  oauthKey: string;
+  oauthSecret: string;
+  ingestPullRequests?: boolean;
 }
 
 interface BitbucketAPICalls {
@@ -127,9 +129,34 @@ export default class BitbucketClient {
       }
 
       const data: OAuthAccessTokenResponse = await response.json();
+      this.verifyScopes(data.scopes, i);
       this.accessTokens.push(data.access_token);
     }
     this.currentAccessToken = 0;
+  }
+
+  private verifyScopes(scopeString, keyNum) {
+    const missingScopes: string[] = [];
+    if (!/account/.test(scopeString)) {
+      missingScopes.push('Account');
+    }
+    if (!/team/.test(scopeString)) {
+      missingScopes.push('Workspace membership');
+    }
+    if (!/project/.test(scopeString)) {
+      missingScopes.push('Projects');
+    }
+    if (this.config.ingestPullRequests && !/pullrequest/.test(scopeString)) {
+      missingScopes.push('Pull requests');
+    }
+    if (missingScopes.length > 0) {
+      throw new IntegrationProviderAuthenticationError({
+        cause: undefined,
+        endpoint: `https://bitbucket.org/site/oauth2/access_token`,
+        status: 'Insufficient scope for token',
+        statusText: `Required scope(s) "${missingScopes}" not set for OAuth Key ${keyNum}. Check Permissions for the OAuth consumer under Workspace settings.`,
+      });
+    }
   }
 
   //the actual moment that we hit the API

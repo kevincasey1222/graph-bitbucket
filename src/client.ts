@@ -11,7 +11,7 @@ import {
   BitbucketRepo,
   BitbucketPR,
 } from './types/bitbucket';
-import { IntegrationConfig } from '../src/config';
+import { IntegrationConfig, sanitizeConfig } from '../src/config';
 
 export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
 
@@ -29,10 +29,12 @@ export class APIClient {
     readonly config: IntegrationConfig,
     context: IntegrationExecutionContext,
   ) {
+    sanitizeConfig(config); //sets pull requests no matter what
     try {
       this.bitbucket = new BitbucketClient(context.logger, {
         oauthKey: config.oauthKey,
         oauthSecret: config.oauthSecret,
+        ingestPullRequests: config.ingestPullRequests,
       });
     } catch (err) {
       throw new IntegrationValidationError(

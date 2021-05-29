@@ -82,7 +82,10 @@ test('#collectCommitsForPR', async function () {
 
   const { logger } = createMockExecutionContext();
 
-  const bitbucket = new BitbucketClient(createMockIntegrationLogger(), {});
+  const bitbucket = new BitbucketClient(createMockIntegrationLogger(), {
+    oauthKey: '',
+    oauthSecret: '',
+  });
   (bitbucket.getCommits as jest.Mock).mockResolvedValue(commitRange);
   (bitbucket.getPRActivity as jest.Mock).mockResolvedValue('activity');
 

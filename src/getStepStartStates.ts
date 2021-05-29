@@ -13,7 +13,7 @@ export default async function getStepStartStates(
   context: IntegrationExecutionContext<IntegrationConfig>,
 ): Promise<StepStartStates> {
   const config = context.instance.config;
-  validateInvocation(context);
+  await validateInvocation(context);
   sanitizeConfig(config); //this sets ingestPullRequests no matter what
 
   return {
