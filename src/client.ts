@@ -11,7 +11,7 @@ import {
   BitbucketRepo,
   BitbucketPR,
 } from './types/bitbucket';
-import { IntegrationConfig } from '../src/config';
+import { IntegrationConfig, sanitizeConfig } from '../src/config';
 
 export type ResourceIteratee<T> = (each: T) => Promise<void> | void;
 
@@ -29,10 +29,13 @@ export class APIClient {
     readonly config: IntegrationConfig,
     context: IntegrationExecutionContext,
   ) {
+    sanitizeConfig(config); //sets pull requests no matter what
     try {
       this.bitbucket = new BitbucketClient(context.logger, {
         oauthKey: config.oauthKey,
         oauthSecret: config.oauthSecret,
+        workspace: config.workspace, //only used for error reporting
+        ingestPullRequests: config.ingestPullRequests,
       });
     } catch (err) {
       throw new IntegrationValidationError(
@@ -141,9 +144,8 @@ export class APIClient {
     //but, that's potentially hitting the API a lot
     //properties that we know are missing in .getAllPRs are
     // `reviewers` and `participants`
-    const pullPRsIndividually = false;
     for (const pr of pullRequests) {
-      if (pullPRsIndividually) {
+      if (this.config.enrichedPrs) {
         const enrichedPr: BitbucketPR = await this.bitbucket.getPR(
           workspaceUuid,
           repoUuid,

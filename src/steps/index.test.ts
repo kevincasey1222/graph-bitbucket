@@ -32,6 +32,13 @@ test('should collect data', async () => {
   await fetchProjects(context);
   await fetchRepos(context);
 
+  //note: detailed converter tests exist in sync/converters.test.ts
+  //this includes details of converting fetched PRs, which are only
+  //fetched within the last 24 hours
+  //because that is well tested there, these tests are only checking
+  //on the fetch process pulling the right number of entities and
+  //matching the snapshots
+
   // Review snapshot, failure is a regression
   expect({
     numCollectedEntities: context.jobState.collectedEntities.length,

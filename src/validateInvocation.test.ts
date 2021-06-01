@@ -34,6 +34,7 @@ it('auth error', async () => {
       oauthSecret: 'INVALID',
       workspace: ['INVALID'],
       ingestPullRequests: false,
+      enrichedPrs: false,
     },
   });
 

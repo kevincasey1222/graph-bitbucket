@@ -37,115 +37,113 @@ import {
 export async function fetchPRs(
   context: IntegrationStepExecutionContext<IntegrationConfig>,
 ) {
-  if (context.instance.config.ingestPullRequests) {
-    const jobState = context.jobState;
-    const apiClient = createAPIClient(
-      sanitizeConfig(context.instance.config),
-      context,
-    );
+  const jobState = context.jobState;
+  const apiClient = createAPIClient(
+    sanitizeConfig(context.instance.config),
+    context,
+  );
 
-    // old integration helper and converter code requires a map of user._key -> userEntity,
-    // and an array of the user._key
-    // ultimately these helpers are just returning a displayName for certain userIDs,
-    // which we could get while processing the PR since we have to get the user entities
-    // from the graph anyway in order to make relationships,
-    // but due to the structure of helper and converter functions,
-    // and a desire to minimize diffs,
-    // we'll produce this map and array here for use below
+  // old integration helper and converter code requires a map of user._key -> userEntity,
+  // and an array of the user._key
+  // ultimately these helpers are just returning a displayName for certain userIDs,
+  // which we could get while processing the PR since we have to get the user entities
+  // from the graph anyway in order to make relationships,
+  // but due to the structure of helper and converter functions,
+  // and a desire to minimize diffs,
+  // we'll produce this map and array here for use below
 
-    let userIds: string[] = [];
-    const userByIdMap: IdEntityMap<BitbucketUserEntity> = {};
+  let userIds: string[] = [];
+  const userByIdMap: IdEntityMap<BitbucketUserEntity> = {};
 
-    await jobState.iterateEntities(
-      {
-        _type: BITBUCKET_USER_ENTITY_TYPE,
-      },
-      (userEntity) => {
-        userIds = [...userIds, userEntity._key];
-        userByIdMap[userEntity._key] = <BitbucketUserEntity>userEntity;
-      },
-    );
+  await jobState.iterateEntities(
+    {
+      _type: BITBUCKET_USER_ENTITY_TYPE,
+    },
+    (userEntity) => {
+      userIds = [...userIds, userEntity._key];
+      userByIdMap[userEntity._key] = <BitbucketUserEntity>userEntity;
+    },
+  );
 
-    await jobState.iterateEntities(
-      {
-        _type: BITBUCKET_REPO_ENTITY_TYPE,
-      },
-      async (repoEntity) => {
-        const workspaceUuid: string = <string>repoEntity.ownerId;
-        const lastSuccessfulSyncTime = context.executionHistory.lastSuccessful
-          ?.startedOn
-          ? context.executionHistory.lastSuccessful?.startedOn
-          : null;
-        const requestFilter = calculatePRRequestFilter(lastSuccessfulSyncTime);
-        await apiClient.iteratePRs(
-          workspaceUuid,
-          repoEntity._key,
-          requestFilter,
-          async (pr) => {
-            //prApprovalData code from the old integration syncContext.ts, loadPullRequestsFromBitBucket()
-            const prApprovalData = await collectCommitsForPR(
-              apiClient.bitbucket,
-              context.logger,
-              workspaceUuid,
-              userIds,
-              pr,
-            );
-            //prConverterInput code from the old integration syncContext.ts, loadPullRequestsFromBitBucket()
-            const prConverterInput: PRConverterInput = {
-              accountUUID: workspaceUuid,
-              pullRequest: pr,
-              commits: prApprovalData.allCommits,
-              commitsApproved: prApprovalData.approvedCommits,
-              commitsByUnknownAuthor: prApprovalData.commitsByUnknownAuthor,
-              approvals: prApprovalData.approvals,
-              approvedCommitsRemoved: prApprovalData.approvedCommitsRemoved,
-              usersByUUID: userByIdMap,
-            };
-            const convertedPR = convertPRToEntity(prConverterInput);
-            const prEntity = (await jobState.addEntity(
-              createIntegrationEntity({
-                entityData: {
-                  source: pr,
-                  assign: convertedPR,
-                },
-              }),
-            )) as BitbucketPullRequestEntity;
+  await jobState.iterateEntities(
+    {
+      _type: BITBUCKET_REPO_ENTITY_TYPE,
+    },
+    async (repoEntity) => {
+      const workspaceUuid: string = <string>repoEntity.ownerId;
+      const lastSuccessfulSyncTime = context.executionHistory.lastSuccessful
+        ?.startedOn
+        ? context.executionHistory.lastSuccessful?.startedOn
+        : null;
+      const requestFilter = calculatePRRequestFilter(lastSuccessfulSyncTime);
+      await apiClient.iteratePRs(
+        workspaceUuid,
+        repoEntity._key,
+        requestFilter,
+        async (pr) => {
+          //prApprovalData code from the old integration syncContext.ts, loadPullRequestsFromBitBucket()
+          const prApprovalData = await collectCommitsForPR(
+            apiClient.bitbucket,
+            context.logger,
+            workspaceUuid,
+            userIds,
+            pr,
+          );
+          //prConverterInput code from the old integration syncContext.ts, loadPullRequestsFromBitBucket()
+          const prConverterInput: PRConverterInput = {
+            accountUUID: workspaceUuid,
+            pullRequest: pr,
+            commits: prApprovalData.allCommits,
+            commitsApproved: prApprovalData.approvedCommits,
+            commitsByUnknownAuthor: prApprovalData.commitsByUnknownAuthor,
+            approvals: prApprovalData.approvals,
+            approvedCommitsRemoved: prApprovalData.approvedCommitsRemoved,
+            usersByUUID: userByIdMap,
+          };
+          const convertedPR = convertPRToEntity(prConverterInput);
+          const prEntity = (await jobState.addEntity(
+            createIntegrationEntity({
+              entityData: {
+                source: pr,
+                assign: convertedPR,
+              },
+            }),
+          )) as BitbucketPullRequestEntity;
 
-            //all relationship code to follow per old integration syncContext.ts/addPRs
-            const repo: BitbucketRepoEntity = <BitbucketRepoEntity>repoEntity;
+          //all relationship code to follow per old integration syncContext.ts/addPRs
+          const repo: BitbucketRepoEntity = <BitbucketRepoEntity>repoEntity;
+          await jobState.addRelationship(
+            convertRepoPRToRelationship(repo, prEntity),
+          );
+
+          const authorEntity = userByIdMap[convertedPR.authorId];
+          if (authorEntity) {
             await jobState.addRelationship(
-              convertRepoPRToRelationship(repo, prEntity),
+              convertUserOpenedPRToRelationship(authorEntity, prEntity),
             );
+          }
 
-            const authorEntity = userByIdMap[convertedPR.authorId];
-            if (authorEntity) {
+          convertedPR.approverIds.forEach(async (approverId) => {
+            const approverEntity = userByIdMap[approverId];
+            if (approverEntity) {
               await jobState.addRelationship(
-                convertUserOpenedPRToRelationship(authorEntity, prEntity),
+                convertUserApprovedPRToRelationship(approverEntity, prEntity),
               );
             }
+          });
 
-            convertedPR.approverIds.forEach(async (approverId) => {
-              const approverEntity = userByIdMap[approverId];
-              if (approverEntity) {
-                await jobState.addRelationship(
-                  convertUserApprovedPRToRelationship(approverEntity, prEntity),
-                );
-              }
-            });
-
-            convertedPR.reviewerIds.forEach(async (reviewerId) => {
-              const reviewerEntity = userByIdMap[reviewerId];
-              if (reviewerEntity) {
-                await jobState.addRelationship(
-                  convertUserReviewedPRToRelationship(reviewerEntity, prEntity),
-                );
-              }
-            });
-          },
-        );
-      },
-    );
-  }
+          convertedPR.reviewerIds.forEach(async (reviewerId) => {
+            const reviewerEntity = userByIdMap[reviewerId];
+            if (reviewerEntity) {
+              await jobState.addRelationship(
+                convertUserReviewedPRToRelationship(reviewerEntity, prEntity),
+              );
+            }
+          });
+        },
+      );
+    },
+  );
 }
 
 export const prSteps: IntegrationStep<IntegrationConfig>[] = [

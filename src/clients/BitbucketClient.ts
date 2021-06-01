@@ -24,6 +24,7 @@ const BASE_API_URL = 'https://bitbucket.org/api/2.0/';
 
 interface OAuthAccessTokenResponse {
   access_token: string;
+  scopes: string;
 }
 
 interface BitbucketPage<T> {
@@ -36,8 +37,10 @@ interface BitbucketPage<T> {
 }
 
 interface BitbucketClientOptions {
-  oauthKey?: string;
-  oauthSecret?: string;
+  oauthKey: string;
+  oauthSecret: string;
+  workspace?: string[];
+  ingestPullRequests?: boolean;
 }
 
 interface BitbucketAPICalls {
@@ -93,8 +96,10 @@ export default class BitbucketClient {
       throw new Error('"oauthKey(s)" and "oauthSecret(s)" are required');
     }
 
-    const oauthKeys = this.config.oauthKey.split(',');
-    const oauthSecrets = this.config.oauthSecret.split(',');
+    //the .replace just removes any white spaces in the string,
+    //in case someone did 'key1, key2, key3', or with tabs, or whatever
+    const oauthKeys = this.config.oauthKey.replace(/\s+/g, '').split(',');
+    const oauthSecrets = this.config.oauthSecret.replace(/\s+/g, '').split(',');
     if (!(oauthKeys.length === oauthSecrets.length)) {
       throw new IntegrationValidationError(
         'Number of comma-delimited OAuth keys and secrets differ in the config',
@@ -122,14 +127,40 @@ export default class BitbucketClient {
           cause: undefined,
           endpoint: url,
           status: response.status,
-          statusText: `Failure requesting '${url}' for OAuth Key ${i}. Response status: ${response.status}`,
+          statusText: `Failure requesting '${url}' for OAuth Key ${oauthKeys[i]}. Response status: ${response.status}`,
         });
       }
 
       const data: OAuthAccessTokenResponse = await response.json();
+      this.verifyScopes(data.scopes, oauthKeys[i]);
       this.accessTokens.push(data.access_token);
     }
     this.currentAccessToken = 0;
+  }
+
+  private verifyScopes(scopeString, keyNum) {
+    const missingScopes: string[] = [];
+    if (!/account/.test(scopeString)) {
+      missingScopes.push('Account');
+    }
+    if (!/project/.test(scopeString)) {
+      missingScopes.push('Projects');
+    }
+    if (this.config.ingestPullRequests && !/pullrequest/.test(scopeString)) {
+      missingScopes.push('Pull requests');
+    }
+    if (missingScopes.length > 0) {
+      let statusText = `Required scope(s) "${missingScopes}" not set for OAuth Key ${keyNum}. Check permissions for the OAuth consumer under Workspace settings.`;
+      if (this.config.workspace) {
+        statusText = `Required scope(s) "${missingScopes}" not set for OAuth Key ${keyNum}. Check permissions for the OAuth consumer under Workspace settings at https://bitbucket.org/${this.config.workspace[0]}/workspace/settings/api`;
+      }
+      throw new IntegrationProviderAuthenticationError({
+        cause: undefined,
+        endpoint: `https://bitbucket.org/site/oauth2/access_token`,
+        status: 'Insufficient scope for token',
+        statusText: statusText,
+      });
+    }
   }
 
   //the actual moment that we hit the API
@@ -208,7 +239,7 @@ export default class BitbucketClient {
           cause: undefined,
           endpoint: url,
           status: response.status,
-          statusText: `Failure requesting '${url}'. Response status: ${response.status}`,
+          statusText: `Failure requesting '${url}'. Response status: ${response.status}. See Errors & Validation under https://docs.atlassian.com/bitbucket-server/rest/7.13.0/bitbucket-branch-rest.html`,
         });
       }
 
