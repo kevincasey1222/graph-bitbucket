@@ -39,6 +39,7 @@ interface BitbucketPage<T> {
 interface BitbucketClientOptions {
   oauthKey: string;
   oauthSecret: string;
+  workspace: string;
   ingestPullRequests?: boolean;
 }
 
@@ -126,12 +127,12 @@ export default class BitbucketClient {
           cause: undefined,
           endpoint: url,
           status: response.status,
-          statusText: `Failure requesting '${url}' for OAuth Key ${i}. Response status: ${response.status}`,
+          statusText: `Failure requesting '${url}' for OAuth Key ${oauthKeys[i]}. Response status: ${response.status}`,
         });
       }
 
       const data: OAuthAccessTokenResponse = await response.json();
-      this.verifyScopes(data.scopes, i);
+      this.verifyScopes(data.scopes, oauthKeys[i]);
       this.accessTokens.push(data.access_token);
     }
     this.currentAccessToken = 0;
@@ -153,7 +154,7 @@ export default class BitbucketClient {
         cause: undefined,
         endpoint: `https://bitbucket.org/site/oauth2/access_token`,
         status: 'Insufficient scope for token',
-        statusText: `Required scope(s) "${missingScopes}" not set for OAuth Key ${keyNum}. Check Permissions for the OAuth consumer under Workspace settings.`,
+        statusText: `Required scope(s) "${missingScopes}" not set for OAuth Key ${keyNum}. Check permissions for the OAuth consumer under Workspace settings at https://bitbucket.org/${this.config.workspace}/workspace/settings/api`,
       });
     }
   }
