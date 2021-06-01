@@ -39,7 +39,7 @@ interface BitbucketPage<T> {
 interface BitbucketClientOptions {
   oauthKey: string;
   oauthSecret: string;
-  workspace: string;
+  workspace?: string[];
   ingestPullRequests?: boolean;
 }
 
@@ -150,11 +150,15 @@ export default class BitbucketClient {
       missingScopes.push('Pull requests');
     }
     if (missingScopes.length > 0) {
+      let statusText = `Required scope(s) "${missingScopes}" not set for OAuth Key ${keyNum}. Check permissions for the OAuth consumer under Workspace settings.`;
+      if (this.config.workspace) {
+        statusText = `Required scope(s) "${missingScopes}" not set for OAuth Key ${keyNum}. Check permissions for the OAuth consumer under Workspace settings at https://bitbucket.org/${this.config.workspace[0]}/workspace/settings/api`;
+      }
       throw new IntegrationProviderAuthenticationError({
         cause: undefined,
         endpoint: `https://bitbucket.org/site/oauth2/access_token`,
         status: 'Insufficient scope for token',
-        statusText: `Required scope(s) "${missingScopes}" not set for OAuth Key ${keyNum}. Check permissions for the OAuth consumer under Workspace settings at https://bitbucket.org/${this.config.workspace}/workspace/settings/api`,
+        statusText: statusText,
       });
     }
   }

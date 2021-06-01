@@ -34,7 +34,7 @@ export class APIClient {
       this.bitbucket = new BitbucketClient(context.logger, {
         oauthKey: config.oauthKey,
         oauthSecret: config.oauthSecret,
-        workspace: config.workspace[0], //only used for error reporting
+        workspace: config.workspace, //only used for error reporting
         ingestPullRequests: config.ingestPullRequests,
       });
     } catch (err) {
