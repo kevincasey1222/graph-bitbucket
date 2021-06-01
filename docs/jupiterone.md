@@ -118,10 +118,10 @@ You can get around this limit by adding additional OAuth consumers to your
 Bitbucket workspace, and then updating your JupiterOne Bitbucket integration
 configuration to use a comma-delimited list of OAuth keys and secrets.
 
-To do so, put the comma-delimited list of OAuth client keys (with no spaces), in
-the **Bitbucket Client Key** field of your integration configuration. Do the
-same for the matching OAuth client secrets in the **Bitbucket Client Secret**
-field, being careful to make sure the secrets are in the same order as the keys.
+To do so, put the comma-delimited list of OAuth client keys in the **Bitbucket
+Client Key** field of your integration configuration. Do the same for the
+matching OAuth client secrets in the **Bitbucket Client Secret** field, being
+careful to make sure the secrets are in the same order as the keys.
 
 Note that the integration will attempt to validate all of the key/secret pairs
 before starting ingestion, and throw an error if any of them is invalid.

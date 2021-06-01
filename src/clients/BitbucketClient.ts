@@ -95,8 +95,10 @@ export default class BitbucketClient {
       throw new Error('"oauthKey(s)" and "oauthSecret(s)" are required');
     }
 
-    const oauthKeys = this.config.oauthKey.split(',');
-    const oauthSecrets = this.config.oauthSecret.split(',');
+    //the .replace just removes any white spaces in the string,
+    //in case someone did 'key1, key2, key3', or with tabs, or whatever
+    const oauthKeys = this.config.oauthKey.replace(/\s+/g, '').split(',');
+    const oauthSecrets = this.config.oauthSecret.replace(/\s+/g, '').split(',');
     if (!(oauthKeys.length === oauthSecrets.length)) {
       throw new IntegrationValidationError(
         'Number of comma-delimited OAuth keys and secrets differ in the config',
