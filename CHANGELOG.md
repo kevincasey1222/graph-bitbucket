@@ -8,6 +8,23 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 2021-06-22 - v1.1.0
+
+### Added
+
+- New config variable enrichedPrs that toggles pulling PRs individually in order
+  to get Reviewer data.
+- Scope checking to the access token validation.
+
+### Changed
+
+- ingestPullRequests config variable now uses the getStartStepStates pattern, so
+  that the step doesn't run at all if ingestPullRequests is false.
+
+### Updated
+
+- Documentation.
+
 ## 2021-05-28 - v1.0.0
 
 ### Updated
