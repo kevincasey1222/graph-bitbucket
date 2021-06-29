@@ -163,6 +163,7 @@ The following entities are created:
 
 | Resources              | Entity `_type`          | Entity `_class` |
 | ---------------------- | ----------------------- | --------------- |
+| Bitbucket Group        | `bitbucket_group`       | `UserGroup`     |
 | Bitbucket Project      | `bitbucket_project`     | `Project`       |
 | Bitbucket Pull Request | `bitbucket_pullrequest` | `Review`, `PR`  |
 | Bitbucket Repo         | `bitbucket_repo`        | `CodeRepo`      |
@@ -175,11 +176,14 @@ The following relationships are created/mapped:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type`   |
 | --------------------- | --------------------- | ----------------------- |
+| `bitbucket_group`     | **HAS**               | `bitbucket_user`        |
 | `bitbucket_project`   | **HAS**               | `bitbucket_repo`        |
 | `bitbucket_repo`      | **HAS**               | `bitbucket_pullrequest` |
 | `bitbucket_user`      | **APPROVED**          | `bitbucket_pullrequest` |
 | `bitbucket_user`      | **OPENED**            | `bitbucket_pullrequest` |
+| `bitbucket_user`      | **OWNS**              | `bitbucket_group`       |
 | `bitbucket_user`      | **REVIEWED**          | `bitbucket_pullrequest` |
+| `bitbucket_workspace` | **HAS**               | `bitbucket_group`       |
 | `bitbucket_workspace` | **HAS**               | `bitbucket_user`        |
 | `bitbucket_workspace` | **OWNS**              | `bitbucket_project`     |
 | `bitbucket_workspace` | **OWNS**              | `bitbucket_repo`        |

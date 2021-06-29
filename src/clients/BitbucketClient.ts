@@ -16,11 +16,13 @@ import {
   BitbucketProject,
   BitbucketRepo,
   BitbucketUser,
+  BitbucketGroup,
   BitbucketWorkspace,
   BitbucketWorkspaceMembership,
 } from '../types';
 
 const BASE_API_URL = 'https://bitbucket.org/api/2.0/';
+const OLD_BASE_API_URL = 'https://bitbucket.org/api/1.0/'; //required for groups
 
 interface OAuthAccessTokenResponse {
   access_token: string;
@@ -53,6 +55,7 @@ interface BitbucketAPICalls {
   diff: number;
   workspaceMembers: number;
   user: number;
+  groups: number;
   projects: number;
   project: number;
   workspaces: number;
@@ -82,6 +85,7 @@ export default class BitbucketClient {
       diff: 0,
       workspaceMembers: 0,
       user: 0,
+      groups: 0,
       projects: 0,
       project: 0,
       workspaces: 0,
@@ -172,6 +176,7 @@ export default class BitbucketClient {
     url: string,
     options?: {
       ignoreNotFound?: boolean;
+      useOldApi?: boolean;
     },
   ) {
     if (!this.accessTokens) {
@@ -180,7 +185,11 @@ export default class BitbucketClient {
     try {
       this.logger.info(`Requesting ${url}...`);
       if (!url.startsWith('https://')) {
-        url = urlJoin(BASE_API_URL, url);
+        if (options?.useOldApi) {
+          url = urlJoin(OLD_BASE_API_URL, url);
+        } else {
+          url = urlJoin(BASE_API_URL, url);
+        }
       }
 
       const response = await fetch(url, {
@@ -260,6 +269,7 @@ export default class BitbucketClient {
     options: {
       firstUri: string;
       ignoreNotFound?: boolean;
+      useOldApi?: boolean;
     },
     eachFn: (page: BitbucketPage<T>) => void,
   ) {
@@ -271,14 +281,26 @@ export default class BitbucketClient {
         options,
       );
 
-      const page: any = response.data;
+      let page: any = response.data;
 
       if (page) {
+        if (options.useOldApi) {
+          //api 1.0
+          //we need to wrap the response to make things work
+          page = {
+            size: page.length,
+            page: 1,
+            values: page,
+          };
+        }
         eachFn(page);
       }
 
       if (page?.next) {
-        if (!page.next.startsWith(BASE_API_URL)) {
+        if (
+          !page.next.startsWith(BASE_API_URL) &&
+          !page.next.startsWith(OLD_BASE_API_URL)
+        ) {
           throw new Error(
             `The next page URL, ${page.next}, does not start with the expected base API URL ${BASE_API_URL}`,
           );
@@ -294,7 +316,8 @@ export default class BitbucketClient {
   async collectAllPages<T>(
     firstUri: string,
     options?: {
-      ignoreNotFound: boolean;
+      ignoreNotFound?: boolean;
+      useOldApi?: boolean;
     },
   ): Promise<{ results: T[]; calls: number }> {
     const results: T[] = [];
@@ -420,6 +443,15 @@ export default class BitbucketClient {
     const response = await this.makeGetRequest<BitbucketUser>(`users/${uuid}`);
     this.calls.user++;
     return response.data;
+  }
+
+  async getAllWorkspaceGroups(workspace: string): Promise<BitbucketGroup[]> {
+    const { results, calls } = await this.collectAllPages<BitbucketGroup>(
+      `groups/${workspace}`,
+      { useOldApi: true },
+    );
+    this.calls.groups += calls;
+    return results;
   }
 
   async getAllWorkspaceMembers(workspace: string): Promise<BitbucketUser[]> {

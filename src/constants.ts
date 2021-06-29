@@ -6,15 +6,24 @@ export const BITBUCKET_WORKSPACE_REPO_RELATIONSHIP_TYPE =
   'bitbucket_workspace_owns_repo';
 export const BITBUCKET_WORKSPACE_PROJECT_RELATIONSHIP_TYPE =
   'bitbucket_workspace_owns_project';
+export const BITBUCKET_WORKSPACE_GROUP_RELATIONSHIP_TYPE =
+  'bitbucket_workspace_has_group';
 
 export const BITBUCKET_USER_ENTITY_TYPE = 'bitbucket_user';
 export const BITBUCKET_USER_ENTITY_CLASS = 'User';
+export const BITBUCKET_USER_GROUP_RELATIONSHIP_TYPE =
+  'bitbucket_user_owns_group';
 export const BITBUCKET_USER_OPENED_PR_RELATIONSHIP_TYPE =
   'bitbucket_user_opened_pullrequest';
 export const BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE =
   'bitbucket_user_reviewed_pullrequest';
 export const BITBUCKET_USER_APPROVED_PR_RELATIONSHIP_TYPE =
   'bitbucket_user_approved_pullrequest';
+
+export const BITBUCKET_GROUP_ENTITY_TYPE = 'bitbucket_group';
+export const BITBUCKET_GROUP_ENTITY_CLASS = 'UserGroup';
+export const BITBUCKET_GROUP_USER_RELATIONSHIP_TYPE =
+  'bitbucket_group_has_user';
 
 export const BITBUCKET_REPO_ENTITY_TYPE = 'bitbucket_repo';
 export const BITBUCKET_REPO_ENTITY_CLASS = 'CodeRepo';

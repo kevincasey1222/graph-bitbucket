@@ -11,6 +11,8 @@ import {
   BITBUCKET_USER_APPROVED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_ENTITY_CLASS,
   BITBUCKET_USER_ENTITY_TYPE,
+  BITBUCKET_GROUP_ENTITY_CLASS,
+  BITBUCKET_GROUP_ENTITY_TYPE,
   BITBUCKET_USER_OPENED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_WORKSPACE_ENTITY_CLASS,
@@ -18,6 +20,7 @@ import {
   BITBUCKET_WORKSPACE_PROJECT_RELATIONSHIP_TYPE,
   BITBUCKET_WORKSPACE_REPO_RELATIONSHIP_TYPE,
   BITBUCKET_WORKSPACE_USER_RELATIONSHIP_TYPE,
+  BITBUCKET_WORKSPACE_GROUP_RELATIONSHIP_TYPE,
 } from '../constants';
 import {
   BitbucketCommit,
@@ -32,12 +35,15 @@ import {
   BitbucketRepoPullRequestRelationship,
   BitbucketUser,
   BitbucketUserEntity,
+  BitbucketGroup,
+  BitbucketGroupEntity,
   BitbucketUserPullRequestRelationship,
   BitbucketWorkspace,
   BitbucketWorkspaceEntity,
   BitbucketWorkspaceProjectRelationship,
   BitbucketWorkspaceRepoRelationship,
   BitbucketWorkspaceUserRelationship,
+  BitbucketWorkspaceGroupRelationship,
   IdEntityMap,
 } from '../types';
 import { Approval } from './approval/parsePRActivity';
@@ -81,6 +87,24 @@ export function convertUserToEntity(user: BitbucketUser): BitbucketUserEntity {
     username: user.display_name, //this was not set by the old integration
   };
   return userEntity;
+}
+
+export function convertGroupToEntity(
+  group: BitbucketGroup,
+): BitbucketGroupEntity {
+  const groupEntity: BitbucketGroupEntity = {
+    _type: BITBUCKET_GROUP_ENTITY_TYPE,
+    _class: BITBUCKET_GROUP_ENTITY_CLASS,
+    _key: group.name, //there is no uuid in API v.1.0 objects
+    displayName: group.name,
+    name: group.name,
+    permission: group.permission,
+    autoAdd: group.auto_add,
+    slug: group.slug,
+    //could iterate members and owner for user uuids here and set properties of those
+    //but let's let those exist via relationships
+  };
+  return groupEntity;
 }
 
 export function convertRepoToEntity(
@@ -229,6 +253,20 @@ export function convertWorkspaceUserToRelationship(
     _type: BITBUCKET_WORKSPACE_USER_RELATIONSHIP_TYPE,
     _fromEntityKey: workspace._key,
     _toEntityKey: user._key,
+    displayName: 'HAS',
+  };
+}
+
+export function convertWorkspaceGroupToRelationship(
+  workspace: BitbucketWorkspaceEntity,
+  group: BitbucketGroupEntity,
+): BitbucketWorkspaceGroupRelationship {
+  return {
+    _key: `${workspace._key}|has|${group._key}`,
+    _class: 'HAS',
+    _type: BITBUCKET_WORKSPACE_GROUP_RELATIONSHIP_TYPE,
+    _fromEntityKey: workspace._key,
+    _toEntityKey: group._key,
     displayName: 'HAS',
   };
 }

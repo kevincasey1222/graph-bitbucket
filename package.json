@@ -33,11 +33,11 @@
     "uuid": "^8.3.2"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^6.3.0"
+    "@jupiterone/integration-sdk-core": "^6.7.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^6.3.0",
-    "@jupiterone/integration-sdk-dev-tools": "^6.3.0",
-    "@jupiterone/integration-sdk-testing": "^6.3.0"
+    "@jupiterone/integration-sdk-core": "^6.7.0",
+    "@jupiterone/integration-sdk-dev-tools": "^6.7.0",
+    "@jupiterone/integration-sdk-testing": "^6.7.0"
   }
 }

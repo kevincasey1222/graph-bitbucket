@@ -19,6 +19,7 @@ export default async function getStepStartStates(
   return {
     ['fetch-workspaces']: { disabled: false },
     ['fetch-users']: { disabled: false },
+    ['fetch-groups']: { disabled: false },
     ['fetch-projects']: { disabled: false },
     ['fetch-repos']: { disabled: false },
     ['fetch-prs']: { disabled: !config.ingestPullRequests },
