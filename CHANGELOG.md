@@ -8,6 +8,23 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 2021-06-29 - v1.2.0
+
+### Added
+
+- Added Groups, which pulls from API v.1.0 because that's the only place that
+  supports it
+- Support for API v.1.0 calls
+
+### Changed
+
+- Improved efficiency on managing objects in memory
+
+### Updated
+
+- Documentation.
+- SDK version.
+
 ## 2021-06-22 - v1.1.0
 
 ### Added

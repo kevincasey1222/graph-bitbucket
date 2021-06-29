@@ -2,8 +2,8 @@
 
 ## Bitbucket + JupiterOne Integration Benefits
 
-- Visualize Bitbucket workspaces, projects, repos, pull requests, and users in
-  the JupiterOne graph.
+- Visualize Bitbucket workspaces, projects, repos, pull requests, groups, and
+  users in the JupiterOne graph.
 - Map Bitbucket users to employees in your JupiterOne account.
 - Monitor changes to Bitbucket users using JupiterOne alerts.
 - Track which Bitbucket users opened, reviewed, and approved Bitbucket pull
@@ -11,8 +11,8 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches workspaces, projects, repos, and users from
-  Bitbucket to update the graph.
+- JupiterOne periodically fetches workspaces, projects, repos, groups, and users
+  from Bitbucket to update the graph.
 - Optionally, JupiterOne fetches pull requests from the last 24 hours, along
   with user activity on those PRs, and adds that information to the graph.
 - Write JupiterOne queries to review and monitor updates to the graph, or
