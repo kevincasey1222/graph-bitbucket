@@ -3,6 +3,7 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   RelationshipClass,
+  IntegrationMissingKeyError,
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../client';
@@ -10,6 +11,8 @@ import { IntegrationConfig, sanitizeConfig } from '../config';
 import {
   convertGroupToEntity,
   convertWorkspaceGroupToRelationship,
+  convertGroupUserToRelationship,
+  convertUserGroupToRelationship,
 } from '../sync/converters';
 import {
   BITBUCKET_WORKSPACE_ENTITY_TYPE,
@@ -20,7 +23,12 @@ import {
   BITBUCKET_GROUP_USER_RELATIONSHIP_TYPE,
   BITBUCKET_USER_GROUP_RELATIONSHIP_TYPE,
 } from '../constants';
-import { BitbucketWorkspaceEntity, BitbucketGroupEntity } from '../types';
+import {
+  BitbucketWorkspaceEntity,
+  BitbucketGroupEntity,
+  IdEntityMap,
+  BitbucketUserEntity,
+} from '../types';
 
 export async function fetchGroups(
   context: IntegrationStepExecutionContext<IntegrationConfig>,
@@ -30,6 +38,16 @@ export async function fetchGroups(
     sanitizeConfig(context.instance.config),
     context,
   );
+
+  const userByIdMap = await jobState.getData<IdEntityMap<BitbucketUserEntity>>(
+    'USER_BY_UUID_MAP',
+  );
+
+  if (!userByIdMap) {
+    throw new IntegrationMissingKeyError(
+      `Expected to find userByIdMap in jobState.`,
+    );
+  }
 
   await jobState.iterateEntities(
     {
@@ -53,7 +71,31 @@ export async function fetchGroups(
           await jobState.addRelationship(
             convertWorkspaceGroupToRelationship(workspace, groupEntity),
           );
-          //and add relationships group HAS users and one user OWNS group
+
+          for (const user of group.members) {
+            if (user.uuid) {
+              if (userByIdMap[user.uuid]) {
+                await jobState.addRelationship(
+                  convertGroupUserToRelationship(
+                    groupEntity,
+                    userByIdMap[user.uuid],
+                  ),
+                );
+              }
+            }
+          }
+
+          const owner = group.owner;
+          if (owner.uuid) {
+            if (userByIdMap[owner.uuid]) {
+              await jobState.addRelationship(
+                convertUserGroupToRelationship(
+                  userByIdMap[owner.uuid],
+                  groupEntity,
+                ),
+              );
+            }
+          }
         });
       }
     },

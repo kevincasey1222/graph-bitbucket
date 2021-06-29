@@ -17,7 +17,11 @@ import {
   BITBUCKET_USER_ENTITY_CLASS,
   BITBUCKET_WORKSPACE_USER_RELATIONSHIP_TYPE,
 } from '../constants';
-import { BitbucketWorkspaceEntity, BitbucketUserEntity } from '../types';
+import {
+  BitbucketWorkspaceEntity,
+  BitbucketUserEntity,
+  IdEntityMap,
+} from '../types';
 
 export async function fetchUsers(
   context: IntegrationStepExecutionContext<IntegrationConfig>,
@@ -27,6 +31,8 @@ export async function fetchUsers(
     sanitizeConfig(context.instance.config),
     context,
   );
+
+  const userByIdMap: IdEntityMap<BitbucketUserEntity> = {};
 
   await jobState.iterateEntities(
     {
@@ -51,10 +57,13 @@ export async function fetchUsers(
           await jobState.addRelationship(
             convertWorkspaceUserToRelationship(workspace, userEntity),
           );
+          userByIdMap[user.uuid] = userEntity;
         });
       }
     },
   );
+
+  await jobState.setData('USER_BY_UUID_MAP', userByIdMap);
 }
 
 export const userSteps: IntegrationStep<IntegrationConfig>[] = [

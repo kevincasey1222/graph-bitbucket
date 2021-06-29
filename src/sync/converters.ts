@@ -13,6 +13,8 @@ import {
   BITBUCKET_USER_ENTITY_TYPE,
   BITBUCKET_GROUP_ENTITY_CLASS,
   BITBUCKET_GROUP_ENTITY_TYPE,
+  BITBUCKET_GROUP_USER_RELATIONSHIP_TYPE,
+  BITBUCKET_USER_GROUP_RELATIONSHIP_TYPE,
   BITBUCKET_USER_OPENED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_WORKSPACE_ENTITY_CLASS,
@@ -44,6 +46,8 @@ import {
   BitbucketWorkspaceRepoRelationship,
   BitbucketWorkspaceUserRelationship,
   BitbucketWorkspaceGroupRelationship,
+  BitbucketGroupUserRelationship,
+  BitbucketUserGroupRelationship,
   IdEntityMap,
 } from '../types';
 import { Approval } from './approval/parsePRActivity';
@@ -324,6 +328,34 @@ export function convertRepoPRToRelationship(
     _fromEntityKey: repo._key,
     _toEntityKey: pullrequest._key,
     displayName: 'HAS',
+  };
+}
+
+export function convertGroupUserToRelationship(
+  group: BitbucketGroupEntity,
+  user: BitbucketUserEntity,
+): BitbucketGroupUserRelationship {
+  return {
+    _key: `${group._key}|has|${user._key}`,
+    _class: 'HAS',
+    _type: BITBUCKET_GROUP_USER_RELATIONSHIP_TYPE,
+    _fromEntityKey: group._key,
+    _toEntityKey: user._key,
+    displayName: 'HAS',
+  };
+}
+
+export function convertUserGroupToRelationship(
+  user: BitbucketUserEntity,
+  group: BitbucketGroupEntity,
+): BitbucketUserGroupRelationship {
+  return {
+    _key: `${user._key}|owns|${group._key}`,
+    _class: 'OWNS',
+    _type: BITBUCKET_USER_GROUP_RELATIONSHIP_TYPE,
+    _fromEntityKey: user._key,
+    _toEntityKey: group._key,
+    displayName: 'OWNS',
   };
 }
 
