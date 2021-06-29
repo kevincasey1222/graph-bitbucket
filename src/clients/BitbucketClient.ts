@@ -183,7 +183,6 @@ export default class BitbucketClient {
       await this.authenticate();
     }
     try {
-      this.logger.info(`Requesting ${url}...`);
       if (!url.startsWith('https://')) {
         if (options?.useOldApi) {
           url = urlJoin(OLD_BASE_API_URL, url);
@@ -191,6 +190,7 @@ export default class BitbucketClient {
           url = urlJoin(BASE_API_URL, url);
         }
       }
+      this.logger.info(`Requesting ${url}...`);
 
       const response = await fetch(url, {
         method: 'GET',

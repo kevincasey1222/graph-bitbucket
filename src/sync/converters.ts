@@ -99,7 +99,7 @@ export function convertGroupToEntity(
   const groupEntity: BitbucketGroupEntity = {
     _type: BITBUCKET_GROUP_ENTITY_TYPE,
     _class: BITBUCKET_GROUP_ENTITY_CLASS,
-    _key: group.name, //there is no uuid in API v.1.0 objects
+    _key: `bitbucket-group: ${group.name}`, //there is no uuid in API v.1.0 objects
     displayName: group.name,
     name: group.name,
     permission: group.permission,

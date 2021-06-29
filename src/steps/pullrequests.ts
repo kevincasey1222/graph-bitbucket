@@ -3,7 +3,7 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   RelationshipClass,
-  IntegrationMissingKeyError,
+  IntegrationError,
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../client';
@@ -49,17 +49,19 @@ export async function fetchPRs(
   );
 
   if (!userByIdMap) {
-    throw new IntegrationMissingKeyError(
-      `Expected to find userByIdMap in jobState.`,
-    );
+    throw new IntegrationError({
+      code: 'DATA_NOT_FOUND',
+      message: "Required data not found in job state: 'USER_BY_UUID_MAP'",
+    });
   }
 
   const userIds = await jobState.getData<string[]>('USER_ID_ARRAY');
 
   if (!userIds) {
-    throw new IntegrationMissingKeyError(
-      `Expected to find userIds in jobState.`,
-    );
+    throw new IntegrationError({
+      code: 'DATA_NOT_FOUND',
+      message: "Required data not found in job state: 'USER_ID_ARRAY'",
+    });
   }
 
   await jobState.iterateEntities(
