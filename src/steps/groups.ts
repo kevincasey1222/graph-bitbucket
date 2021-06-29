@@ -9,10 +9,10 @@ import {
 import { createAPIClient } from '../client';
 import { IntegrationConfig, sanitizeConfig } from '../config';
 import {
-  convertGroupToEntity,
-  convertWorkspaceGroupToRelationship,
-  convertGroupUserToRelationship,
-  convertUserGroupToRelationship,
+  createGroupEntity,
+  createWorkspaceHasGroupRelationship,
+  createGroupHasUserRelationship,
+  createUserOwnsGroupRelationship,
 } from '../sync/converters';
 import {
   BITBUCKET_WORKSPACE_ENTITY_TYPE,
@@ -63,7 +63,7 @@ export async function fetchGroups(
             createIntegrationEntity({
               entityData: {
                 source: group,
-                assign: convertGroupToEntity(group),
+                assign: createGroupEntity(group),
               },
             }),
           )) as BitbucketGroupEntity;
@@ -71,14 +71,14 @@ export async function fetchGroups(
             BitbucketWorkspaceEntity
           >workspaceEntity;
           await jobState.addRelationship(
-            convertWorkspaceGroupToRelationship(workspace, groupEntity),
+            createWorkspaceHasGroupRelationship(workspace, groupEntity),
           );
 
           for (const user of group.members) {
             if (user.uuid) {
               if (userByIdMap[user.uuid]) {
                 await jobState.addRelationship(
-                  convertGroupUserToRelationship(
+                  createGroupHasUserRelationship(
                     groupEntity,
                     userByIdMap[user.uuid],
                   ),
@@ -91,7 +91,7 @@ export async function fetchGroups(
           if (owner.uuid) {
             if (userByIdMap[owner.uuid]) {
               await jobState.addRelationship(
-                convertUserGroupToRelationship(
+                createUserOwnsGroupRelationship(
                   userByIdMap[owner.uuid],
                   groupEntity,
                 ),

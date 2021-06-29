@@ -62,7 +62,7 @@ function getTime(input) {
   return parseTimePropertyValue(input);
 }
 
-export function convertWorkspaceToEntity(
+export function createWorkspaceEntity(
   workspace: BitbucketWorkspace,
 ): BitbucketWorkspaceEntity {
   const workspaceEntity: BitbucketWorkspaceEntity = {
@@ -80,7 +80,7 @@ export function convertWorkspaceToEntity(
   return workspaceEntity;
 }
 
-export function convertUserToEntity(user: BitbucketUser): BitbucketUserEntity {
+export function createUserEntity(user: BitbucketUser): BitbucketUserEntity {
   const userEntity: BitbucketUserEntity = {
     _type: BITBUCKET_USER_ENTITY_TYPE,
     _class: BITBUCKET_USER_ENTITY_CLASS,
@@ -93,9 +93,7 @@ export function convertUserToEntity(user: BitbucketUser): BitbucketUserEntity {
   return userEntity;
 }
 
-export function convertGroupToEntity(
-  group: BitbucketGroup,
-): BitbucketGroupEntity {
+export function createGroupEntity(group: BitbucketGroup): BitbucketGroupEntity {
   const groupEntity: BitbucketGroupEntity = {
     _type: BITBUCKET_GROUP_ENTITY_TYPE,
     _class: BITBUCKET_GROUP_ENTITY_CLASS,
@@ -111,7 +109,7 @@ export function convertGroupToEntity(
   return groupEntity;
 }
 
-export function convertRepoToEntity(
+export function createRepoEntity(
   accountUUID: string,
   repo: BitbucketRepo,
 ): BitbucketRepoEntity {
@@ -133,7 +131,7 @@ export function convertRepoToEntity(
   return repoEntity;
 }
 
-export function convertProjectToEntity(
+export function createProjectEntity(
   workspace: string,
   project: BitbucketProject,
 ): BitbucketProjectEntity {
@@ -165,7 +163,7 @@ export interface PRConverterInput {
   usersByUUID?: IdEntityMap<BitbucketUserEntity>;
 }
 
-export function convertPRToEntity({
+export function createPrEntity({
   accountUUID,
   pullRequest,
   commits,
@@ -247,7 +245,7 @@ export function convertPRToEntity({
   return prEntity;
 }
 
-export function convertWorkspaceUserToRelationship(
+export function createWorkspaceHasUserRelationship(
   workspace: BitbucketWorkspaceEntity,
   user: BitbucketUserEntity,
 ): BitbucketWorkspaceUserRelationship {
@@ -261,7 +259,7 @@ export function convertWorkspaceUserToRelationship(
   };
 }
 
-export function convertWorkspaceGroupToRelationship(
+export function createWorkspaceHasGroupRelationship(
   workspace: BitbucketWorkspaceEntity,
   group: BitbucketGroupEntity,
 ): BitbucketWorkspaceGroupRelationship {
@@ -275,7 +273,7 @@ export function convertWorkspaceGroupToRelationship(
   };
 }
 
-export function convertWorkspaceRepoToRelationship(
+export function createWorkspaceOwnsRepoRelationship(
   workspace: BitbucketWorkspaceEntity,
   repo: BitbucketRepoEntity,
 ): BitbucketWorkspaceRepoRelationship {
@@ -289,7 +287,7 @@ export function convertWorkspaceRepoToRelationship(
   };
 }
 
-export function convertWorkspaceProjectToRelationship(
+export function createWorkspaceOwnsProjectRelationship(
   workspace: BitbucketWorkspaceEntity,
   project: BitbucketProjectEntity,
 ): BitbucketWorkspaceProjectRelationship {
@@ -303,7 +301,7 @@ export function convertWorkspaceProjectToRelationship(
   };
 }
 
-export function convertProjectRepoToRelationship(
+export function createProjectHasRepoRelationship(
   project: BitbucketProjectEntity,
   repo: BitbucketRepoEntity,
 ): BitbucketProjectRepoRelationship {
@@ -317,7 +315,7 @@ export function convertProjectRepoToRelationship(
   };
 }
 
-export function convertRepoPRToRelationship(
+export function createRepoHasPrRelationship(
   repo: BitbucketRepoEntity,
   pullrequest: BitbucketPullRequestEntity,
 ): BitbucketRepoPullRequestRelationship {
@@ -331,7 +329,7 @@ export function convertRepoPRToRelationship(
   };
 }
 
-export function convertGroupUserToRelationship(
+export function createGroupHasUserRelationship(
   group: BitbucketGroupEntity,
   user: BitbucketUserEntity,
 ): BitbucketGroupUserRelationship {
@@ -345,7 +343,7 @@ export function convertGroupUserToRelationship(
   };
 }
 
-export function convertUserGroupToRelationship(
+export function createUserOwnsGroupRelationship(
   user: BitbucketUserEntity,
   group: BitbucketGroupEntity,
 ): BitbucketUserGroupRelationship {
@@ -359,7 +357,7 @@ export function convertUserGroupToRelationship(
   };
 }
 
-export function convertUserOpenedPRToRelationship(
+export function createUserOpenedPrRelationship(
   user: BitbucketUserEntity,
   pullrequest: BitbucketPullRequestEntity,
 ): BitbucketUserPullRequestRelationship {
@@ -373,7 +371,7 @@ export function convertUserOpenedPRToRelationship(
   };
 }
 
-export function convertUserReviewedPRToRelationship(
+export function createUserReviewedPrRelationship(
   user: BitbucketUserEntity,
   pullrequest: BitbucketPullRequestEntity,
 ): BitbucketUserPullRequestRelationship {
@@ -387,7 +385,7 @@ export function convertUserReviewedPRToRelationship(
   };
 }
 
-export function convertUserApprovedPRToRelationship(
+export function createUserApprovedPrRelationship(
   user: BitbucketUserEntity,
   pullrequest: BitbucketPullRequestEntity,
 ): BitbucketUserPullRequestRelationship {

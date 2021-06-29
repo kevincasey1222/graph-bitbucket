@@ -8,8 +8,8 @@ import {
 import { createAPIClient } from '../client';
 import { IntegrationConfig, sanitizeConfig } from '../config';
 import {
-  convertUserToEntity,
-  convertWorkspaceUserToRelationship,
+  createUserEntity,
+  createWorkspaceHasUserRelationship,
 } from '../sync/converters';
 import {
   BITBUCKET_WORKSPACE_ENTITY_TYPE,
@@ -46,7 +46,7 @@ export async function fetchUsers(
       if (workspaceEntity.slug) {
         const slug: string = <string>workspaceEntity.slug;
         await apiClient.iterateUsers(slug, async (user) => {
-          const convertedUser = convertUserToEntity(user);
+          const convertedUser = createUserEntity(user);
           const userEntity = (await jobState.addEntity(
             createIntegrationEntity({
               entityData: {
@@ -59,7 +59,7 @@ export async function fetchUsers(
             BitbucketWorkspaceEntity
           >workspaceEntity;
           await jobState.addRelationship(
-            convertWorkspaceUserToRelationship(workspace, userEntity),
+            createWorkspaceHasUserRelationship(workspace, userEntity),
           );
           userByIdMap[user.uuid] = userEntity;
           userIds.push(userEntity._key);

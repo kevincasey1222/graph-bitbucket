@@ -9,9 +9,9 @@ import {
 import { createAPIClient } from '../client';
 import { IntegrationConfig, sanitizeConfig } from '../config';
 import {
-  convertRepoToEntity,
-  convertWorkspaceRepoToRelationship,
-  convertProjectRepoToRelationship,
+  createRepoEntity,
+  createWorkspaceOwnsRepoRelationship,
+  createProjectHasRepoRelationship,
 } from '../sync/converters';
 import {
   BITBUCKET_WORKSPACE_ENTITY_TYPE,
@@ -47,7 +47,7 @@ export async function fetchRepos(
           createIntegrationEntity({
             entityData: {
               source: repo,
-              assign: convertRepoToEntity(workspaceUuid, repo),
+              assign: createRepoEntity(workspaceUuid, repo),
             },
           }),
         )) as BitbucketRepoEntity;
@@ -56,7 +56,7 @@ export async function fetchRepos(
           workspaceEntity
         );
         await jobState.addRelationship(
-          convertWorkspaceRepoToRelationship(workspace, repoEntity),
+          createWorkspaceOwnsRepoRelationship(workspace, repoEntity),
         );
 
         //go get the project entity and map a relationship
@@ -70,7 +70,7 @@ export async function fetchRepos(
             );
           }
           await jobState.addRelationship(
-            convertProjectRepoToRelationship(projectEntity, repoEntity),
+            createProjectHasRepoRelationship(projectEntity, repoEntity),
           );
         }
       });
