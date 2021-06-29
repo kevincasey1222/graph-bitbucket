@@ -3,6 +3,7 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   RelationshipClass,
+  IntegrationMissingKeyError,
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../client';
@@ -43,27 +44,23 @@ export async function fetchPRs(
     context,
   );
 
-  // old integration helper and converter code requires a map of user._key -> userEntity,
-  // and an array of the user._key
-  // ultimately these helpers are just returning a displayName for certain userIDs,
-  // which we could get while processing the PR since we have to get the user entities
-  // from the graph anyway in order to make relationships,
-  // but due to the structure of helper and converter functions,
-  // and a desire to minimize diffs,
-  // we'll produce this map and array here for use below
-
-  let userIds: string[] = [];
-  const userByIdMap: IdEntityMap<BitbucketUserEntity> = {};
-
-  await jobState.iterateEntities(
-    {
-      _type: BITBUCKET_USER_ENTITY_TYPE,
-    },
-    (userEntity) => {
-      userIds = [...userIds, userEntity._key];
-      userByIdMap[userEntity._key] = <BitbucketUserEntity>userEntity;
-    },
+  const userByIdMap = await jobState.getData<IdEntityMap<BitbucketUserEntity>>(
+    'USER_BY_UUID_MAP',
   );
+
+  if (!userByIdMap) {
+    throw new IntegrationMissingKeyError(
+      `Expected to find userByIdMap in jobState.`,
+    );
+  }
+
+  const userIds = await jobState.getData<string[]>('USER_ID_ARRAY');
+
+  if (!userIds) {
+    throw new IntegrationMissingKeyError(
+      `Expected to find userIds in jobState.`,
+    );
+  }
 
   await jobState.iterateEntities(
     {

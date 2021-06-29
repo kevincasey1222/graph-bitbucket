@@ -32,7 +32,9 @@ export async function fetchUsers(
     context,
   );
 
+  //an array and a map are needed later by other steps
   const userByIdMap: IdEntityMap<BitbucketUserEntity> = {};
+  const userIds: string[] = [];
 
   await jobState.iterateEntities(
     {
@@ -58,12 +60,14 @@ export async function fetchUsers(
             convertWorkspaceUserToRelationship(workspace, userEntity),
           );
           userByIdMap[user.uuid] = userEntity;
+          userIds.push(userEntity._key);
         });
       }
     },
   );
 
   await jobState.setData('USER_BY_UUID_MAP', userByIdMap);
+  await jobState.setData('USER_ID_ARRAY', userIds);
 }
 
 export const userSteps: IntegrationStep<IntegrationConfig>[] = [
