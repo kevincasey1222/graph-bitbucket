@@ -27,6 +27,8 @@ import {
   BITBUCKET_USER_OPENED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_APPROVED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE,
+  DATA_USER_BY_ID_MAP,
+  DATA_USER_ID_ARRAY,
 } from '../constants';
 import {
   IdEntityMap,
@@ -45,7 +47,7 @@ export async function fetchPRs(
   );
 
   const userByIdMap = await jobState.getData<IdEntityMap<BitbucketUserEntity>>(
-    'USER_BY_UUID_MAP',
+    DATA_USER_BY_ID_MAP,
   );
 
   if (!userByIdMap) {
@@ -55,7 +57,7 @@ export async function fetchPRs(
     });
   }
 
-  const userIds = await jobState.getData<string[]>('USER_ID_ARRAY');
+  const userIds = await jobState.getData<string[]>(DATA_USER_ID_ARRAY);
 
   if (!userIds) {
     throw new IntegrationError({

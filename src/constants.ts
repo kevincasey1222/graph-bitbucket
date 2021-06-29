@@ -41,3 +41,6 @@ export const BITBUCKET_PR_ENTITY_CLASSES = [
   'Review',
   BITBUCKET_PR_ENTITY_PRIMARY_CLASS,
 ];
+
+export const DATA_USER_BY_ID_MAP = 'USER_BY_ID_MAP';
+export const DATA_USER_ID_ARRAY = 'USER_ID_ARRAY';

@@ -22,6 +22,7 @@ import {
   BITBUCKET_WORKSPACE_GROUP_RELATIONSHIP_TYPE,
   BITBUCKET_GROUP_USER_RELATIONSHIP_TYPE,
   BITBUCKET_USER_GROUP_RELATIONSHIP_TYPE,
+  DATA_USER_BY_ID_MAP,
 } from '../constants';
 import {
   BitbucketWorkspaceEntity,
@@ -40,7 +41,7 @@ export async function fetchGroups(
   );
 
   const userByIdMap = await jobState.getData<IdEntityMap<BitbucketUserEntity>>(
-    'USER_BY_UUID_MAP',
+    DATA_USER_BY_ID_MAP,
   );
 
   if (!userByIdMap) {

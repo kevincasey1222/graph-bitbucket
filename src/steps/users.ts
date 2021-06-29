@@ -16,6 +16,8 @@ import {
   BITBUCKET_USER_ENTITY_TYPE,
   BITBUCKET_USER_ENTITY_CLASS,
   BITBUCKET_WORKSPACE_USER_RELATIONSHIP_TYPE,
+  DATA_USER_BY_ID_MAP,
+  DATA_USER_ID_ARRAY,
 } from '../constants';
 import {
   BitbucketWorkspaceEntity,
@@ -66,8 +68,8 @@ export async function fetchUsers(
     },
   );
 
-  await jobState.setData('USER_BY_UUID_MAP', userByIdMap);
-  await jobState.setData('USER_ID_ARRAY', userIds);
+  await jobState.setData(DATA_USER_BY_ID_MAP, userByIdMap);
+  await jobState.setData(DATA_USER_ID_ARRAY, userIds);
 }
 
 export const userSteps: IntegrationStep<IntegrationConfig>[] = [
