@@ -18,9 +18,6 @@ Object {
               "avatar": Object {
                 "href": "https://bitbucket.org/workspaces/jupiterone-dev/avatar/?ts=1616114655",
               },
-              "hooks": Object {
-                "href": "https://bitbucket.org/!api/2.0/workspaces/jupiterone-dev/hooks",
-              },
               "html": Object {
                 "href": "https://bitbucket.org/jupiterone-dev/",
               },
@@ -63,27 +60,27 @@ Object {
       "_class": Array [
         "User",
       ],
-      "_key": "{89df9e73-a58a-4a26-8db9-8cb1b9d62955}",
+      "_key": "{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
       "_rawData": Array [
         Object {
           "name": "default",
           "rawData": Object {
-            "account_id": "5fa964870b4e3a006bfada9f",
+            "account_id": "5e779055ea2da70c2d23614b",
             "display_name": "User 0",
             "links": Object {
               "avatar": Object {
-                "href": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/5fa964870b4e3a006bfada9f/f10d90e5-290e-4d04-b760-1785a165f6bb/128",
+                "href": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/5e779055ea2da70c2d23614b/e78f3054-e58a-4054-826c-c68470f92e7d/128",
               },
               "html": Object {
-                "href": "https://bitbucket.org/%7B89df9e73-a58a-4a26-8db9-8cb1b9d62955%7D/",
+                "href": "https://bitbucket.org/%7B2f0561d5-c4c4-4cde-8082-f14a2122cb70%7D/",
               },
               "self": Object {
-                "href": "https://bitbucket.org/!api/2.0/users/%7B89df9e73-a58a-4a26-8db9-8cb1b9d62955%7D",
+                "href": "https://bitbucket.org/!api/2.0/users/%7B2f0561d5-c4c4-4cde-8082-f14a2122cb70%7D",
               },
             },
             "nickname": "Nickname 0",
             "type": "user",
-            "uuid": "{89df9e73-a58a-4a26-8db9-8cb1b9d62955}",
+            "uuid": "{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
           },
         },
       ],
@@ -128,41 +125,6 @@ Object {
       "name": "User 1",
       "nickname": "Nickname 1",
       "username": "User 1",
-    },
-    Object {
-      "_class": Array [
-        "User",
-      ],
-      "_key": "{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
-      "_rawData": Array [
-        Object {
-          "name": "default",
-          "rawData": Object {
-            "account_id": "5e779055ea2da70c2d23614b",
-            "display_name": "User 2",
-            "links": Object {
-              "avatar": Object {
-                "href": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/5e779055ea2da70c2d23614b/e78f3054-e58a-4054-826c-c68470f92e7d/128",
-              },
-              "html": Object {
-                "href": "https://bitbucket.org/%7B2f0561d5-c4c4-4cde-8082-f14a2122cb70%7D/",
-              },
-              "self": Object {
-                "href": "https://bitbucket.org/!api/2.0/users/%7B2f0561d5-c4c4-4cde-8082-f14a2122cb70%7D",
-              },
-            },
-            "nickname": "Nickname 2",
-            "type": "user",
-            "uuid": "{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
-          },
-        },
-      ],
-      "_type": "bitbucket_user",
-      "createdOn": undefined,
-      "displayName": "User 2",
-      "name": "User 2",
-      "nickname": "Nickname 2",
-      "username": "User 2",
     },
     Object {
       "_class": Array [
@@ -495,10 +457,10 @@ Object {
               "uuid": "{819a7369-1044-444e-921c-0124fec32830}",
             },
             "scm": "git",
-            "size": 89247,
+            "size": 63371,
             "slug": "project-a-repo-a",
             "type": "repository",
-            "updated_on": "2021-05-19T18:49:34.699444+00:00",
+            "updated_on": "2021-03-19T00:45:46.345467+00:00",
             "uuid": "{2408f9ea-6d10-4897-84c5-aeeffb1b4c14}",
             "website": null,
             "workspace": Object {
@@ -531,7 +493,7 @@ Object {
       "ownerId": "{5ade5777-444d-4a40-bc89-1d43b04487a7}",
       "projectId": "{819a7369-1044-444e-921c-0124fec32830}",
       "public": false,
-      "updatedOn": 1621450174699,
+      "updatedOn": 1616114746345,
       "webLink": "https://bitbucket.org/jupiterone-dev/project-a-repo-a",
     },
     Object {
@@ -683,8 +645,8 @@ Object {
     Object {
       "_class": "HAS",
       "_fromEntityKey": "{5ade5777-444d-4a40-bc89-1d43b04487a7}",
-      "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|has|{89df9e73-a58a-4a26-8db9-8cb1b9d62955}",
-      "_toEntityKey": "{89df9e73-a58a-4a26-8db9-8cb1b9d62955}",
+      "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|has|{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
+      "_toEntityKey": "{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
       "_type": "bitbucket_workspace_has_user",
       "displayName": "HAS",
     },
@@ -693,14 +655,6 @@ Object {
       "_fromEntityKey": "{5ade5777-444d-4a40-bc89-1d43b04487a7}",
       "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|has|{f1eb42cf-0d64-4bb9-bac5-459b83d9f0ed}",
       "_toEntityKey": "{f1eb42cf-0d64-4bb9-bac5-459b83d9f0ed}",
-      "_type": "bitbucket_workspace_has_user",
-      "displayName": "HAS",
-    },
-    Object {
-      "_class": "HAS",
-      "_fromEntityKey": "{5ade5777-444d-4a40-bc89-1d43b04487a7}",
-      "_key": "{5ade5777-444d-4a40-bc89-1d43b04487a7}|has|{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
-      "_toEntityKey": "{2f0561d5-c4c4-4cde-8082-f14a2122cb70}",
       "_type": "bitbucket_workspace_has_user",
       "displayName": "HAS",
     },
@@ -725,14 +679,6 @@ Object {
       "_fromEntityKey": "bitbucket-group:Administrators",
       "_key": "bitbucket-group:Administrators|has|{f1eb42cf-0d64-4bb9-bac5-459b83d9f0ed}",
       "_toEntityKey": "{f1eb42cf-0d64-4bb9-bac5-459b83d9f0ed}",
-      "_type": "bitbucket_group_has_user",
-      "displayName": "HAS",
-    },
-    Object {
-      "_class": "HAS",
-      "_fromEntityKey": "bitbucket-group:Administrators",
-      "_key": "bitbucket-group:Administrators|has|{89df9e73-a58a-4a26-8db9-8cb1b9d62955}",
-      "_toEntityKey": "{89df9e73-a58a-4a26-8db9-8cb1b9d62955}",
       "_type": "bitbucket_group_has_user",
       "displayName": "HAS",
     },
@@ -806,7 +752,7 @@ Object {
     "bitbucket_workspace_owns_repo",
     "bitbucket_project_has_repo",
   ],
-  "numCollectedEntities": 10,
-  "numCollectedRelationships": 14,
+  "numCollectedEntities": 9,
+  "numCollectedRelationships": 12,
 }
 `;
