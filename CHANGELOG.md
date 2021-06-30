@@ -6,24 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-## 2021-06-29 - v1.2.0
+## Unreleased
 
 ### Added
 
-- Added Groups, which pulls from API v.1.0 because that's the only place that
-  supports it
-- Support for API v.1.0 calls
+- [Ingest user groups](https://github.com/JupiterOne/integrations/projects/2#card-63990552)
 
 ### Changed
 
-- Improved efficiency on managing objects in memory
-
-### Updated
-
-- Documentation.
-- SDK version.
+- Upgraded to `@jupiterone/integration-sdk-*@6.7.0`
 
 ## 2021-06-22 - v1.1.0
 
@@ -38,12 +29,8 @@ and this project adheres to
 - ingestPullRequests config variable now uses the getStartStepStates pattern, so
   that the step doesn't run at all if ingestPullRequests is false.
 
-### Updated
-
-- Documentation.
-
 ## 2021-05-28 - v1.0.0
 
-### Updated
+### Changed
 
-- to '@jupiterone/integration-sdk-core'
+- Moved integration to GitHub and migrated latest SDK

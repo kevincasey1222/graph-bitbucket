@@ -1,31 +1,38 @@
-import { parseTimePropertyValue } from '@jupiterone/integration-sdk-core';
 import {
+  createIntegrationEntity,
+  parseTimePropertyValue,
+} from '@jupiterone/integration-sdk-core';
+
+import {
+  BITBUCKET_GROUP_ENTITY_CLASS,
+  BITBUCKET_GROUP_ENTITY_TYPE,
+  BITBUCKET_GROUP_USER_RELATIONSHIP_TYPE,
+  BITBUCKET_PR_ENTITY_CLASSES,
+  BITBUCKET_PR_ENTITY_TYPE,
   BITBUCKET_PROJECT_ENTITY_CLASS,
   BITBUCKET_PROJECT_ENTITY_TYPE,
   BITBUCKET_PROJECT_REPO_RELATIONSHIP_TYPE,
-  BITBUCKET_PR_ENTITY_CLASSES,
-  BITBUCKET_PR_ENTITY_TYPE,
   BITBUCKET_REPO_ENTITY_CLASS,
   BITBUCKET_REPO_ENTITY_TYPE,
   BITBUCKET_REPO_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_APPROVED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_ENTITY_CLASS,
   BITBUCKET_USER_ENTITY_TYPE,
-  BITBUCKET_GROUP_ENTITY_CLASS,
-  BITBUCKET_GROUP_ENTITY_TYPE,
-  BITBUCKET_GROUP_USER_RELATIONSHIP_TYPE,
   BITBUCKET_USER_GROUP_RELATIONSHIP_TYPE,
   BITBUCKET_USER_OPENED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_WORKSPACE_ENTITY_CLASS,
   BITBUCKET_WORKSPACE_ENTITY_TYPE,
+  BITBUCKET_WORKSPACE_GROUP_RELATIONSHIP_TYPE,
   BITBUCKET_WORKSPACE_PROJECT_RELATIONSHIP_TYPE,
   BITBUCKET_WORKSPACE_REPO_RELATIONSHIP_TYPE,
   BITBUCKET_WORKSPACE_USER_RELATIONSHIP_TYPE,
-  BITBUCKET_WORKSPACE_GROUP_RELATIONSHIP_TYPE,
 } from '../constants';
 import {
   BitbucketCommit,
+  BitbucketGroup,
+  BitbucketGroupEntity,
+  BitbucketGroupUserRelationship,
   BitbucketPR,
   BitbucketProject,
   BitbucketProjectEntity,
@@ -37,17 +44,14 @@ import {
   BitbucketRepoPullRequestRelationship,
   BitbucketUser,
   BitbucketUserEntity,
-  BitbucketGroup,
-  BitbucketGroupEntity,
+  BitbucketUserGroupRelationship,
   BitbucketUserPullRequestRelationship,
   BitbucketWorkspace,
   BitbucketWorkspaceEntity,
+  BitbucketWorkspaceGroupRelationship,
   BitbucketWorkspaceProjectRelationship,
   BitbucketWorkspaceRepoRelationship,
   BitbucketWorkspaceUserRelationship,
-  BitbucketWorkspaceGroupRelationship,
-  BitbucketGroupUserRelationship,
-  BitbucketUserGroupRelationship,
   IdEntityMap,
 } from '../types';
 import { Approval } from './approval/parsePRActivity';
@@ -94,19 +98,23 @@ export function createUserEntity(user: BitbucketUser): BitbucketUserEntity {
 }
 
 export function createGroupEntity(group: BitbucketGroup): BitbucketGroupEntity {
-  const groupEntity: BitbucketGroupEntity = {
-    _type: BITBUCKET_GROUP_ENTITY_TYPE,
-    _class: BITBUCKET_GROUP_ENTITY_CLASS,
-    _key: `bitbucket-group: ${group.name}`, //there is no uuid in API v.1.0 objects
-    displayName: group.name,
-    name: group.name,
-    permission: group.permission,
-    autoAdd: group.auto_add,
-    slug: group.slug,
-    //could iterate members and owner for user uuids here and set properties of those
-    //but let's let those exist via relationships
-  };
-  return groupEntity;
+  const { members, ...source } = group; // remove members for raw data
+
+  return createIntegrationEntity({
+    entityData: {
+      source,
+      assign: {
+        _type: BITBUCKET_GROUP_ENTITY_TYPE,
+        _class: BITBUCKET_GROUP_ENTITY_CLASS,
+        _key: `bitbucket-group:${group.name}`, //there is no uuid in API v.1.0 objects
+        displayName: group.name,
+        name: group.name,
+        permission: group.permission,
+        autoAdd: group.auto_add,
+        slug: group.slug,
+      },
+    },
+  }) as BitbucketGroupEntity;
 }
 
 export function createRepoEntity(
