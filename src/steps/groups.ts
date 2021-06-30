@@ -58,7 +58,7 @@ export async function fetchGroups(
         const slug: string = <string>workspaceEntity.slug;
         await apiClient.iterateGroups(slug, async (group) => {
           const groupEntity = createGroupEntity(group);
-          await jobState.addEntity(groupEntity); // TODO: Make addEntity return the type of the argument
+          await jobState.addEntity(groupEntity); // TODO: https://github.com/JupiterOne/sdk/issues/497
 
           const workspace: BitbucketWorkspaceEntity = <
             BitbucketWorkspaceEntity
