@@ -10,7 +10,7 @@ and this project adheres to
 
 ### Added
 
-- [Ingest user groups](https://github.com/JupiterOne/integrations/projects/2#card-63990552)
+- [Ingest user groups](https://github.com/JupiterOne/integrations/issues/29)
 
 ### Changed
 
