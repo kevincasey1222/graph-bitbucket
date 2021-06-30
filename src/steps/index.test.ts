@@ -36,8 +36,7 @@ test('should collect data', async () => {
   //this includes details of converting fetched PRs, which are only
   //fetched within the last 24 hours
   //because that is well tested there, these tests are only checking
-  //on the fetch process pulling the right number of entities and
-  //matching the snapshots
+  //on fetching the other objects
 
   // Review snapshot, failure is a regression
   expect({

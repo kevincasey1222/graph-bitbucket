@@ -10,6 +10,20 @@ export interface BitbucketUser {
   display_name: string;
 }
 
+// https://support.atlassian.com/bitbucket-cloud/docs/groups-endpoint/
+// the /groups endpoint is from API v.1.0, which is generally deprecated,
+// but this endpoint is still supported for some time because the 2.0 API doesn't
+// support it
+export interface BitbucketGroup {
+  uuid: string;
+  name: string;
+  permission: string;
+  auto_add: boolean;
+  members: BitbucketUser[];
+  owner: BitbucketUser;
+  slug: string;
+}
+
 /**
  * @deprecated teams are no longer supported by Bitbucket but they still come
  * back in some response data.

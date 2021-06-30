@@ -23,19 +23,17 @@ import {
 import * as converters from './converters';
 
 test('converters.convertWorkspaceToEntity', () => {
-  const entity = converters.convertWorkspaceToEntity(workspaceApiResponse);
+  const entity = converters.createWorkspaceEntity(workspaceApiResponse);
   expect(entity).toEqual(expectedWorkspaceEntity);
 });
 
 test('converters.convertUserToEntity', () => {
-  const entity = converters.convertUserToEntity(
-    userApiResponse as BitbucketUser,
-  );
+  const entity = converters.createUserEntity(userApiResponse as BitbucketUser);
   expect(entity).toEqual(expectedUserEntity);
 });
 
 test('converters.convertRepoToEntity', () => {
-  const entity = converters.convertRepoToEntity(
+  const entity = converters.createRepoEntity(
     '{816bc128-0132-4b85-a3d0-78900493a1f0}',
     repoApiResponse as BitbucketRepo,
   );
@@ -44,16 +42,13 @@ test('converters.convertRepoToEntity', () => {
 
 test('converters.convertProjectToEntity', () => {
   const workspace = 'lifeomic';
-  const entity = converters.convertProjectToEntity(
-    workspace,
-    projectApiResponse,
-  );
+  const entity = converters.createProjectEntity(workspace, projectApiResponse);
   expect(entity).toEqual(expectedProjectEntity(workspace));
 });
 
 describe('converters.convertPRToEntity', () => {
   test('calculates approval values', () => {
-    const entity = converters.convertPRToEntity({
+    const entity = converters.createPrEntity({
       accountUUID: 'le_account',
       pullRequest: prApiResponse,
       commits: [asdf123Commit, hjkl456Commit, qwer789Commit],
@@ -74,7 +69,7 @@ describe('converters.convertPRToEntity', () => {
   });
 
   test('sets approved to false if there are no commits', () => {
-    const entity = converters.convertPRToEntity({
+    const entity = converters.createPrEntity({
       accountUUID: 'le_account',
       pullRequest: prApiResponse,
       commits: [],
@@ -115,7 +110,7 @@ test('converters.convertWorkspaceUserToRelationship', () => {
     displayName: 'philgatesidem-lifeomic',
   };
 
-  const relationship = converters.convertWorkspaceUserToRelationship(
+  const relationship = converters.createWorkspaceHasUserRelationship(
     workspace,
     user,
   );
@@ -152,7 +147,7 @@ test('converters.convertWorkspaceRepoToRelationship', () => {
     updatedOn: 0,
   };
 
-  const relationship = converters.convertWorkspaceRepoToRelationship(
+  const relationship = converters.createWorkspaceOwnsRepoRelationship(
     workspaceEntity,
     repo,
   );

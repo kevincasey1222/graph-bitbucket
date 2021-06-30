@@ -2,8 +2,8 @@
 
 ## Bitbucket + JupiterOne Integration Benefits
 
-- Visualize Bitbucket workspaces, projects, repos, pull requests, and users in
-  the JupiterOne graph.
+- Visualize Bitbucket workspaces, projects, repos, pull requests, groups, and
+  users in the JupiterOne graph.
 - Map Bitbucket users to employees in your JupiterOne account.
 - Monitor changes to Bitbucket users using JupiterOne alerts.
 - Track which Bitbucket users opened, reviewed, and approved Bitbucket pull
@@ -11,8 +11,8 @@
 
 ## How it Works
 
-- JupiterOne periodically fetches workspaces, projects, repos, and users from
-  Bitbucket to update the graph.
+- JupiterOne periodically fetches workspaces, projects, repos, groups, and users
+  from Bitbucket to update the graph.
 - Optionally, JupiterOne fetches pull requests from the last 24 hours, along
   with user activity on those PRs, and adds that information to the graph.
 - Write JupiterOne queries to review and monitor updates to the graph, or
@@ -163,6 +163,7 @@ The following entities are created:
 
 | Resources              | Entity `_type`          | Entity `_class` |
 | ---------------------- | ----------------------- | --------------- |
+| Bitbucket Group        | `bitbucket_group`       | `UserGroup`     |
 | Bitbucket Project      | `bitbucket_project`     | `Project`       |
 | Bitbucket Pull Request | `bitbucket_pullrequest` | `Review`, `PR`  |
 | Bitbucket Repo         | `bitbucket_repo`        | `CodeRepo`      |
@@ -175,11 +176,14 @@ The following relationships are created/mapped:
 
 | Source Entity `_type` | Relationship `_class` | Target Entity `_type`   |
 | --------------------- | --------------------- | ----------------------- |
+| `bitbucket_group`     | **HAS**               | `bitbucket_user`        |
 | `bitbucket_project`   | **HAS**               | `bitbucket_repo`        |
 | `bitbucket_repo`      | **HAS**               | `bitbucket_pullrequest` |
 | `bitbucket_user`      | **APPROVED**          | `bitbucket_pullrequest` |
 | `bitbucket_user`      | **OPENED**            | `bitbucket_pullrequest` |
+| `bitbucket_user`      | **OWNS**              | `bitbucket_group`       |
 | `bitbucket_user`      | **REVIEWED**          | `bitbucket_pullrequest` |
+| `bitbucket_workspace` | **HAS**               | `bitbucket_group`       |
 | `bitbucket_workspace` | **HAS**               | `bitbucket_user`        |
 | `bitbucket_workspace` | **OWNS**              | `bitbucket_project`     |
 | `bitbucket_workspace` | **OWNS**              | `bitbucket_repo`        |

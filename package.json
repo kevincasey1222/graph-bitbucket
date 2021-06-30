@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-bitbucket",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A JupiterOne Integration for BitBucket",
   "license": "MPL-2.0",
   "main": "dist/index.js",
@@ -33,11 +33,11 @@
     "uuid": "^8.3.2"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^6.3.0"
+    "@jupiterone/integration-sdk-core": "^6.7.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^6.3.0",
-    "@jupiterone/integration-sdk-dev-tools": "^6.3.0",
-    "@jupiterone/integration-sdk-testing": "^6.3.0"
+    "@jupiterone/integration-sdk-core": "^6.7.0",
+    "@jupiterone/integration-sdk-dev-tools": "^6.7.0",
+    "@jupiterone/integration-sdk-testing": "^6.7.0"
   }
 }

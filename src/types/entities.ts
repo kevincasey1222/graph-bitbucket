@@ -7,6 +7,16 @@ export interface BitbucketUserEntity extends Entity {
   webLink?: string;
 }
 
+export interface BitbucketGroupEntity extends Entity {
+  _type: 'bitbucket_group';
+  name: string;
+  permission: string;
+  autoAdd: boolean;
+  slug: string;
+  //the object from the API has members: and owner: properties also
+  //which we'll represent by relationships
+}
+
 export interface BitbucketWorkspaceEntity extends Entity {
   _type: 'bitbucket_workspace';
   slug: string;

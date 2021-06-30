@@ -7,6 +7,7 @@ import BitbucketClient from './clients/BitbucketClient';
 import {
   BitbucketWorkspace,
   BitbucketUser,
+  BitbucketGroup,
   BitbucketProject,
   BitbucketRepo,
   BitbucketPR,
@@ -83,6 +84,24 @@ export class APIClient {
 
     for (const user of users) {
       await iteratee(user);
+    }
+  }
+
+  /**
+   * Iterates each Bitbucket group for a given workspace.
+   *
+   * @param iteratee receives each resource to produce entities/relationships
+   */
+  public async iterateGroups(
+    workspaceSlug: string,
+    iteratee: ResourceIteratee<BitbucketGroup>,
+  ): Promise<void> {
+    const groups: BitbucketGroup[] = await this.bitbucket.getAllWorkspaceGroups(
+      workspaceSlug,
+    );
+
+    for (const group of groups) {
+      await iteratee(group);
     }
   }
 

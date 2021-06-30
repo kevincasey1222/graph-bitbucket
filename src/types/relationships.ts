@@ -10,6 +10,19 @@ export interface BitbucketWorkspaceUserRelationship
   _type: 'bitbucket_workspace_has_user';
 }
 
+export interface BitbucketWorkspaceGroupRelationship
+  extends ExplicitRelationship {
+  _type: 'bitbucket_workspace_has_group';
+}
+
+export interface BitbucketGroupUserRelationship extends ExplicitRelationship {
+  _type: 'bitbucket_group_has_user';
+}
+
+export interface BitbucketUserGroupRelationship extends ExplicitRelationship {
+  _type: 'bitbucket_user_owns_group';
+}
+
 export interface BitbucketWorkspaceProjectRelationship
   extends ExplicitRelationship {
   _type: 'bitbucket_workspace_owns_project';

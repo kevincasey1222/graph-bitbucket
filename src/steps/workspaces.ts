@@ -6,7 +6,7 @@ import {
 
 import { createAPIClient } from '../client';
 import { IntegrationConfig, sanitizeConfig } from '../config';
-import { convertWorkspaceToEntity } from '../sync/converters';
+import { createWorkspaceEntity } from '../sync/converters';
 import {
   BITBUCKET_WORKSPACE_ENTITY_TYPE,
   BITBUCKET_WORKSPACE_ENTITY_CLASS,
@@ -26,7 +26,7 @@ export async function fetchWorkspaces(
       createIntegrationEntity({
         entityData: {
           source: workspace,
-          assign: convertWorkspaceToEntity(workspace),
+          assign: createWorkspaceEntity(workspace),
         },
       }),
     );

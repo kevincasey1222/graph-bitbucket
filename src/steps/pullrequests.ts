@@ -3,6 +3,7 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   RelationshipClass,
+  IntegrationError,
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../client';
@@ -10,12 +11,12 @@ import { IntegrationConfig, sanitizeConfig } from '../config';
 import collectCommitsForPR from '../sync/approval/collectCommitsForPR';
 import { calculatePRRequestFilter } from '../sync/helpers';
 import {
-  convertPRToEntity,
+  createPrEntity,
   PRConverterInput,
-  convertRepoPRToRelationship,
-  convertUserOpenedPRToRelationship,
-  convertUserApprovedPRToRelationship,
-  convertUserReviewedPRToRelationship,
+  createRepoHasPrRelationship,
+  createUserOpenedPrRelationship,
+  createUserApprovedPrRelationship,
+  createUserReviewedPrRelationship,
 } from '../sync/converters';
 import {
   BITBUCKET_USER_ENTITY_TYPE,
@@ -26,6 +27,8 @@ import {
   BITBUCKET_USER_OPENED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_APPROVED_PR_RELATIONSHIP_TYPE,
   BITBUCKET_USER_REVIEWED_PR_RELATIONSHIP_TYPE,
+  DATA_USER_BY_ID_MAP,
+  DATA_USER_ID_ARRAY,
 } from '../constants';
 import {
   IdEntityMap,
@@ -43,27 +46,25 @@ export async function fetchPRs(
     context,
   );
 
-  // old integration helper and converter code requires a map of user._key -> userEntity,
-  // and an array of the user._key
-  // ultimately these helpers are just returning a displayName for certain userIDs,
-  // which we could get while processing the PR since we have to get the user entities
-  // from the graph anyway in order to make relationships,
-  // but due to the structure of helper and converter functions,
-  // and a desire to minimize diffs,
-  // we'll produce this map and array here for use below
-
-  let userIds: string[] = [];
-  const userByIdMap: IdEntityMap<BitbucketUserEntity> = {};
-
-  await jobState.iterateEntities(
-    {
-      _type: BITBUCKET_USER_ENTITY_TYPE,
-    },
-    (userEntity) => {
-      userIds = [...userIds, userEntity._key];
-      userByIdMap[userEntity._key] = <BitbucketUserEntity>userEntity;
-    },
+  const userByIdMap = await jobState.getData<IdEntityMap<BitbucketUserEntity>>(
+    DATA_USER_BY_ID_MAP,
   );
+
+  if (!userByIdMap) {
+    throw new IntegrationError({
+      code: 'DATA_NOT_FOUND',
+      message: "Required data not found in job state: 'USER_BY_UUID_MAP'",
+    });
+  }
+
+  const userIds = await jobState.getData<string[]>(DATA_USER_ID_ARRAY);
+
+  if (!userIds) {
+    throw new IntegrationError({
+      code: 'DATA_NOT_FOUND',
+      message: "Required data not found in job state: 'USER_ID_ARRAY'",
+    });
+  }
 
   await jobState.iterateEntities(
     {
@@ -100,7 +101,7 @@ export async function fetchPRs(
             approvedCommitsRemoved: prApprovalData.approvedCommitsRemoved,
             usersByUUID: userByIdMap,
           };
-          const convertedPR = convertPRToEntity(prConverterInput);
+          const convertedPR = createPrEntity(prConverterInput);
           const prEntity = (await jobState.addEntity(
             createIntegrationEntity({
               entityData: {
@@ -113,13 +114,13 @@ export async function fetchPRs(
           //all relationship code to follow per old integration syncContext.ts/addPRs
           const repo: BitbucketRepoEntity = <BitbucketRepoEntity>repoEntity;
           await jobState.addRelationship(
-            convertRepoPRToRelationship(repo, prEntity),
+            createRepoHasPrRelationship(repo, prEntity),
           );
 
           const authorEntity = userByIdMap[convertedPR.authorId];
           if (authorEntity) {
             await jobState.addRelationship(
-              convertUserOpenedPRToRelationship(authorEntity, prEntity),
+              createUserOpenedPrRelationship(authorEntity, prEntity),
             );
           }
 
@@ -127,7 +128,7 @@ export async function fetchPRs(
             const approverEntity = userByIdMap[approverId];
             if (approverEntity) {
               await jobState.addRelationship(
-                convertUserApprovedPRToRelationship(approverEntity, prEntity),
+                createUserApprovedPrRelationship(approverEntity, prEntity),
               );
             }
           });
@@ -136,7 +137,7 @@ export async function fetchPRs(
             const reviewerEntity = userByIdMap[reviewerId];
             if (reviewerEntity) {
               await jobState.addRelationship(
-                convertUserReviewedPRToRelationship(reviewerEntity, prEntity),
+                createUserReviewedPrRelationship(reviewerEntity, prEntity),
               );
             }
           });
