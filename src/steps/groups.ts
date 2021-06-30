@@ -1,34 +1,32 @@
 import {
-  createIntegrationEntity,
+  IntegrationError,
   IntegrationStep,
   IntegrationStepExecutionContext,
   RelationshipClass,
-  IntegrationError,
 } from '@jupiterone/integration-sdk-core';
 
 import { createAPIClient } from '../client';
 import { IntegrationConfig, sanitizeConfig } from '../config';
 import {
-  createGroupEntity,
-  createWorkspaceHasGroupRelationship,
-  createGroupHasUserRelationship,
-  createUserOwnsGroupRelationship,
-} from '../sync/converters';
-import {
-  BITBUCKET_WORKSPACE_ENTITY_TYPE,
-  BITBUCKET_USER_ENTITY_TYPE,
-  BITBUCKET_GROUP_ENTITY_TYPE,
   BITBUCKET_GROUP_ENTITY_CLASS,
-  BITBUCKET_WORKSPACE_GROUP_RELATIONSHIP_TYPE,
+  BITBUCKET_GROUP_ENTITY_TYPE,
   BITBUCKET_GROUP_USER_RELATIONSHIP_TYPE,
+  BITBUCKET_USER_ENTITY_TYPE,
   BITBUCKET_USER_GROUP_RELATIONSHIP_TYPE,
+  BITBUCKET_WORKSPACE_ENTITY_TYPE,
+  BITBUCKET_WORKSPACE_GROUP_RELATIONSHIP_TYPE,
   DATA_USER_BY_ID_MAP,
 } from '../constants';
 import {
-  BitbucketWorkspaceEntity,
-  BitbucketGroupEntity,
-  IdEntityMap,
+  createGroupEntity,
+  createGroupHasUserRelationship,
+  createUserOwnsGroupRelationship,
+  createWorkspaceHasGroupRelationship,
+} from '../sync/converters';
+import {
   BitbucketUserEntity,
+  BitbucketWorkspaceEntity,
+  IdEntityMap,
 } from '../types';
 
 export async function fetchGroups(
@@ -59,14 +57,9 @@ export async function fetchGroups(
       if (workspaceEntity.slug) {
         const slug: string = <string>workspaceEntity.slug;
         await apiClient.iterateGroups(slug, async (group) => {
-          const groupEntity = (await jobState.addEntity(
-            createIntegrationEntity({
-              entityData: {
-                source: group,
-                assign: createGroupEntity(group),
-              },
-            }),
-          )) as BitbucketGroupEntity;
+          const groupEntity = createGroupEntity(group);
+          await jobState.addEntity(groupEntity); // TODO: Make addEntity return the type of the argument
+
           const workspace: BitbucketWorkspaceEntity = <
             BitbucketWorkspaceEntity
           >workspaceEntity;
